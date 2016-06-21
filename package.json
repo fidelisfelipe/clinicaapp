@@ -9,7 +9,8 @@
     "require-dir": "^0.3.0",
     "gulp-load-plugins": "^1.0.0-rc",
     "del": "^2.0.0",
-    "vinyl-paths": "^2.0.0"
+    "vinyl-paths": "^2.0.0",
+    "xml2js": "^0.4.9"
   },
   "devDependencies": {
     "browser-sync": "^2.8.3",
