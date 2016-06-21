@@ -5,7 +5,8 @@
   },
   "dependencies": {
     "bower": ">=1.7.9",
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "require-dir": "^0.3.0"
   },
   "devDependencies": {
     "browser-sync": "^2.8.3",
