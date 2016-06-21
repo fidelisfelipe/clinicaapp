@@ -15,7 +15,8 @@
     "main-bower-files": "^2.9.0",
     "karma": "^0.13.9",
     "browser-sync": "^2.8.3",
-    "gulp-protractor": "^2.1.0"
+    "gulp-protractor": "^2.1.0",
+    "gulp-eslint": "^2.0.0"
   },
   "devDependencies": {
     "browser-sync": "^2.8.3",
