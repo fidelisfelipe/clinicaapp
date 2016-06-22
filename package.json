@@ -6,7 +6,6 @@
   "dependencies": {
     "bower": ">=1.7.9",
     "gulp": "^3.9.0",
-    "ionic": ">=1.7.15",
     "browser-sync": "^2.8.3",
     "chalk": "^1.1.0",
     "cordova": "~6.0.0",
@@ -102,7 +101,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "start": "gulp serve-prod",
+    "start": "gulp serve-prod --env=prod",
     "postinstall": "bower install && gulp build --minify"
   }
 }
