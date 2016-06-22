@@ -1,8 +1,6 @@
 # frontend-ionic
 This project was generated with Generator-M-Ionic v1.7.0. For more info visit the [repository](https://github.com/mwaylabs/generator-m-ionic) or check out the README below.
 ##Configuration Heroku
-	heroku config:set DOMAIN_URL=https://frontend-ionic.herokuapp.com
-	heroku maintenance:on or off
 	
 
 # Generator-M-Ionic v1.7.0
