@@ -102,7 +102,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "start": "ionic serve",
+    "start": "gulp serve-prod",
     "postinstall": "bower install && gulp build --minify"
   }
 }
