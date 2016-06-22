@@ -102,6 +102,6 @@
   "scripts": {
     "test": "gulp test",
     "start": "gulp serve --env=prod",
-    "postinstall": "./node_modules/bower/bin/bower install && gulp build --env=prod"
+    "postinstall": "gulp default"
   }
 }
