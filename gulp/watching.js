@@ -93,3 +93,6 @@ gulp.task('serve', ['inject-all'], function () {
 gulp.task('serve-build', ['build'], function () {
   bsInit(['app', '.tmp'], false);
 });
+gulp.task('serve-prod', ['build'], function () {
+  bsInit(['www', '.tmp'], false);
+});
