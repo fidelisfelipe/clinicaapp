@@ -4,6 +4,23 @@
 
     <!-- content goes here -->
     <ion-list>
+	  <!-- backend -->
+      <ion-item class="item item-divider">Backend:</ion-item>
+      <ion-item class="item item-thumbnail">
+        {{ctrl.backendState}}<br>
+        {{ctrl.backendRequestUrl}}<br>
+      URI:<input type="text" placeholder="URI"
+            ng-model="ctrl.backendUri" /> 
+      Method: <input type="text" placeholder="GET, POST, PUT, DELETE"
+            ng-model="ctrl.backendMethod" />
+        <button class="button button-block button-dark"
+          ng-click="ctrl.backendTest()">    
+          Test Backend
+        </button>
+
+        <ion-item class="item item-divider">Console Response: {{ctrl.urlSended}}<br>Status: {{ctrl.backendStatus}}</ion-item>
+      	<ion-item class="item item-text-wrap" >{{ctrl.backendConsole}}</ion-item>
+      </ion-item>
 
       <ion-item class="item item-divider">
         Some basic checks
@@ -60,24 +77,6 @@
         </button>
         {{ctrl.proxyState}}<br>
         {{ctrl.proxyRequestUrl}}
-      </ion-item>
-	  <!-- backend -->
-      <ion-item class="item item-divider">Backend:</ion-item>
-      <ion-item class="item item-thumbnail">
-        {{ctrl.backendState}}<br>
-        {{ctrl.backendRequestUrl}}<br>
-      URI:<input type="text" placeholder="URI"
-            ng-model="ctrl.backendUri" /> 
-      Method: <input type="text" placeholder="GET, POST, PUT, DELETE"
-            ng-model="ctrl.backendMethod" />
-        <button class="button button-block button-dark"
-          ng-click="ctrl.backendTest()">    
-          Test Backend
-        </button>
-
-        <ion-item class="item item-divider">Console Response: {{ctrl.urlSended}}<br>Status: {{ctrl.backendStatus}}</ion-item>
-      		<ion-item class="item item-text-wrap" >{{ctrl.backendConsole}}</ion-item>
-      		
       </ion-item>
 
     </ion-list>
