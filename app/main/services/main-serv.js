@@ -18,15 +18,4 @@ angular.module('main')
     }, 500);
   };
 
-  function onValidTestBackend (data) {
-    if (data.status === 200) {
-      $log.debug('request success: ', data);
-    } else {
-      $log.error('request error: ', data);
-    }
-  }
-  function onErrorTestBackend (data) {
-    $log.error('request error: ', data);
-  }
-
 });

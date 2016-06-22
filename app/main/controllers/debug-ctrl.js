@@ -63,7 +63,5 @@ angular.module('main')
       this.backendState = 'ready';
     }.bind(this), 6000));
   };
- 
- 
 
 });
