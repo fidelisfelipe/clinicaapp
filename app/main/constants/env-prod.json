@@ -1,4 +1,4 @@
 {
   "SERVER_URL": "https://PRODSERVER/api",
-  "SOME_OTHER_URL": "https://echo.getpostman.com"
+  "SOME_OTHER_URL": "https://frontend-ionic.herokuapp.com"
 }
