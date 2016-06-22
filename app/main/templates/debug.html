@@ -61,6 +61,16 @@
         {{ctrl.proxyState}}<br>
         {{ctrl.proxyRequestUrl}}
       </ion-item>
+	  <!-- backend -->
+      <ion-item class="item item-divider">Backend:</ion-item>
+      <ion-item class="item item-thumbnail">
+        <button class="button button-block button-dark"
+          ng-click="ctrl.backendTest()">
+          Test Backend
+        </button>
+        {{ctrl.backendState}}<br>
+        {{ctrl.backendRequestUrl}}
+      </ion-item>
 
     </ion-list>
 

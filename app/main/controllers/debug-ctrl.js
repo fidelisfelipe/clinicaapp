@@ -35,6 +35,8 @@ angular.module('main')
   // Proxy
   this.proxyState = 'ready';
   this.proxyRequestUrl = Config.ENV.SOME_OTHER_URL + '/get';
+  this.backendState = 'ready';
+  this.backendRequestUrl = Config.ENV.DOMAIN_BACKEND_URL;
 
   this.proxyTest = function () {
     this.proxyState = '...';
@@ -48,5 +50,20 @@ angular.module('main')
       this.proxyState = 'ready';
     }.bind(this), 6000));
   };
+  //Backend
+  this.backendTest = function () {
+    this.backendState = '...';
+
+    $http.get(this.backendRequestUrl)
+    .then(function (response) {
+      $log.log(response);
+      this.backendState = 'success (result printed to browser console)';
+    }.bind(this))
+    .then($timeout(function () {
+      this.backendState = 'ready';
+    }.bind(this), 6000));
+  };
+ 
+ 
 
 });

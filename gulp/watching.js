@@ -94,5 +94,5 @@ gulp.task('serve-build', ['build'], function () {
   bsInit(['app', '.tmp'], false);
 });
 gulp.task('serve-prod', ['build'], function () {
-  bsInit(['static', 'www', '.tmp'], false);
+  bsInit(['www', '.tmp'], false);
 });
