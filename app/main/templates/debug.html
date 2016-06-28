@@ -5,35 +5,39 @@
     <!-- content goes here -->
     <ion-list>
 	  <!-- backend -->
-      <ion-item class="item item-divider">Backend:</ion-item>
-      <ion-item class="item item-thumbnail">
-        {{ctrl.backendState}}<br>
-        {{ctrl.backendRequestUrl}}<br>
-      URI:<input type="text" placeholder="URI"
-            ng-model="ctrl.backendUri" /> 
-      Method: <input type="text" placeholder="GET, POST, PUT, DELETE"
-            ng-model="ctrl.backendMethod" />
-        <button class="button button-block button-dark"
-          ng-click="ctrl.backendTest()">    
+        <ion-item class="item item-divider item-text-wrap">
+        <h2>Backend</h2>
+        Url: {{ctrl.backendRequestUrl}}<br>
+        Console Response: {{ctrl.urlSended}}<br>
+        Status: {{ctrl.backendStatus}}<br>
+        State:  {{ctrl.backendState}}<br>
+        </ion-item>
+      	<ion-item class="item item-text-wrap" >
+      	URI: <input type="text" placeholder="URI" ng-model="ctrl.backendUri" /> 
+        Method: <input type="text" placeholder="GET, POST, PUT, DELETE" ng-model="ctrl.backendMethod" />
+        <button class="button button-block button-dark" ng-click="ctrl.backendTest()" >    
           Test Backend
         </button>
-
-        <ion-item class="item item-divider">Console Response: {{ctrl.urlSended}}<br>Status: {{ctrl.backendStatus}}</ion-item>
-      	<ion-item class="item item-text-wrap" >{{ctrl.backendConsole}}</ion-item>
-      </ion-item>
+      	{{ctrl.backendConsole}}
+      	</ion-item>
 
       <ion-item class="item item-divider">
-        Some basic checks
+       Checks
       </ion-item>
       <ion-item class="item item-icon">
         icons working?
         <i class="icon ion-checkmark-circled"></i>
       </ion-item>
       <ion-item class="item item-thumbnail">
+        uri's working?<br>
+        Total: {{ctrl.data.features.size}}
+        <div ng-repeat="item in ctrl.data.features.items"><i class="icon ion-checkmark-circled"></i><label>{{item.function}} - {{item.method}} - {{item.rota}}</label>&nbsp;</div>
+      </ion-item>
+      <ion-item class="item item-thumbnail">
         images working?<br>
         <img width="75" src="main/assets/images/yo@2x.png">
       </ion-item>
-      <ion-item class="item">{{ctrl.someData.binding}}</ion-item>
+      <ion-item class="item">{{ctrl.someData.binding}} <button class="button button-block button-dark" ng-click="ctrl.serviceTest()">Test Service</button></ion-item>
       <ion-item class="item item-divider">Environment variables:</ion-item>
       <ion-item class="item item-text-wrap">
         <pre>{{ctrl.ENV | json}}</pre>
@@ -45,27 +49,6 @@
       <ion-item class="item item-divider">Device:</ion-item>
       <ion-item class="item item-text-wrap">
         <pre>{{ctrl.device | json}}</pre>
-      </ion-item>
-
-      <!-- password -->
-      <ion-item class="item item-divider">Password Test:</ion-item>
-      <ion-item class="item item-text-wrap">
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password"
-            ng-model="ctrl.password.input"
-            ng-change="ctrl.grade()">
-        </label>
-      </ion-item>
-      <ion-item class="item item-text-wrap">
-        Strength
-        <span class="badge"
-          ng-class="{
-            'badge-assertive': ctrl.password.strength === 'weak',
-            'badge-balanced': ctrl.password.strength === 'strong',
-            'badge-energized': ctrl.password.strength === 'medium'
-          }"
-          ng-bind="ctrl.password.strength"></span>
       </ion-item>
 
       <!-- proxy -->

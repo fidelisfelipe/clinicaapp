@@ -6,31 +6,16 @@ angular.module('main')
   var bind = this;
   // bind data from services
   this.someData = Main.someData;
+  this.serviceTest = function () {Main.changeBriefly();};
   this.ENV = Config.ENV;
   this.BUILD = Config.BUILD;
+
   // get device info
   ionic.Platform.ready(function () {
     if (ionic.Platform.isWebView()) {
       this.device = $cordovaDevice.getDevice();
     }
   }.bind(this));
-
-  // PASSWORD EXAMPLE
-  this.password = {
-    input: '', // by user
-    strength: ''
-  };
-  this.grade = function () {
-    var size = this.password.input.length;
-    if (size > 8) {
-      this.password.strength = 'strong';
-    } else if (size > 3) {
-      this.password.strength = 'medium';
-    } else {
-      this.password.strength = 'weak';
-    }
-  };
-  this.grade();
 
   // Proxy
   this.proxyState = 'ready';
@@ -53,8 +38,17 @@ angular.module('main')
       this.proxyState = 'ready';
     }.bind(this), 6000));
   };
+  this.data = {'features': {'items': {}, 'size': 0}};
   //Backend
-
+  Main.features(function (features) {
+    bind.data.features.items = features;
+    angular.forEach(bind.data.features.items, function () {
+      bind.data.features.size = bind.data.features.size + 1;
+    });
+    $log.log(bind.data.features.items, bind.data.features.size);
+  }, function () {
+    $log.log('fail load features...');
+  });
   this.backendTest = function () {
     this.urlSended = this.backendRequestUrl + this.backendUri;
     this.backendState = '...';
