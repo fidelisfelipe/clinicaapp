@@ -3,35 +3,48 @@
   <ion-content class="padding">
 
     <!-- content goes here -->
+
+    <label class="item item-input">
+     	  
+     	  <ion-toggle ng-model="ctrl.showStatus">Status</ion-toggle>
+	</label>
+
     <ion-list>
 	  <!-- backend -->
         <ion-item class="item item-divider item-text-wrap">
-        <h2>Backend</h2>
-        Url: {{ctrl.backendRequestUrl}}<br>
-        Console Response: {{ctrl.urlSended}}<br>
-        Status: {{ctrl.backendStatus}}<br>
-        State:  {{ctrl.backendState}}<br>
+        <h2><i class="icon ion-power" 
+        	ng-class="{'': backendOnline === 'loading',	positive: backendOnline === true, assertive: backendOnline === false}" ></i>
+        	{{ctrl.backendRequestUrl}}
+        </h2>
         </ion-item>
-      	<ion-item class="item item-text-wrap" >
-      	URI: <input type="text" placeholder="URI" ng-model="ctrl.backendUri" /> 
-        Method: <input type="text" placeholder="GET, POST, PUT, DELETE" ng-model="ctrl.backendMethod" />
-        <button class="button button-block button-dark" ng-click="ctrl.backendTest()" >    
-          Test Backend
-        </button>
-      	{{ctrl.backendConsole}}
-      	</ion-item>
+        <ion-item class="item item-divider item-text-wrap">Console Response: {{ctrl.urlSended}} </ion-item>
+        <ion-item class="item item-divider item-text-wrap">Status: {{ctrl.backendStatus}} &nbsp;</ion-item>
+        <ion-item class="item item-divider item-text-wrap">State:  {{ctrl.backendState}}</ion-item>
 
+	        <label class="item item-input">
+	      	URI:&nbsp;<input type="text" placeholder="URI" ng-model="ctrl.backendUri" />
+	      	</label>
+	        <label class="item item-input">
+	      	Method:&nbsp;<input type="text" placeholder="GET, POST, PUT, DELETE" ng-model="ctrl.backendMethod" />
+	      	</label>
+	      	<label class="item item-input">
+	      	Result:&nbsp;<textarea >{{ctrl.backendConsole}}</textarea>
+	      	</label>
+	        <button class="button button-block button-stable" ng-class="{'button-balanced': ctrl.backendStatus === 200, 'button-assertive': ctrl.backendStatus !== 200 && ctrl.backendStatus !== '', 'button-positive': ctrl.backendStatus === ''}" ng-click="ctrl.backendTest()" >    
+	          Test Backend
+	        </button>
+
+      </ion-list>
+      <ion-toggle ng-model="ctrl.showRoutes">Routes {{ctrl.data.features.size}}</ion-toggle>
+
+      <ion-list ng-show="ctrl.showRoutes" ng-repeat="item in ctrl.data.features.items" "><ion-radio ng-model="ctrl.request" ng-click="ctrl.backendUri = item.rota; ctrl.backendMethod = item.method" ng-value="item.rota">{{item.function}} - {{item.rota}} - {{item.method}}</ion-radio></ion-list>
+      
       <ion-item class="item item-divider">
        Checks
       </ion-item>
       <ion-item class="item item-icon">
         icons working?
         <i class="icon ion-checkmark-circled"></i>
-      </ion-item>
-      <ion-item class="item item-thumbnail">
-        uri's working?<br>
-        Total: {{ctrl.data.features.size}}
-        <div ng-repeat="item in ctrl.data.features.items"><i class="icon ion-checkmark-circled"></i><label>{{item.function}} - {{item.method}} - {{item.rota}}</label>&nbsp;</div>
       </ion-item>
       <ion-item class="item item-thumbnail">
         images working?<br>

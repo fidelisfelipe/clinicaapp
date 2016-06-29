@@ -1,7 +1,7 @@
 'use strict';
 angular.module('main')
-.service('Main', function ($log, $timeout, $http, Config) {
-
+.service('Main', function ($log, $timeout, $http, $rootScope, Config) {
+  var bind = this;
   $log.log('Hello from your Service: Main in module main');
   // some initial data
   this.someData = {
@@ -33,4 +33,19 @@ angular.module('main')
       }.bind(this), 6000));
   };
 
+  this.backendOnline = function () {
+    bind.status = false;
+    $http({
+      method: 'GET',
+      url: Config.ENV.DOMAIN_BACKEND_URL
+    }).then(function (response) {
+      if (response.status === 200) {
+        bind.status = true;
+      } else {
+        bind.status = false;
+      }
+    }.bind(this)).then($timeout(function () {
+      $rootScope.backendOnline = bind.status;
+    }.bind(this), 5000));
+  };
 });

@@ -44,4 +44,6 @@ angular.module('main', [
           }
         }
       });
+}).run(function ($rootScope, Main) {
+  $rootScope.$on('$stateChangeSuccess', Main.backendOnline());
 });
