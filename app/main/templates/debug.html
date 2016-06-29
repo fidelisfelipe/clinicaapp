@@ -37,7 +37,7 @@
       </ion-list>
       <ion-toggle ng-model="ctrl.showRoutes">Routes {{ctrl.data.features.size}}</ion-toggle>
 
-      <ion-list ng-show="ctrl.showRoutes" ng-repeat="item in ctrl.data.features.items" "><ion-radio ng-model="ctrl.request" ng-click="ctrl.backendUri = item.rota; ctrl.backendMethod = item.method" ng-value="item.rota">{{item.function}} - {{item.rota}} - {{item.method}}</ion-radio></ion-list>
+      <ion-list ng-show="ctrl.showRoutes" ng-repeat="item in ctrl.data.features.items" ><ion-radio ng-model="ctrl.request" ng-click="ctrl.backendUri = item.rota; ctrl.backendMethod = item.method" ng-value="item.rota">{{item.function}} - {{item.rota}} - {{item.method}}</ion-radio></ion-list>
       
       <ion-item class="item item-divider">
        Checks
