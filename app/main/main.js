@@ -44,6 +44,6 @@ angular.module('main', [
           }
         }
       });
-}).run(function ($rootScope, Main) {
-  $rootScope.$on('$stateChangeSuccess', Main.backendOnline());
+}).run(function ($rootScope, $state, $log, Main) {
+  $rootScope.$on('$stateChangeSuccess', function () {$log.log($state.current.name === 'main.debug'); if ($state.current.name === 'main.debug') {Main.backendOnline();}});
 });

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('DebugCtrl', function ($log, $http, $timeout, Main, Config, $cordovaDevice, FlashService) {
+.controller('DebugCtrl', function ($log, $http, $timeout, Main, Config, $cordovaDevice, $interval, $rootScope, FlashService) {
 
   $log.log('Hello from your Controller: DebugCtrl in module main:. This is your controller:', this);
   var bind = this;
@@ -62,22 +62,34 @@ angular.module('main')
   this.backendTest = function () {
     this.urlSended = this.backendRequestUrl + this.backendUri;
     this.backendState = '...';
-    this.backendConsole = '';
+    this.backendConsole = '{}';
     bind.backendStatus = '';
     $http.get(this.backendRequestUrl + this.backendUri)
     .then(function (response) {
       bind.backendStatus = response.status;
       $log.log(response);
-      bind.backendConsole = JSON.stringify(response);
+      bind.backendConsole = response;
       bind.backendState = 'success (result printed to browser console)';
     }.bind(this), function (response) {
       bind.backendStatus = response.status;
       if (response.status) {
-        bind.backendConsole = JSON.stringify(response);
+        bind.backendConsole = response;
       }
     }).then($timeout(function () {
       this.backendState = 'ready';
     }.bind(this), 6000));
+  };
+  $rootScope.$on('refreshStatusBackend', function () {Main.backendOnline();});
+
+  this.intervalTest = function () {
+    if (this.continueTest) {
+      $log.log('intervalTest');
+      bind.stopInterval = $interval(function () {
+        $log.log('send refreshStatusBackend');
+        $rootScope.$broadcast('refreshStatusBackend');}, 60000);
+    } else {
+      $interval.cancel(bind.stopInterval);
+    }
   };
 
 });

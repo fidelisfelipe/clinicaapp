@@ -2,6 +2,7 @@
 angular.module('main')
 .service('Main', function ($log, $timeout, $http, $rootScope, Config) {
   var bind = this;
+  $rootScope.backendLabelTest = 'loading status backend...';
   $log.log('Hello from your Service: Main in module main');
   // some initial data
   this.someData = {
@@ -34,6 +35,7 @@ angular.module('main')
   };
 
   this.backendOnline = function () {
+    $log.log('backendOnline testing...');
     bind.status = false;
     $http({
       method: 'GET',
@@ -46,6 +48,7 @@ angular.module('main')
       }
     }.bind(this)).then($timeout(function () {
       $rootScope.backendOnline = bind.status;
+      $rootScope.backendLabelTest = (bind.status ? 'OK' : 'Fail');
     }.bind(this), 5000));
   };
 });

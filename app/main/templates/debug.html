@@ -3,21 +3,15 @@
   <ion-content class="padding">
 
     <!-- content goes here -->
-
-    <label class="item item-input">
-     	  
-     	  <ion-toggle ng-model="ctrl.showStatus">Status</ion-toggle>
-	</label>
-
     <ion-list>
 	  <!-- backend -->
-        <ion-item class="item item-divider item-text-wrap">
-        <h2><i class="icon ion-power" 
-        	ng-class="{'': backendOnline === 'loading',	positive: backendOnline === true, assertive: backendOnline === false}" ></i>
-        	{{ctrl.backendRequestUrl}}
-        </h2>
-        </ion-item>
-        <ion-item class="item item-divider item-text-wrap">Console Response: {{ctrl.urlSended}} </ion-item>
+     	  <ion-toggle ng-model="ctrl.continueTest" ng-change="ctrl.intervalTest()" class="item-text-wrap">
+			<i class="icon ion-power" 
+        	ng-class="{'': backendOnline === 'loading',	balanced: backendOnline === true, assertive: backendOnline === false}" ></i>
+        	{{backendLabelTest}}
+		  </ion-toggle>
+
+        <ion-item class="item item-divider item-text-wrap">Send: {{ctrl.urlSended}} </ion-item>
         <ion-item class="item item-divider item-text-wrap">Status: {{ctrl.backendStatus}} &nbsp;</ion-item>
         <ion-item class="item item-divider item-text-wrap">State:  {{ctrl.backendState}}</ion-item>
 
@@ -27,9 +21,8 @@
 	        <label class="item item-input">
 	      	Method:&nbsp;<input type="text" placeholder="GET, POST, PUT, DELETE" ng-model="ctrl.backendMethod" />
 	      	</label>
-	      	<label class="item item-input">
-	      	Result:&nbsp;<textarea >{{ctrl.backendConsole}}</textarea>
-	      	</label>
+	      	<ion-toggle ng-model="ctrl.showResult">Result: <pre ng-show="ctrl.showResult">{{ctrl.backendConsole | json}}</pre>
+	      	</ion-toggle>
 	        <button class="button button-block button-stable" ng-class="{'button-balanced': ctrl.backendStatus === 200, 'button-assertive': ctrl.backendStatus !== 200 && ctrl.backendStatus !== '', 'button-positive': ctrl.backendStatus === ''}" ng-click="ctrl.backendTest()" >    
 	          Test Backend
 	        </button>
@@ -39,43 +32,42 @@
 
       <ion-list ng-show="ctrl.showRoutes" ng-repeat="item in ctrl.data.features.items" ><ion-radio ng-model="ctrl.request" ng-click="ctrl.backendUri = item.rota; ctrl.backendMethod = item.method" ng-value="item.rota">{{item.function}} - {{item.rota}} - {{item.method}}</ion-radio></ion-list>
       
-      <ion-item class="item item-divider">
-       Checks
-      </ion-item>
-      <ion-item class="item item-icon">
-        icons working?
-        <i class="icon ion-checkmark-circled"></i>
-      </ion-item>
-      <ion-item class="item item-thumbnail">
-        images working?<br>
-        <img width="75" src="main/assets/images/yo@2x.png">
-      </ion-item>
-      <ion-item class="item">{{ctrl.someData.binding}} <button class="button button-block button-dark" ng-click="ctrl.serviceTest()">Test Service</button></ion-item>
-      <ion-item class="item item-divider">Environment variables:</ion-item>
-      <ion-item class="item item-text-wrap">
-        <pre>{{ctrl.ENV | json}}</pre>
-      </ion-item>
-      <ion-item class="item item-divider">Build variables:</ion-item>
-      <ion-item class="item item-text-wrap">
-        <pre>{{ctrl.BUILD | json}}</pre>
-      </ion-item>
-      <ion-item class="item item-divider">Device:</ion-item>
-      <ion-item class="item item-text-wrap">
-        <pre>{{ctrl.device | json}}</pre>
-      </ion-item>
-
-      <!-- proxy -->
-      <ion-item class="item item-divider">Proxy:</ion-item>
-      <ion-item class="item item-thumbnail">
-        <button class="button button-block button-dark"
-          ng-click="ctrl.proxyTest()">
-          Test Proxy
-        </button>
-        {{ctrl.proxyState}}<br>
-        {{ctrl.proxyRequestUrl}}
-      </ion-item>
-
-    </ion-list>
+      <ion-toggle ng-model="ctrl.showChecks">Checks</ion-toggle>
+      
+      <ion-list ng-show="ctrl.showChecks">
+	      <ion-item class="item item-icon">
+	        icons working?
+	        <i class="icon ion-checkmark-circled"></i>
+	      </ion-item>
+	      <ion-item class="item item-thumbnail">
+	        images working?<br>
+	        <img width="75" src="main/assets/images/yo@2x.png">
+	      </ion-item>
+	      <ion-item class="item">{{ctrl.someData.binding}} <button class="button button-block button-dark" ng-click="ctrl.serviceTest()">Test Service</button></ion-item>
+	      <ion-item class="item item-divider">Environment variables:</ion-item>
+	      <ion-item class="item item-text-wrap">
+	        <pre>{{ctrl.ENV | json}}</pre>
+	      </ion-item>
+	      <ion-item class="item item-divider">Build variables:</ion-item>
+	      <ion-item class="item item-text-wrap">
+	        <pre>{{ctrl.BUILD | json}}</pre>
+	      </ion-item>
+	      <ion-item class="item item-divider">Device:</ion-item>
+	      <ion-item class="item item-text-wrap">
+	        <pre>{{ctrl.device | json}}</pre>
+	      </ion-item>
+	
+	      <!-- proxy -->
+	      <ion-item class="item item-divider">Proxy:</ion-item>
+	      <ion-item class="item item-thumbnail">
+	        <button class="button button-block button-dark"
+	          ng-click="ctrl.proxyTest()">
+	          Test Proxy
+	        </button>
+	        {{ctrl.proxyState}}<br>
+	        {{ctrl.proxyRequestUrl}}
+	      </ion-item>
+	  </ion-list>
 
   </ion-content>
 </ion-view>
