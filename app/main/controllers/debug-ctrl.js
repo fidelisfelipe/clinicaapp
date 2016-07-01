@@ -38,7 +38,7 @@ angular.module('main')
   this.proxyState = 'ready';
   this.proxyRequestUrl = Config.ENV.SOME_OTHER_URL + '/get';
   this.backendUri = '';
-  this.backendMethod = 'GET';
+  this.backendMethod = '';
   this.backendState = 'ready';
   this.backendRequestUrl = Config.ENV.DOMAIN_BACKEND_URL;
   this.proxyTest = function () {
@@ -90,6 +90,26 @@ angular.module('main')
     } else {
       $interval.cancel(bind.stopInterval);
     }
+  };
+  this.submit = {recurso: {nome: 'Nome', descricao: 'Descrição', actionMethod: 'GET', uri: '/test'}};
+  this.submitFormRecurso = function () {
+    FlashService.Loading(true, 'send request...');
+    $log.log('submitFormRecurso...');
+    $http({
+      url: this.backendRequestUrl + '/recursos/novo',
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: this.submit
+    }).then(function (response) {
+      $log.log(response);
+      FlashService.Loading(false);
+      FlashService.Success('response:' + JSON.stringify(response.data));
+    }.bind(this))
+      .then($timeout(function () {
+        FlashService.Loading(false);
+      }.bind(this), 6000));
   };
 
 });

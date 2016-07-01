@@ -37,10 +37,7 @@ angular.module('main')
   this.backendOnline = function () {
     $log.log('backendOnline testing...');
     bind.status = false;
-    $http({
-      method: 'GET',
-      url: Config.ENV.DOMAIN_BACKEND_URL
-    }).then(function (response) {
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL).then(function (response) {
       if (response.status === 200) {
         bind.status = true;
       } else {

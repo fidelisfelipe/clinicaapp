@@ -68,6 +68,31 @@
 	        {{ctrl.proxyRequestUrl}}
 	      </ion-item>
 	  </ion-list>
+	  
+	  <ion-toggle ng-model="ctrl.showFormPerfil">Perfil Form</ion-toggle>
+
+	  <div class="list" ng-show="ctrl.showFormPerfil">
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Name</span>
+		    <input type="text" placeholder="Name" ng-model="ctrl.recurso.nome">
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Description</span>
+		    <input type="text" placeholder="Description" ng-model="ctrl.recurso.descricao">
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Method</span>
+		    <input type="text" placeholder="GET,POST,DELETE,PUT" ng-model="ctrl.recurso.actionMethod">
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">URI</span>
+		    <input type="text" placeholder="/uri" ng-model="ctrl.recurso.uri">
+		  </label>
+    	  <button class="button button-block button-positive" ng-click="ctrl.submitFormRecurso()" >    
+	        Submit
+	      </button>
+	  </div>
+
 
   </ion-content>
 </ion-view>
