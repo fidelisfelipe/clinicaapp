@@ -19,10 +19,7 @@ angular.module('main')
   };
 
   this.features = function (callback, fail) {
-    $http({
-      method: 'GET',
-      url: Config.ENV.DOMAIN_BACKEND_URL + '/features'
-    })
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/features')
     .then(function (response) {
       if (response.status === 200) {
         callback(response.data.features);
@@ -37,7 +34,7 @@ angular.module('main')
   this.backendOnline = function () {
     $log.log('backendOnline testing...');
     bind.status = false;
-    $http.get(Config.ENV.DOMAIN_BACKEND_URL).then(function (response) {
+    $http({url: Config.ENV.DOMAIN_BACKEND_URL + '/', method: 'get', headers: {'Content-Type': 'application/json'}}).then(function (response) {
       if (response.status === 200) {
         bind.status = true;
       } else {

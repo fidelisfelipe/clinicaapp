@@ -55,7 +55,7 @@ angular.module('main')
       this.proxyState = 'ready';
     }.bind(this), 6000));
   };
-  this.data = {'features': {'items': {}, 'size': 0}};
+  this.data = {'tests': {'items': {}}, 'features': {'items': {}, 'size': 0}};
 
   //Backend
 
@@ -91,25 +91,113 @@ angular.module('main')
       $interval.cancel(bind.stopInterval);
     }
   };
-  this.submit = {recurso: {nome: 'Nome', descricao: 'Descrição', actionMethod: 'GET', uri: '/test'}};
-  this.submitFormRecurso = function () {
+  this.submit = {test: {descricao: 'Descrição'}};
+
+  this.submitFormTest = function () {
+    bind.addStatus = '';
     FlashService.Loading(true, 'send request...');
-    $log.log('submitFormRecurso...');
+    $log.log('submitFormTest...');
     $http({
-      url: this.backendRequestUrl + '/recursos/novo',
-      method: 'Post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      url: this.backendRequestUrl + '/tests/add',
+      method: 'post',
       data: this.submit
     }).then(function (response) {
       $log.log(response);
       FlashService.Loading(false);
       FlashService.Success('response:' + JSON.stringify(response.data));
+      bind.addStatus = response.status;
+      bind.listTests();
     }.bind(this))
       .then($timeout(function () {
         FlashService.Loading(false);
       }.bind(this), 6000));
   };
+  this.listTests = function () {
+    bind.addStatus = '';
+    FlashService.Loading(true, 'send request...');
+    $log.log('list Test...');
+    $http({
+      url: this.backendRequestUrl + '/tests',
+      method: 'get',
+      data: this.submit
+    }).then(function (response) {
+      $log.log(response);
+      FlashService.Loading(false);
+      FlashService.Success('response:' + JSON.stringify(response.data));
+      bind.addStatus = response.status;
 
+      if (response.status === 200) {
+        bind.data.tests.items = response.data.tests;
+      }
+
+    }.bind(this))
+      .then($timeout(function () {
+        FlashService.Loading(false);
+      }.bind(this), 6000));
+  };
+  this.removeTest = function (id) {
+    bind.addStatus = '';
+    FlashService.Loading(true, 'send request...');
+    $log.log('remove Test...');
+    $http({
+      url: this.backendRequestUrl + '/tests/' + id,
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'},
+      data: {'_method': 'delete', test: {id: id}}
+    }).then(function (response) {
+      $log.log(response);
+      FlashService.Loading(false);
+      FlashService.Success('response:' + JSON.stringify(response.data));
+      bind.addStatus = response.status;
+
+      if (response.status === 200) {
+        bind.listTests();
+      }
+    }.bind(this))
+     .then($timeout(function () {
+       FlashService.Loading(false);
+     }.bind(this), 6000));
+  };
+  this.loadUpdateTest = function (id) {
+    this.updateItem = '';
+    bind.addStatus = '';
+    FlashService.Loading(true, 'send request...');
+    $log.log('load Test...');
+    $http({
+      url: this.backendRequestUrl + '/tests/' + id,
+      method: 'get',
+      headers: {'Content-Type': 'application/json'},
+      data: {'_method': 'get', test: {id: id}}
+    }).then(function (response) {
+      $log.log(response);
+      FlashService.Loading(false);
+      FlashService.Success('response:' + JSON.stringify(response.data));
+      bind.updateItem = response.data.test;
+      $log.log(bind.updateItem.descricao);
+    }.bind(this))
+      .then($timeout(function () {
+        FlashService.Loading(false);
+      }.bind(this), 6000));
+  };
+  this.updateTest = function (id) {
+    this.updateItem = '';
+    bind.addStatus = '';
+    FlashService.Loading(true, 'send request...');
+    $log.log('update Test...');
+    $http({
+      url: this.backendRequestUrl + '/tests/' + id,
+      method: 'get',
+      headers: {'Content-Type': 'application/json'},
+      data: {'_method': 'put', test: {id: id, descricao: bind.testUpdate.descricao}}
+    }).then(function (response) {
+      $log.log(response);
+      FlashService.Loading(false);
+      FlashService.Success('response:' + JSON.stringify(response.data));
+      bind.updateItem = response.data.test;
+      $log.log(bind.updateItem.descricao);
+    }.bind(this))
+      .then($timeout(function () {
+        FlashService.Loading(false);
+      }.bind(this), 6000));
+  };
 });

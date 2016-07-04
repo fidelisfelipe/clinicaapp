@@ -69,28 +69,18 @@
 	      </ion-item>
 	  </ion-list>
 	  
-	  <ion-toggle ng-model="ctrl.showFormPerfil">Perfil Form</ion-toggle>
+	  <ion-toggle ng-model="ctrl.showFormTest">Persistence Test</ion-toggle>
 
-	  <div class="list" ng-show="ctrl.showFormPerfil">
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Name</span>
-		    <input type="text" placeholder="Name" ng-model="ctrl.recurso.nome">
-		  </label>
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Description</span>
-		    <input type="text" placeholder="Description" ng-model="ctrl.recurso.descricao">
-		  </label>
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Method</span>
-		    <input type="text" placeholder="GET,POST,DELETE,PUT" ng-model="ctrl.recurso.actionMethod">
-		  </label>
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">URI</span>
-		    <input type="text" placeholder="/uri" ng-model="ctrl.recurso.uri">
-		  </label>
-    	  <button class="button button-block button-positive" ng-click="ctrl.submitFormRecurso()" >    
-	        Submit
+	  <div class="list" ng-show="ctrl.showFormTest">
+    	  <button class="button button-block button-positive" ng-click="ctrl.submitFormTest()" 
+    	    ng-class="{'button-balanced': ctrl.addStatus === 200, 'button-assertive': ctrl.addStatus !== 200 && ctrl.addStatus !== '', 'button-positive': ctrl.addStatus === ''}">    
+	        Test Add Post
 	      </button>
+	      <button class="button button-block button-positive" ng-click="ctrl.listTests()" 
+    	    ng-class="{'button-balanced': ctrl.addStatus === 200, 'button-assertive': ctrl.addStatus !== 200 && ctrl.addStatus !== '', 'button-positive': ctrl.addStatus === ''}">    
+	        Test List
+	      </button>
+	      <ion-list ng-show="ctrl.showFormTest" ng-repeat="item in ctrl.data.tests.items" >{{item.id}} - {{item.descricao}} - {{item.data}} - {{item.atualizacao}} - <a ng-click="ctrl.removeTest('{{item.id}}')">remove</a></ion-list>
 	  </div>
 
 
