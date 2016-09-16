@@ -8,7 +8,7 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider) {
 
   // ROUTING with ui.router
-  $urlRouterProvider.otherwise('/main/list');
+  $urlRouterProvider.otherwise('/main/pacientes');
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
@@ -17,11 +17,29 @@ angular.module('main', [
       templateUrl: 'main/templates/menu.html',
       controller: 'MenuCtrl as menu'
     })
-      .state('main.list', {
-        url: '/list',
+      .state('main.tabelas', {
+        url: '/tabelas',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/list.html',
+            templateUrl: 'main/templates/tabelas.html',
+            // controller: '<someCtrl> as ctrl'
+          }
+        }
+      })
+      .state('main.hemograma', {
+        url: '/hemograma',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/hemograma.html',
+            controller: 'HemogramaCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.pacientes', {
+        url: '/pacientes',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/pacientes.html',
             // controller: '<someCtrl> as ctrl'
           }
         }
@@ -47,3 +65,18 @@ angular.module('main', [
 }).run(function ($rootScope, $state, $log, Main) {
   $rootScope.$on('$stateChangeSuccess', function () {$log.log($state.current.name === 'main.debug'); if ($state.current.name === 'main.debug') {Main.backendOnline();}});
 });
+
+angular.module('main').filter('unique', function () {
+  return function (input, key) {
+    var unique = {};
+    var uniqueList = [];
+    for (var i = 0; i < input.length; i++) {
+      if (typeof unique[input[i][key]] === 'undefined') {
+        unique[input[i][key]] = '';
+        uniqueList.push(input[i]);
+      }
+    }
+    return uniqueList;
+  };
+});
+
