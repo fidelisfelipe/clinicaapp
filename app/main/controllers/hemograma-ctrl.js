@@ -1,132 +1,109 @@
 'use strict';
 angular.module('main')
-.controller('HemogramaCtrl', function ($log, $scope, $filter) {
+.controller('HemogramaCtrl', function ($log, $scope, $filter, $rootScope,$state, Main) {
 
   $log.log('Hello from your Controller: HemogramaCtrl in module main:. This is your controller:', this);
   var bind = this;
   //recupera todos os resultados referentes ao mesmo item. ex: HEM{}
-  
-  (function init () {
-  	
-  })();
 
-  bind.siglasGeral = ['HEM', 'HB'];
-  bind.registro = null;
-  bind.registros = [
-   {'id':'1', 'data': '10/01/2016', 'sigla': bind.siglasGeral[1], 'value': Math.floor((Math.random()*99)+1)},
-   {'id':'2', 'data': '10/02/2016', 'sigla': bind.siglasGeral[0], 'value': Math.floor((Math.random()*99)+1)},
-   {'id':'3', 'data': '18/02/2016', 'sigla': bind.siglasGeral[1], 'value': Math.floor((Math.random()*99)+1)},
-   {'id':'3', 'data': '19/02/2016', 'sigla': bind.siglasGeral[0], 'value': Math.floor((Math.random()*99)+1)},
-   {'id':'3', 'data': '12/02/2016', 'sigla': bind.siglasGeral[1], 'value': Math.floor((Math.random()*99)+1)},
-   {'id':'3', 'data': '18/03/2016', 'sigla': bind.siglasGeral[0], 'value': Math.floor((Math.random()*99)+1)},
-   {'id':'3', 'data': '19/04/2016', 'sigla': bind.siglasGeral[1], 'value': Math.floor((Math.random()*99)+1)},
-   {'id':'3', 'data': '01/06/2016', 'sigla': bind.siglasGeral[1], 'value': Math.floor((Math.random()*99)+1)}
-  ];
-  bind.hemogramas = unique(bind.registros, 'id');
-  bind.datas = function () {
-  	return unique(bind.registros, 'data');
-  }
-  bind.siglas = function () {
-  	return bind.siglasGeral;
-  }
+//  (function init () {
+    bind.registro = null;
+
+    bind.siglasGeral = Main.siglasGeral();
+    bind.registros = Main.registros();
+    bind.datas = Main.datas();
+    bind.siglas = Main.siglas();
+    bind.render = Main.render();
+    bind.form = function () {$state.go('main.hemogramaAdd');};
+//  })();
+
   bind.clean = function () {
+    $log.log('clean registro...');
   	bind.registro = null;
   }
+  bind.refresh = function () {
+  $log.log('refresh...');
+      //refresh tables
+    for (var i = 0; i < bind.siglas.length; i++) {
+      bind.tests(bind.siglas[i].sigla);
+    };
+  }
+  bind.cleanList = function () {
+    $log.log('clean bind.registros...');
+    $log.log('clean bind.render...');
+    $log.log('clean $rootScope.render...');
+
+    $rootScope.render = [];
+    bind.render = [];
+    bind.registros = [];
+  }
   bind.add = function () {
-  	bind.registros.push(bind.registro);	
+    //gera id em test mas é ignorado pelo backend
+    //backend gerará uma chave segura
+  	bind.registro.id = Math.floor((Math.random()*99)+1);//TODO: deve ser removido
+  	bind.registro.data = bind.registro.dataInput;
+    bind.registros.push(bind.registro);
+    $log.log('add:', bind.registro); 
+    for (var i = 0; i < bind.siglas.length; i++) {
+      bind.tests(bind.siglas[i].sigla);
+    };
   };
   bind.newMock = function () {
-	var dataRandon = new Date();
-	dataRandon.setDate(dataRandon.getDate() + Math.random() * 3 + 1);
-	var dataRandonString = $filter('date')(dataRandon, 'dd/MM/yyyy');
-	bind.registro = {
-		'id': Math.floor((Math.random()*99)+1), 
-		'value': Math.floor((Math.random()*59)+1) , 
-		'sigla': bind.siglasGeral[Math.floor((Math.random()*2))],
-		'data': dataRandonString};
+  	var dataRandon = new Date();
+  	dataRandon.setDate(dataRandon.getDate() + Math.random() * 3 + 1);
+  	bind.registro = {
+  		'id': Math.floor((Math.random()*99)+1), 
+  		'value': Math.floor((Math.random()*59)+1) , 
+  		'sigla': bind.siglasGeral[Math.floor((Math.random()*2))],
+  		'dataInput': dataRandon};
   }
   bind.remove = function (indexRegistro) {
   	$log.log('remove registro ' + indexRegistro);
    	bind.registros.splice(indexRegistro, 1);
   }
   var countSiglas = 0;
-  bind.render = [];
   var countRender = 0;
   // a cada sigla chamo este método
   // para recuperar os seus item por sigla e data
+  $rootScope.tests = function (sigla) {return bind.tests(sigla);}
   bind.tests = function (sigla) {
   	//return
   	//controle de sigla
-  	if (countSiglas <= bind.siglas().length - 1){
+  	if (countSiglas <= bind.siglas.length - 1){
   	  var tmp = [];
   	  $log.log('tests', sigla);
   	  
         var hasRegistry;
-		for (var k = 0; k <= bind.datas().length - 1; k++) {
+        //percorro cada data para recuperar todas as datas desta sigla
+		for (var k = 0; k <= bind.datas.length - 1; k++) {
             hasRegistry = false;
 			for (var i = 0; i <= bind.registros.length - 1; i++) {
 				if (bind.registros[i].sigla === sigla
-				  		&& bind.registros[i].data === bind.datas()[k].data) {
+				  		&& bind.registros[i].data === bind.datas[k].data) {
 					$log.info('push', bind.registros[i]);
 					tmp.push(bind.registros[i]);
 				    hasRegistry = true;
 				}
 			}
+			//se a data e sigla não possui valor, a coluna fica vazia
 			if (!hasRegistry){
 		      var vazio = {'id': Math.floor((Math.random()*99)+1), 'value': '-'};
 		      tmp.push(vazio);
 		    }
 		}
-		$log.log('current tmp',tmp);
+
 		var itemRender = [];
 		for (var t = 0; t <= tmp.length - 1; t++) {
 		  itemRender.push(tmp[t]);
 		}
 		bind.render[countRender] = itemRender;
-		$log.log('current itemRender',itemRender);
+
 		countRender++;
 		countSiglas++;
 		$log.log('render ', bind.render);
 		return tmp;
     }
-    
-    
   };
-  
-  bind.listItems = function (sigla) {
- 	var tmp = [];
-  	var hasRegistry = false;
-
-  	if (countSiglas <= bind.siglas().length - 1){
-      $log.log('sigla', sigla);
-
-	  for (var k = 0; k <= bind.hemogramas.length - 1; k++) {
-		if(bind.hemogramas[k].sigla === sigla) {
-            for (var i = 0 ; i<= bind.datas().length - 1; i++) {
-		 	 
-		 	  if (bind.hemogramas[k].data === bind.datas()[i].data){
-		 	  	$log.log('push:', bind.hemogramas[k]);
-		 	  	$log.log('tmp befor: ', tmp);
-		 	  	tmp.push(JSON.stringify(bind.hemogramas[k]));
-		 	  	$log.log('tmp after: ', tmp);
-		 	  	hasRegistry = true;
-	  	        $log.info('added:', bind.hemogramas[k].sigla +' - '+ bind.hemogramas[k].data);
-		 	  }else{
-		 	  	 $log.log('no match', bind.datas()[i].data);
-		 	  }
-		 	}
-	    }
-	  }
-	  if (!hasRegistry){
-	    var vazio = {'id': Math.floor((Math.random()*99)+1), 'value': 'vazio'};
-	    tmp.push(vazio);
-	  }
-	  countSiglas++;
-	  $log.log('return: ', tmp);
-
-	  return tmp;
-    }
-  }
 
   function unique(input, key) {
     var unique = {};

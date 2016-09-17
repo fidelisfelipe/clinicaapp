@@ -1,76 +1,18 @@
 <ion-view view-title="Hemograma">
   <ion-content>
-   <h1></h1>
-    <div class="list list-inset">
-     
-     <label class="item item-input item-select">
-        <div class="input-label">
-          Item de Exame
+    <div class="button-bar">
+        <button class="button icon-right ion-plus-round positive" ng-click="ctrl.form()">Novo item</button>
+    </div>
+    <div class="row text-center" style="background: #1b68ea; color:white;">
+        <div class="col text-center icon-row">Items/Datas</div>
+        <div class="col text-center" ng-repeat="result in datas | orderBy: 'data'">{{result.data | date: 'dd/MM/yyyy'}}
         </div>
-        <select ng-model="ctrl.registro.sigla" ng-options="sigla for sigla in ctrl.siglasGeral">
-        </select>
-      </label>
-
-      <label class="item item-input item-floating-label">
-        <span class="input-label">ID</span>
-        <input type="text" placeholder="ID" ng-model="ctrl.registro.id" >
-      </label>
-
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Data</span>
-        <input type="text" placeholder="DD/MM/YYYY" ng-model="ctrl.registro.data">
-      </label>
-
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Value</span>
-        <input type="text" placeholder="Value" ng-model="ctrl.registro.value">
-      </label>  
-
-      <div class="button-bar">
-        <a class="button button-light" ng-click="ctrl.clean()">Clean</a>
-        <a class="button button-balanced" ng-click="ctrl.newMock()">Mock</a>
-        <a class="button button-positive" ng-click="ctrl.add()" ng-disabled="(ctrl.registro === null)">Add</a>
-      </div>
     </div>
 
-      <div class="row" ng-repeat="object in ctrl.registros" >
-        <div class="col">{{object.id}}</div>
-        <div class="col">{{object.sigla}}</div>
-        <div class="col">{{object.data}}</div>
-        <div class="col">{{object.value}}</div>
-        <a class="button icon ion-ios-trash-outline" ng-click="ctrl.remove($index)"></a>
+      <div class="row" ng-repeat="sigla in registros | unique: 'sigla'" ng-init="ctrl.tests(sigla.sigla)" style="background: white; color:blue;">
+        <div class="col text-center">{{sigla.sigla}}</div>
+        <div class="col text-center" ng-repeat="item in render[$index]">{{item.value}}</div>
       </div>
 
-  <div class="row header">
-    <div class="col">Items/Datas</div>
-    <div class="col" ng-repeat="result in ctrl.datas() | orderBy: 'data'">{{result.data}}</div>
-  </div>
-
-  <div class="row" ng-repeat="sigla in ctrl.registros | unique: 'sigla'" ng-init="ctrl.tests(sigla.sigla)">
-    <div class="col">{{sigla.sigla}}</div>
-    <div class="col" ng-repeat="item in ctrl.render[$index]">{{item.value}}</div>
-  </div>
-<!--
-<div class="list">
-    <table>
-        <tr>
-          <th style="border: solid">
-            ITENS/DATA
-          </th>
-          <th ng-repeat="result in ctrl.datas()" style="border: solid">
-            {{result.data}}
-          </th>
-        </tr>
-        <tr ng-repeat="item in ctrl.registros | unique: 'sigla'" ng-init="ctrl.tests(item.sigla)">
-            <td style="border: solid" >
-              {{item.sigla}}
-            </td>
-            <td style="border: solid" ng-repeat="item in ctrl.render[$index]"  >
-              {{item.value}}
-            </td>
-        </tr>
-    </table>
-</div>
--->
   </ion-content>
 </ion-view>

@@ -2,13 +2,61 @@
 angular.module('main')
 .service('Main', function ($log, $timeout, $http, $rootScope, Config) {
   var bind = this;
-  $rootScope.backendLabelTest = 'loading status backend...';
+
+  $rootScope.render = [];
+  this.siglasGeral = function () {return ['HEM', 'HB', 'HCL'];}
+
+  bind.registros = [
+     {'id':'1', 'data': '10/01/2016', 'sigla': bind.siglasGeral()[0], 'value': Math.floor((Math.random()*99)+1)},
+     {'id':'2', 'data': '10/02/2016', 'sigla': bind.siglasGeral()[1], 'value': Math.floor((Math.random()*99)+1)},
+     {'id':'3', 'data': '10/02/2016', 'sigla': bind.siglasGeral()[2], 'value': Math.floor((Math.random()*99)+1)}
+     ];
+  $rootScope.registros = bind.registros;
+
   $log.log('Hello from your Service: Main in module main');
-  // some initial data
-  this.someData = {
-    binding: 'Yes! Got that databinding working'
+
+  this.render = function () {
+    return $rootScope.render;
   };
 
+  //registros
+  this.registrosAdd = function (registro) {
+    if (registro.sigla && registro.data && registro.value) {
+      $log.log('added: ', registro);
+      registro.id = Math.floor((Math.random()*99)+1);//TODO: Remover qnd colocar o backend
+      $rootScope.registros.push(registro);
+    }
+  }
+
+  this.registros = function () {
+    return $rootScope.registros;
+  };
+  //siglas
+  this.siglas = function () {
+    var siglas = unique($rootScope.registros, 'sigla');
+    $rootScope.siglas = siglas;
+    return $rootScope.siglas;
+  };
+  //datas
+  this.datas = function () {
+    $rootScope.datas = unique($rootScope.registros, 'data');
+    return $rootScope.datas;
+  }
+
+//Util - TODO:migration for util
+  function unique(input, key) {
+    var unique = {};
+    var uniqueList = [];
+    for (var i = 0; i < input.length; i++) {
+      if (typeof unique[input[i][key]] === 'undefined') {
+        unique[input[i][key]] = '';
+        uniqueList.push(input[i]);
+      }
+    }
+    return uniqueList;
+  };
+
+//OLD REFS REST 
   this.changeBriefly = function () {
     var initialValue = this.someData.binding;
     this.someData.binding = 'Yeah Service Working!';

@@ -31,7 +31,17 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/hemograma.html',
-            controller: 'HemogramaCtrl as ctrl'
+            controller: 'HemogramaCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+      .state('main.hemogramaAdd', {
+        url: '/hemograma/add',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/hemograma-form.html',
+            controller: 'HemogramaFormCtrl as ctrl'
           }
         }
       })
@@ -44,6 +54,7 @@ angular.module('main', [
           }
         }
       })
+
       .state('main.listDetail', {
         url: '/list/detail',
         views: {
