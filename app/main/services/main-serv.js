@@ -2,10 +2,65 @@
 angular.module('main')
 .service('Main', function ($log, $timeout, $http, $rootScope, Config) {
   var bind = this;
-
+//TODO: move for Util
+  function getDataRandon () {
+    var dataRandon = new Date();
+    dataRandon.setDate(dataRandon.getDate() - Math.random() * 30000 + 1);
+    return dataRandon;
+  }
+  function getTelefoneRandon(){
+    var telefoneRandon = Math.floor((Math.random()*6199999999)+1);
+    return telefoneRandon;
+  }
   $rootScope.render = [];
+  $rootScope.estadoCivilList = ['Solteiro','Casado','Divorciado'];
+  $rootScope.sexoList = ['Masculino','Feminino'];
   this.siglasGeral = function () {return ['HEM', 'HB', 'HCL'];}
-
+  $rootScope.pacientes = [{'id': Math.floor((Math.random()*999)+3), 
+                           'nome': 'John',
+                           'responsavel': 'John Resp.',
+                           'dataNascimento': getDataRandon(),
+                           'telefone': getTelefoneRandon(),
+                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
+                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
+                           'naturalidade': 'Belo Horizonte - MG',
+                           'profissao': 'Estudante'},
+                          {'id': Math.floor((Math.random()*999)+3), 
+                           'nome': 'Bob',
+                           'responsavel': 'Bob Resp.',
+                           'dataNascimento': getDataRandon(),
+                           'telefone': getTelefoneRandon(),
+                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
+                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
+                           'naturalidade': 'Goiânia - GO',
+                           'profissao': 'Médico'},
+                          {'id': Math.floor((Math.random()*999)+3), 
+                           'nome': 'Thevis',
+                           'responsavel': 'Thevis Resp.',
+                           'dataNascimento': getDataRandon(),
+                           'telefone': getTelefoneRandon(),
+                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
+                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
+                           'naturalidade': 'Natal - RN',
+                           'profissao': 'Mecânico'},
+                          {'id': Math.floor((Math.random()*999)+3), 
+                           'nome': 'Toddy',
+                           'responsavel': 'Toddy Resp.',
+                           'dataNascimento': getDataRandon(),
+                           'telefone': getTelefoneRandon(),
+                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
+                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
+                           'naturalidade': 'Manaus - AM',
+                           'profissao': 'Engenheiro'},
+                          {'id': Math.floor((Math.random()*999)+3), 
+                           'nome': 'Bily',
+                           'responsavel': 'Bily Resp.',
+                           'dataNascimento': getDataRandon(),
+                           'telefone': getTelefoneRandon(),
+                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
+                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
+                           'naturalidade': 'Taguatinga - TO',
+                           'profissao': 'Estudante'}];
   bind.registros = [
      {'id':'1', 'data': '10/01/2016', 'sigla': bind.siglasGeral()[0], 'value': Math.floor((Math.random()*99)+1)},
      {'id':'2', 'data': '10/02/2016', 'sigla': bind.siglasGeral()[1], 'value': Math.floor((Math.random()*99)+1)},
@@ -14,6 +69,35 @@ angular.module('main')
   $rootScope.registros = bind.registros;
 
   $log.log('Hello from your Service: Main in module main');
+
+  this.addPaciente = function (novo) {
+    novo.id = Math.floor((Math.random()*999)+3);
+    $rootScope.pacientes.push(novo);
+  }
+  this.editPaciente = function (registro) {
+    for (var i = 0; i < $rootScope.pacientes.length; i++) {
+      if ($rootScope.pacientes[i].id === registro.id) {
+        $rootScope.pacientes[i] = registro;
+        return true;
+      }
+    };
+    return false;
+  }
+
+  this.getPaciente = function (pacienteId) {
+    for (var i = 0; i < $rootScope.pacientes.length; i++) { 
+      var compareId = pacienteId + '';
+      var compareIdList = $rootScope.pacientes[i].id + '';
+
+      $log.log('compare '+compareId+' === '+compareIdList+'? ', compareId === compareIdList);
+
+      if (compareId === compareIdList) {
+        $log.log('get paciente: ', $rootScope.pacientes[i]);
+        return $rootScope.pacientes[i];
+      }
+    };
+    $log.log('get paciente not found: ', pacienteId);
+  }
 
   this.render = function () {
     return $rootScope.render;

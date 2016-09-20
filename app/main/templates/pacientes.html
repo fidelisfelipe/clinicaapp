@@ -1,45 +1,25 @@
 <ion-view view-title="Pacientes">
   <ion-content>
-      <div class="button-bar">
-          <button class="button icon-right ion-plus-round positive" ng-click="ctrl.form()">Novo item</button>
-      </div>
-    <!-- content goes here -->
 
+    <div class="list">
+      <a class="item item-icon-left item-icon-right" ui-sref="main.pacienteAdd">
+        <span>Novo</span>
+        <i class="icon ion-person-add"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon" ></i>
         <input type="text" placeholder="Search" 
-        ng-init="pacientes = [{name:'John'},
-                              {name:'Mary'},
-                              {name:'Mike'},
-                              {name:'Adam'},
-                              {name:'Laura'},
-                              {name:'Bob'},
-                              {name:'Fred'},
-                              {name:'Peter'},
-                              {name:'Hunter'},
-                              {name:'Grunt'},
-                              {name:'Gulper'},
-                              {name:'Josef'},
-                              {name:'Raphael'},
-                              {name:'Lion'},
-                              {name:'Julie'},
-                              {name:'Juliette'}]" ng-model="searchText">
-                              <span class="badge badge-positive" ng-bind="pacientes.length"></span>
-
+         ng-model="searchText">
+        <span class="badge badge-positive" ng-bind="pacientes.length"></span>
       </label>
 
-
-    <ion-list>
-
-      <ion-item
-        class="item-remove-animate item-icon-right"
-        type="item-text-wrap"
-        ui-sref="main.tabelas" ng-repeat="result in pacientes | filter:searchText">
-        <h2>{{result.name}}</h2>
-        <p></p>
+      <a class="item item-icon-right" 
+       ui-sref="main.pacienteDetail({'pacienteId': result.id})" ng-repeat="result in pacientes | filter:searchText">
+        <span>{{result.id}} - {{result.nome}}</span>
         <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
-    </ion-list>
+      </a>
 
+    </div>
   </ion-content>
 </ion-view>

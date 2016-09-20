@@ -8,7 +8,7 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider) {
 
   // ROUTING with ui.router
-  $urlRouterProvider.otherwise('/main/pacientes');
+  $urlRouterProvider.otherwise('/main/home');
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
@@ -17,12 +17,59 @@ angular.module('main', [
       templateUrl: 'main/templates/menu.html',
       controller: 'MenuCtrl as menu'
     })
+    .state('main.home', {
+        url: '/home',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/home.html',
+            controller: 'HomeCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+     .state('main.pacientes', {
+        url: '/pacientes',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/pacientes.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+     .state('main.pacienteAdd', {
+        url: '/paciente/add',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-add.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+     .state('main.pacienteDetail', {
+        url: '/paciente/detail/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-detail.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+    .state('main.config', {
+        url: '/config',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/config.html',
+            controller: 'ConfigCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
       .state('main.tabelas', {
         url: '/tabelas',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/tabelas.html',
-            // controller: '<someCtrl> as ctrl'
+            controller: 'TabelaCtrl as ctrl'
           }
         }
       })
@@ -45,16 +92,6 @@ angular.module('main', [
           }
         }
       })
-      .state('main.pacientes', {
-        url: '/pacientes',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/pacientes.html',
-            // controller: '<someCtrl> as ctrl'
-          }
-        }
-      })
-
       .state('main.listDetail', {
         url: '/list/detail',
         views: {
