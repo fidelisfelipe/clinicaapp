@@ -1,8 +1,13 @@
 <ion-view view-title="Hemograma">
   <ion-content>
-    <div class="button-bar">
-        <button class="button icon-right ion-plus-round positive" ng-click="ctrl.form()">Novo item</button>
+    <div class="list">
+      <a class="item item-icon-left item-icon-right" ui-sref="main.hemogramaAdd" >
+        <span>Novo</span>
+        <i class="icon ion-person-add"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
     </div>
+
     <div class="row text-center" style="background: #1b68ea; color:white;">
         <div class="col text-center icon-row">Items/Datas</div>
         <div class="col text-center" ng-repeat="result in datas | orderBy: 'data'">{{result.data | date: 'dd/MM/yyyy'}}

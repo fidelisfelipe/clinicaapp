@@ -53,10 +53,14 @@
           <input type="text" placeholder="Profissão" ng-model="ctrl.novo.profissao">
       </label>
 
-      <div class="button-bar">
-       <button class="button icon-right ion-plus-round positive" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
-      </div>
-
+      <a class="item item-icon-left item-icon-right" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
+        <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
+        <i class="icon ion-checkmark-circled"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+    </div>
+    <div class="list">
+      
     </div>
   </ion-content>
 </ion-view>

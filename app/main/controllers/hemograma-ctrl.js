@@ -14,7 +14,7 @@ angular.module('main')
     bind.datas = Main.datas();
     bind.siglas = Main.siglas();
     bind.render = Main.render();
-    bind.form = function () {$state.go('main.hemogramaAdd');};
+
 //  })();
 
   bind.clean = function () {
