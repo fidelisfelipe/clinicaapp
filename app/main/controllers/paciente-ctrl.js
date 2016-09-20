@@ -26,19 +26,5 @@ angular.module('main')
   	FlashService.Success('Operação realizada com sucesso');
   	$state.go('main.pacientes');
   }
-  bind.mock = function () {
-  	var dataRandon = new Date();
-    dataRandon.setDate(dataRandon.getDate() + Math.random() * 3 + 1);
-  	var novo =  {
-  		'nome':'Jonny Bigood',
-  		'responsavel': 'Cristofer Yellow',
-  		'dataNascimento': dataRandon,
-  		'sexo':'Masculino',
-  		'estadoCivil':'Solteiro',
-  		'naturalidade':'Taguatinga - TO',
-  		'profissao': 'Engenheiro'
-  	};
-  	bind.novo = novo;
-  }
 
 });

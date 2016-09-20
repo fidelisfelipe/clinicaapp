@@ -40,7 +40,7 @@ angular.module('main', [
         url: '/paciente/add',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-add.html',
+            templateUrl: 'main/templates/paciente-detail.html',
             controller: 'PacienteCtrl as ctrl'
           }
         }

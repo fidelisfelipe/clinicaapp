@@ -1,13 +1,13 @@
 <ion-view view-title="Paciente">
   <ion-content>
-    <div class="list">
-      <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas">
+    <div class="list" >
+      <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas" ng-show="{{ctrl.novo.id}}">
         <span>Exames</span>
         <i class="icon ion-ios-pulse-strong"></i>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
 
-      <label class="item item-input item-floating-label">
+      <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
           <span class="input-label">ID</span>
           <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
       </label>
@@ -54,7 +54,7 @@
       </label>
 
       <div class="button-bar">
-       <button class="button icon-right ion-plus-round positive" ng-click="ctrl.novo.id === null ? ctrl.add() : ctrl.edit()">{{ctrl.novo.id === null ? 'Novo' : 'Editar'}}</button>
+       <button class="button icon-right ion-plus-round positive" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
       </div>
 
     </div>
