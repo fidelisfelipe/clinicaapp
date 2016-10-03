@@ -1,22 +1,20 @@
 'use strict';
 angular.module('main')
-.controller('HemogramaCtrl', function ($log, $scope, $filter, $rootScope,$state, Main) {
+.controller('EasCtrl', function ($log, $scope, $filter, $rootScope,$state, Data) {
 
-  $log.log('Hello from your Controller: HemogramaCtrl in module main:. This is your controller:', this);
+  $log.log('Hello from your Controller: EasCtrl in module main:. This is your controller:', this);
   var bind = this;
+
+  bind.type = 'EAS';
 
 //  (function init () {
     bind.registro = null;
-    $log.log('init table exam: hemograma ');
-    bind.siglasGeral = function () {
-      var result = Main.siglasGeral();
-      $log.log('get siglas geral of hemograma', result);
-      return result;
-    };
-    bind.registros = Main.registros();
-    bind.datas = Main.datas();
-    bind.siglas = Main.siglas();
-    bind.render = Main.render();
+
+    Data.siglasGeral(bind.type);
+    bind.registros = Data.registros(bind.type);
+    bind.datas = Data.datas(bind.type);
+    bind.siglas = Data.siglas(bind.type);
+    bind.render = Data.render();
 
 //  })();
 
@@ -57,7 +55,7 @@ angular.module('main')
   	bind.registro = {
   		'id': Math.floor((Math.random()*99)+1), 
   		'value': Math.floor((Math.random()*59)+1) , 
-  		'sigla': bind.siglasGeral[Math.floor((Math.random()*2))],
+  		'sigla': bind.siglasGeral(bind.type)[Math.floor((Math.random()*2))],
   		'dataInput': dataRandon};
   }
   bind.remove = function (indexRegistro) {

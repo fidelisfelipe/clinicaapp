@@ -7,7 +7,7 @@ angular.module('main')
     /*inject-env*/
     'SERVER_URL': 'https://DEVSERVER/api',
     'SOME_OTHER_URL': '/proxy',
-    'DOMAIN_BACKEND_URL': 'http://localhost:8080/backend-vraptor'
+    'DOMAIN_BACKEND_URL': 'http://localhost:8080/clinicabackend'
     /*endinject*/
   },
 

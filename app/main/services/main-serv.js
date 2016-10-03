@@ -1,6 +1,7 @@
 'use strict';
 angular.module('main')
 .service('Main', function ($log, $timeout, $http, $rootScope, Config) {
+  $log.log('Hello from your Service: Main in module main');
   var bind = this;
 //TODO: move for Util
   function getDataRandon () {
@@ -15,7 +16,19 @@ angular.module('main')
   $rootScope.render = [];
   $rootScope.estadoCivilList = ['Solteiro','Casado','Divorciado'];
   $rootScope.sexoList = ['Masculino','Feminino'];
-  this.siglasGeral = function () {return ['HEM', 'HB', 'HCL'];}
+  this.siglasGeral = function () {
+    //check o tipo de tabela
+
+    //recupera todas as siglas da atual tabela
+
+    //retorna todas as siglas da atual tabela
+
+    //if (type === 'HEMOGRAMA') {
+      return ['HEM', 'HB', 'HCL', 'VCM', 'HCM', 'CHCM'];
+    //} else if (type === 'EAS') {
+    //  return ['DENS', 'PH', 'ALB', 'GLIC', 'C.CETON', 'UROBIL', 'HEMOB', 'NITRITO'];
+    //}
+  }
   $rootScope.pacientes = [{'id': Math.floor((Math.random()*999)+3), 
                            'nome': 'John',
                            'responsavel': 'John Resp.',
@@ -68,7 +81,7 @@ angular.module('main')
      ];
   $rootScope.registros = bind.registros;
 
-  $log.log('Hello from your Service: Main in module main');
+
 
   this.addPaciente = function (novo) {
     novo.id = Math.floor((Math.random()*999)+3);

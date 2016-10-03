@@ -1,0 +1,24 @@
+<ion-view view-title="Tabela">
+  <ion-content>
+    <div class="list" >
+      
+      <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
+          <span class="input-label">ID</span>
+          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
+      </label>
+      <label class="item item-input item-floating-label">
+          <span class="input-label">Nome</span>
+          <input type="text" placeholder="Nome" ng-model="ctrl.novo.nome">
+      </label>
+
+      <a class="item item-icon-left item-icon-right" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
+        <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
+        <i class="icon ion-checkmark-circled"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+    </div>
+    <div class="list">
+      
+    </div>
+  </ion-content>
+</ion-view>

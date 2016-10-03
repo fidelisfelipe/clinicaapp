@@ -64,8 +64,44 @@ angular.module('main', [
           }
         }
       })
-      .state('main.tabelas', {
-        url: '/tabelas',
+      .state('main.tabelaAdd', {
+        url: '/tabela/add',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tabela-detail.html',
+            controller: 'TabelaCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.tabelaDetail', {
+        url: '/tabela/detail/:tabelaId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tabela-detail.html',
+            controller: 'TabelaCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.tabelaSearch', {
+        url: '/tabelas/search',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tabelas-search.html',
+            controller: 'TabelaCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.tabelasList', {
+        url: '/tabelas/list',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tabelas.html',
+            controller: 'TabelaCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.items', {
+        url: '/items',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/tabelas.html',
@@ -89,6 +125,16 @@ angular.module('main', [
           'pageContent': {
             templateUrl: 'main/templates/hemograma-form.html',
             controller: 'HemogramaFormCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.eas', {
+        url: '/eas',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/eas.html',
+            controller: 'EasCtrl as ctrl',
+            cache: false
           }
         }
       })
