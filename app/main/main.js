@@ -100,12 +100,30 @@ angular.module('main', [
           }
         }
       })
-      .state('main.items', {
-        url: '/items',
+      .state('main.itemSearch', {
+        url: '/itens/search',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/tabelas.html',
-            controller: 'TabelaCtrl as ctrl'
+            templateUrl: 'main/templates/itens-search.html',
+            controller: 'ItemCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.itemAdd', {
+        url: '/item/add',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/item-add.html',
+            controller: 'ItemCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.itemDetail', {
+        url: '/item/detail/:itemId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/item-detail.html',
+            controller: 'ItemCtrl as ctrl'
           }
         }
       })

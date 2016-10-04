@@ -18,9 +18,40 @@ angular.module('main')
                   {'id': 10, 'nome': 'Especialidades'},
                   {'id': 11, 'nome': 'Raio X'},
                   {'id': 12, 'nome': 'Eletrocardiogramas'}];
+
+  $rootScope.itens = [{'id': 1, 'sigla': 'HEM', 'nome': 'Hemáceas'},
+                {'id': 2, 'sigla': 'HB', 'nome': 'Hemoglobina'},
+                {'id': 3, 'sigla': 'HCT', 'nome': 'Hemoglobina Cetônicos'}];
+
   bind.add = function () {
   	FlashService.Question('Incluir novo registro?', msgSucesso);
   	bind.addSave(bind.novo);
+  }
+  bind.remove = function () {
+  	FlashService.Question('Deseja remover este registro?', function () {
+  	  var removed = remove(bind.novo.id);
+  	  $log.log('index remove: ', removed);
+      if (removed) {
+        msgSucesso();
+      } else {
+        msgErro();
+      }
+    });
+  }
+
+  function remove (id) {
+  	$log.log('remove item', $rootScope.tabelas);
+	for (var i = 0; i < $rootScope.tabelas.length; i++) { 
+      var compareId = id + '';
+      var compareIdList = $rootScope.tabelas[i].id + '';
+
+      if (compareId === compareIdList) {
+        var index = $rootScope.tabelas.indexOf($rootScope.tabelas[i]);
+        $rootScope.tabelas.splice(index, 1);
+        return true;
+      }
+    };
+    return false;
   }
 
   function msgSucesso() {

@@ -1,0 +1,33 @@
+<ion-view view-title="Item da Tabela de Exames">
+  <ion-content>
+    <div class="list" >
+      
+      <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
+          <span class="input-label">ID</span>
+          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
+      </label>
+      <label class="item item-input item-floating-label">
+          <span class="input-label">Nome</span>
+          <input type="text" placeholder="Nome" ng-model="ctrl.novo.nome">
+      </label>
+      <label class="item item-input item-floating-label">
+          <span class="input-label">Sigla</span>
+          <input type="text" placeholder="Sigla" ng-model="ctrl.novo.sigla">
+      </label>
+      <div class="button-bar">
+        <a class="button" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
+          <span></span>
+          <i class="icon ion-checkmark-circled"></i>
+          
+        </a>
+        <a ng-show="{{ctrl.novo.id}}" class="button" ng-click="ctrl.remove()">
+          <span></span>
+          <i class="icon ion-close-circled"></i>
+        </a>
+      </div>
+    </div>
+    <div class="list">
+      
+    </div>
+  </ion-content>
+</ion-view>
