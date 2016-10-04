@@ -6,6 +6,45 @@ angular.module('main')
   var bind = this;
   bind.novo = $stateParams.tabelaId? tabelaPorId($stateParams.tabelaId) : null;
 
+  bind.itensGeral = [{'id': 2, 'sigla': 'HB', 'nome': 'Hemoglobina'},
+                {'id': 3, 'sigla': 'HCT', 'nome': 'Hemoglobina Cetônicos'}];
+  bind.itensAssociados = [{'id': 1, 'sigla': 'HEM', 'nome': 'Hemáceas'}];
+
+  bind.showDelete = false;
+
+  bind.data = {
+    showDelete: false,
+    showReorder: false
+  };
+
+  bind.onItemDelete = function (item) {
+    FlashService.Question('Deseja remover este registro?', function () {
+      var index = bind.itensAssociados.indexOf(item);
+      if (index !== -1) {
+        bind.itensGeral.push(item);
+        bind.itensAssociados.splice(index, 1);          
+      } else {
+        msgErro();
+      }
+    });
+  }
+  bind.onItemAdd = function (item) {
+      FlashService.Question('Deseja vincular este registro?', function () {
+        var index = bind.itensGeral.indexOf(item);
+        if (index !== -1) {
+          bind.itensAssociados.push(item);
+          bind.itensGeral.splice(index, 1);
+        } else {
+          msgErro();
+        }
+      });
+  }
+
+  bind.moveItem = function(item, fromIndex, toIndex) {
+    bind.itensAssociados.splice(fromIndex, 1);
+    bind.itensAssociados.splice(toIndex, 0, item);
+  };
+
   $rootScope.tabelas = [{'id': 1, 'nome': 'Hemograma'},
                   {'id': 2, 'nome': 'EAS'},
                   {'id': 3, 'nome': 'Dosagens Hormonais'},
@@ -19,14 +58,31 @@ angular.module('main')
                   {'id': 11, 'nome': 'Raio X'},
                   {'id': 12, 'nome': 'Eletrocardiogramas'}];
 
-  $rootScope.itens = [{'id': 1, 'sigla': 'HEM', 'nome': 'Hemáceas'},
-                {'id': 2, 'sigla': 'HB', 'nome': 'Hemoglobina'},
-                {'id': 3, 'sigla': 'HCT', 'nome': 'Hemoglobina Cetônicos'}];
+
+
+  bind.selectedItemBind = function () {
+    if (!containsItem(bind.selectedItem.id)) {
+      bind.itensAssociados.push(bind.selectedItem);
+    }
+  }
+
+  function containsItem (id) {
+    for (var i = 0; i < bind.itensAssociados.length; i++) { 
+        var compareId = id + '';
+        var compareIdList = bind.itensAssociados[i].id + '';
+
+        if (compareId === compareIdList) {
+          return true;
+        }
+    };
+    return false;
+  }
 
   bind.add = function () {
   	FlashService.Question('Incluir novo registro?', msgSucesso);
   	bind.addSave(bind.novo);
   }
+
   bind.remove = function () {
   	FlashService.Question('Deseja remover este registro?', function () {
   	  var removed = remove(bind.novo.id);
@@ -41,15 +97,15 @@ angular.module('main')
 
   function remove (id) {
   	$log.log('remove item', $rootScope.tabelas);
-	for (var i = 0; i < $rootScope.tabelas.length; i++) { 
-      var compareId = id + '';
-      var compareIdList = $rootScope.tabelas[i].id + '';
+  	for (var i = 0; i < $rootScope.tabelas.length; i++) { 
+        var compareId = id + '';
+        var compareIdList = $rootScope.tabelas[i].id + '';
 
-      if (compareId === compareIdList) {
-        var index = $rootScope.tabelas.indexOf($rootScope.tabelas[i]);
-        $rootScope.tabelas.splice(index, 1);
-        return true;
-      }
+        if (compareId === compareIdList) {
+          var index = $rootScope.tabelas.indexOf($rootScope.tabelas[i]);
+          $rootScope.tabelas.splice(index, 1);
+          return true;
+        }
     };
     return false;
   }

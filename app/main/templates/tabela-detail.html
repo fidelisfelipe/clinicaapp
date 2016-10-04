@@ -1,7 +1,6 @@
 <ion-view view-title="Tabela">
+
   <ion-content>
-    <div class="list" >
-      
       <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
           <span class="input-label">ID</span>
           <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
@@ -22,36 +21,93 @@
       </div>
 
       <div class="item item-divider item-positive">
-        Itens Associados
+        Itens da tabela
+      </div>
+      <div class="buttons">
+        <button class="button button-icon icon ion-ios-minus-outline" 
+          ng-click="ctrl.data.showDelete = !ctrl.data.showDelete;"
+          ng-show="ctrl.itensAssociados.length > 0">
+          Remove
+        </button>
+        <button class="button button-icon icon ion-ios-plus-outline" ng-click="ctrl.data.showDelete = false; ctrl.data.showReorder = !ctrl.data.showReorder">
+          Add
+        </button>
       </div>
 
-      <a class="item item-icon-left item-icon-right" ui-sref="main.itemAdd">
-        <span>Novo</span>
-        <i class="icon ion-person-add"></i>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </a>
-      <a class="item item-icon-right" 
-       ui-sref="main.itemDetail({'itemId': result.id})" ng-repeat="result in itens | filter:searchText">
-        <span>{{result.id}} - {{result.sigla}} - {{result.nome}}</span>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </a>
+      <ion-list show-delete="ctrl.data.showDelete" show-reorder="ctrl.data.showReorder">
+
+        <ion-item ng-repeat="item in ctrl.itensAssociados" 
+                  item="item"
+                  href="#/item/{{item.id}}" class="item-remove-animate">
+          {{ item.id }} - {{ item.sigla }} - {{ item.nome }}
+          <ion-delete-button class="ion-minus-circled" 
+                             ng-click="ctrl.onItemDelete(item)">
+          </ion-delete-button>
+        </ion-item>
+
+        <div class="item item-divider item-positive">
+          Itens disponíveis
+        </div>
+
+        <ion-item ng-repeat="item in ctrl.itensGeral" 
+                  item="item"
+                  href="#/item/{{item.id}}" class="item-remove-animate">
+          {{ item.id }} - {{ item.sigla }} - {{ item.nome }}
+          <ion-reorder-button class="ion-ios-plus" ng-click="ctrl.onItemAdd(item)"></ion-reorder-button>
+        </ion-item>
+
+      </ion-list>
+<!--
+    <div class="list" >
+      
+      <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
+          <span class="input-label">ID</span>
+          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
+      </label>
+      <label class="item item-input item-floating-label">
+          <span class="input-label">Nome</span>
+          <input type="text" placeholder="Nome" ng-model="ctrl.novo.nome">
+      </label>
+      <div class="button-bar">
+        <a class="button" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
+          <span></span>
+          <i class="icon ion-checkmark-circled"></i>
+        </a>
+        <a ng-show="{{ctrl.novo.id}}" class="button" ng-click="ctrl.remove()">
+          <span></span>
+          <i class="icon ion-close-circled"></i>
+        </a>
+      </div>
+      <div class="list">
+        <div class="item item-divider item-positive">
+          Itens da Tabela
+        </div>
+       </div>
+
+      <div class="list">
+        <a class="item item-icon-right" 
+         ui-sref="main.itemDetail({'itemId': result.id})" ng-repeat="result in ctrl.itensAssociados | filter:searchText">
+          <span>{{result.id}} - {{result.sigla}} - {{result.nome}}</span>
+          <i class="icon icon-accessory"></i>
+        </a>
+      </div>
 
       <div class="item item-divider item-positive">
-        Vincular Item
+        Associar novo item
       </div>
 
       <label class="item item-input item-select">
         <div class="input-label">
           Itens
         </div>
-        <select ng-model="ctrl.itemAssociar">
-          <option ng-repeat="result in itens | filter:searchText" >{{result.sigla}} - {{result.nome}}</option>
+        <select ng-model="ctrl.selectedItem" ng-options="result as result.nome for result in ctrl.itensGeral" ng-change="ctrl.selectedItemBind()" style="width: 100%">
         </select>
       </label>
-      <a class="item" >
-        <span>{{ctrl.itemAssociar.id}} - {{ctrl.itemAssociar.sigla}} - {{ctrl.itemAssociar.nome}}</span>
+      <a class="item" ng-show="{{ctrl.selectedItem !== null}}">
+        <span>{{ctrl.selectedItem.id}} - {{ctrl.selectedItem.sigla}} - {{ctrl.selectedItem.nome}}</span>
         <i class="icon icon-accessory"></i>
       </a>
     </div>
+  -->
   </ion-content>
 </ion-view>
