@@ -1,9 +1,8 @@
 <ion-view view-title="Tabela">
 
   <ion-content>
-      <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
-          <span class="input-label">ID</span>
-          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
+      <label class="item" ng-show="{{ctrl.novo.id}}">
+          <span class="input-label">ID : {{ctrl.novo.id}}</span>
       </label>
       <label class="item item-input item-floating-label">
           <span class="input-label">Nome</span>
@@ -23,27 +22,21 @@
       <div class="item item-divider item-positive">
         Itens da tabela
       </div>
-      <div class="buttons">
-        <button class="button button-icon icon ion-ios-minus-outline" 
-          ng-click="ctrl.data.showDelete = !ctrl.data.showDelete;"
-          ng-show="ctrl.itensAssociados.length > 0">
-          Remove
-        </button>
-        <button class="button button-icon icon ion-ios-plus-outline" ng-click="ctrl.data.showDelete = false; ctrl.data.showReorder = !ctrl.data.showReorder">
-          Add
-        </button>
-      </div>
 
-      <ion-list show-delete="ctrl.data.showDelete" show-reorder="ctrl.data.showReorder">
+      <ion-list show-delete="ctrl.data.showDelete" show-reorder="ctrl.data.showAdd">
 
         <ion-item ng-repeat="item in ctrl.itensAssociados" 
                   item="item"
-                  href="#/item/{{item.id}}" class="item-remove-animate">
-          {{ item.id }} - {{ item.sigla }} - {{ item.nome }}
+                  class="item-remove-animate">
+          {{ item.sigla }} - {{ item.nome }}
           <ion-delete-button class="ion-minus-circled" 
                              ng-click="ctrl.onItemDelete(item)">
           </ion-delete-button>
         </ion-item>
+
+        <div class="item item-light" ng-show="!ctrl.itensAssociados[0]">
+          Nenhum item associado a tabela
+        </div>
 
         <div class="item item-divider item-positive">
           Itens disponíveis
@@ -51,10 +44,14 @@
 
         <ion-item ng-repeat="item in ctrl.itensGeral" 
                   item="item"
-                  href="#/item/{{item.id}}" class="item-remove-animate">
-          {{ item.id }} - {{ item.sigla }} - {{ item.nome }}
-          <ion-reorder-button class="ion-ios-plus" ng-click="ctrl.onItemAdd(item)"></ion-reorder-button>
+                  class="item-remove-animate">
+          {{ item.sigla }} - {{ item.nome }}
+          <ion-reorder-button class="ion-ios-plus" ng-click="ctrl.onItemAdd(item)">
+          </ion-reorder-button>
         </ion-item>
+        <div class="item item-light" ng-show="!ctrl.itensGeral[0]">
+          Nenhum Item Disponível
+        </div>
 
       </ion-list>
 <!--

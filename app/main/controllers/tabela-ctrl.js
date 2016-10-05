@@ -10,11 +10,9 @@ angular.module('main')
                 {'id': 3, 'sigla': 'HCT', 'nome': 'Hemoglobina Cetônicos'}];
   bind.itensAssociados = [{'id': 1, 'sigla': 'HEM', 'nome': 'Hemáceas'}];
 
-  bind.showDelete = false;
-
   bind.data = {
-    showDelete: false,
-    showReorder: false
+    showDelete: true,
+    showAdd: true
   };
 
   bind.onItemDelete = function (item) {

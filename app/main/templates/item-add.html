@@ -13,8 +13,14 @@
       </label>
 
       <div class="button-bar">
-         <button class="button icon-right ion-plus-round positive" ng-click="ctrl.add()">Novo</button>
-        </div>
+        <a class="button" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
+          <span></span>
+          <i class="icon ion-checkmark-circled"></i>
+        </a>
+        <a ng-show="{{ctrl.novo.id}}" class="button" ng-click="ctrl.remove()">
+          <span></span>
+          <i class="icon ion-close-circled"></i>
+        </a>
       </div>
 
   </ion-content>
