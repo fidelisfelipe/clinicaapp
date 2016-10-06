@@ -1,7 +1,7 @@
 <ion-view view-title="Pacientes">
   <ion-content>
 
-    <div class="list">
+    <div class="list" >
       <a class="item item-icon-left item-icon-right" ui-sref="main.pacienteAdd">
         <span>Novo</span>
         <i class="icon ion-person-add"></i>
@@ -11,11 +11,15 @@
         <i class="icon ion-search placeholder-icon" ></i>
         <input type="text" placeholder="Search" 
          ng-model="searchText">
-        <span class="badge badge-positive" ng-bind="pacientes.length"></span>
+        <span class="badge badge-positive" ng-bind="pacienteList.length"></span>
       </label>
 
+      <a class="item" ng-show="pacienteList.length === 0">
+        <span><center>Nenhum registro encontrado!</center></span>
+      </a>
+
       <a class="item item-icon-right" 
-       ui-sref="main.pacienteDetail({'pacienteId': result.id})" ng-repeat="result in pacientes | filter:searchText">
+       ui-sref="main.pacienteDetail({'pacienteId': result.id})" ng-repeat="result in pacienteList | filter:searchText | orderBy: 'id' ">
         <span>{{result.id}} - {{result.nome}}</span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>

@@ -1,10 +1,5 @@
 'use strict';
 //OO representation bussines init
-function Secretario (codigo, nome) {
-  this.codigo = codigo;
-  this.nome = nome;
-}
-
 function TipoExame(codigo, nome){
   this.codigo = codigo;
   this.nome = nome;
@@ -18,10 +13,10 @@ function Exame(codigo, nome, sigla, descricao, tipoExame){
   this.tipoExame = tipoExame;
 }
 
-function ResultadoExame(exame, data, valor){
+function ResultadoExame(exame, valor, data){
   this.exame = exame;
-  this.data = data;
   this.valor = valor;
+  this.data = data;
 }
 
 function Paciente(codido, nome, responsavel, dataNascimento, telefone, sexo, estadoCivil, naturalidade, profissao, resultadoList) {
@@ -39,20 +34,13 @@ function Paciente(codido, nome, responsavel, dataNascimento, telefone, sexo, est
   this.resultadoList = resultadoList;
 }
 
-function Empresa(codido, nome, pacienteList, medicoList, secretarioList) {
-  this.codigo = codigo;
-  this.nome = nome;
-  this.pacienteList = pacienteList;
-  this.medicoList = medicoList;
-  this.secretarioList = secretarioList;
-}
-
 function TabelaExame (tipo, siglaList, dataList, valorList) {
   this.tipo = tipo;
   this.siglaList = siglaList;//lista de siglas sem repetição - resultadoList
   this.dataList = dataList;
   this.valorList = valorList;
-}]
+}
+
 function desenharTabela(paciente, tipo){
   //deve receber o paciente
   //recuperar seus resultados
@@ -93,12 +81,13 @@ angular.module('main', [
           }
         }
       })
-     .state('main.pacientes', {
-        url: '/pacientes',
+     .state('main.pacienteSearch', {
+        url: '/paciente/search',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/pacientes.html',
-            controller: 'PacienteCtrl as ctrl'
+            templateUrl: 'main/templates/paciente-search.html',
+            controller: 'PacienteCtrl as ctrl',
+            cache: false
           }
         }
       })

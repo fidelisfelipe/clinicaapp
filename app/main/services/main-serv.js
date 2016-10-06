@@ -3,6 +3,7 @@ angular.module('main')
 .service('Main', function ($log, $timeout, $http, $rootScope, Config) {
   $log.log('Hello from your Service: Main in module main');
   var bind = this;
+
 //TODO: move for Util
   function getDataRandon () {
     var dataRandon = new Date();
@@ -29,7 +30,93 @@ angular.module('main')
     //  return ['DENS', 'PH', 'ALB', 'GLIC', 'C.CETON', 'UROBIL', 'HEMOB', 'NITRITO'];
     //}
   }
-  $rootScope.pacientes = [{'id': Math.floor((Math.random()*999)+3), 
+  this.pacientes = function (callback, fail) {
+    $log.log('init pacientes request...');
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/pacientes')
+    .then(function (response) {
+      if (response.status === 200) {
+        callback(response.data.pacienteList);
+        $log.log('pacientes request success!');
+      } else {
+         $log.log('pacientes request fail!');
+        fail();
+      }
+    }.bind(this))
+      .then($timeout(function () {
+        $log.log('end pacientes request...');
+      }.bind(this), 6000));
+  };
+
+  bind.proxyState = '';
+  this.addPaciente = function (novo, callback, fail) {
+    $log.log('init paciente add request...');
+    //$rootScope.pacientes.push(novo);
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(novo),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/add'
+    })
+    .then(function (response) {
+      $log.log('paciente add request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+      
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end paciente add request...');
+    }.bind(this), 6000));
+
+  };
+
+  this.removePaciente = function (object, callback, fail) {
+    $log.log('init paciente remove request...');
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(object),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/remove'
+    })
+    .then(function (response) {
+      $log.log('paciente remove request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end paciente remove request...');
+    }.bind(this), 6000));
+
+  };
+
+  this.getPaciente = function (id, callback, fail) {
+    $log.log('init paciente unique request...');
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/'+id)
+    .then(function (response) {
+      if (response.status === 200) {
+        callback(response.data.paciente);
+        $log.log('paciente unique request success!');
+      } else {
+         $log.log('paciente unique request fail!');
+        fail();
+      }
+    }.bind(this))
+      .then($timeout(function () {
+        $log.log('end paciente unique request...');
+      }.bind(this), 6000));
+  };
+
+  /**
+  [{'id': Math.floor((Math.random()*999)+3), 
                            'nome': 'John',
                            'responsavel': 'John Resp.',
                            'dataNascimento': getDataRandon(),
@@ -74,6 +161,7 @@ angular.module('main')
                            'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
                            'naturalidade': 'Taguatinga - TO',
                            'profissao': 'Estudante'}];
+                           **/
   bind.registros = [
      {'id':'1', 'data': '10/01/2016', 'sigla': bind.siglasGeral()[0], 'value': Math.floor((Math.random()*99)+1)},
      {'id':'2', 'data': '10/02/2016', 'sigla': bind.siglasGeral()[1], 'value': Math.floor((Math.random()*99)+1)},
@@ -81,35 +169,27 @@ angular.module('main')
      ];
   $rootScope.registros = bind.registros;
 
-
-
-  this.addPaciente = function (novo) {
-    novo.id = Math.floor((Math.random()*999)+3);
-    $rootScope.pacientes.push(novo);
-  }
-  this.editPaciente = function (registro) {
-    for (var i = 0; i < $rootScope.pacientes.length; i++) {
-      if ($rootScope.pacientes[i].id === registro.id) {
-        $rootScope.pacientes[i] = registro;
-        return true;
+  this.editPaciente = function (object, callback, fail) {
+ $log.log('init paciente edit request...');
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(object),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes'
+    })
+    .then(function (response) {
+      $log.log('paciente edit request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
       }
-    };
-    return false;
-  }
-
-  this.getPaciente = function (pacienteId) {
-    for (var i = 0; i < $rootScope.pacientes.length; i++) { 
-      var compareId = pacienteId + '';
-      var compareIdList = $rootScope.pacientes[i].id + '';
-
-      $log.log('compare '+compareId+' === '+compareIdList+'? ', compareId === compareIdList);
-
-      if (compareId === compareIdList) {
-        $log.log('get paciente: ', $rootScope.pacientes[i]);
-        return $rootScope.pacientes[i];
-      }
-    };
-    $log.log('get paciente not found: ', pacienteId);
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end paciente edit request...');
+    }.bind(this), 6000));
   }
 
   this.render = function () {

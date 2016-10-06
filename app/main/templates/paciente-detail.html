@@ -1,4 +1,4 @@
-<ion-view view-title="Pacienteeee">
+<ion-view view-title="Paciente">
   <ion-content>
     <div class="list" >
       <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas" ng-show="{{ctrl.novo.id}}">
@@ -13,8 +13,17 @@
       </label>
       <label class="item item-input item-floating-label">
           <span class="input-label">Nome</span>
-          <input type="text" placeholder="Nome" ng-model="ctrl.novo.nome">
+          <input type="text" placeholder="Nome" name="paciente.nome" ng-model="ctrl.novo.nome">
       </label>
+      <label class="item item-input item-floating-label">
+          <span class="input-label">CPF</span>
+          <input type="text" placeholder="CPF" name="paciente.cpf" ng-model="ctrl.novo.cpf">
+      </label>
+      <label class="item item-input item-floating-label">
+          <span class="input-label">RG</span>
+          <input type="text" placeholder="RG" name="paciente.rg" ng-model="ctrl.novo.rg">
+      </label>
+
       <label class="item item-input item-floating-label">
           <span class="input-label">Responsável</span>
           <input type="text" placeholder="Responsável" ng-model="ctrl.novo.responsavel">
@@ -52,12 +61,15 @@
           <span class="input-label">Profissão</span>
           <input type="text" placeholder="Profissão" ng-model="ctrl.novo.profissao">
       </label>
-
-      <a class="item item-icon-left item-icon-right" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
-        <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
-        <i class="icon ion-checkmark-circled"></i>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </a>
+      <div class="button-bar">
+        <a class="button button-positive" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
+          <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
+        </a>
+        <a class="button button-assertive" ng-click="ctrl.remove()" 
+        ng-show="ctrl.novo.id">
+          <span>Remover</span>
+        </a>
+      </div>
     </div>
     <div class="list">
       
