@@ -1,75 +1,83 @@
 <ion-view view-title="Paciente">
   <ion-content>
     <div class="list" >
+
+  <form name="formPaciente" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(formPaciente) : ctrl.add(formPaciente)">
+
       <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas" ng-show="{{ctrl.novo.id}}">
         <span>Exames</span>
         <i class="icon ion-ios-pulse-strong"></i>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
 
-      <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
+      <label class="item item-input" ng-show="{{ctrl.novo.id}}">
           <span class="input-label">ID</span>
           <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
       </label>
-      <label class="item item-input item-floating-label">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.nome.$invalid, 'no-errors' : formPaciente.nome.$valid}">
           <span class="input-label">Nome</span>
-          <input type="text" placeholder="Nome" name="paciente.nome" ng-model="ctrl.novo.nome">
+          <input type="text" placeholder="Nome" name="nome" ng-model="ctrl.novo.nome" ng-minlength="5" ng-maxlength="80" required>
       </label>
-      <label class="item item-input item-floating-label">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.cpf.$invalid, 'no-errors' : formPaciente.cpf.$valid}">
           <span class="input-label">CPF</span>
-          <input type="text" placeholder="CPF" name="paciente.cpf" ng-model="ctrl.novo.cpf">
+          <input type="text" placeholder="CPF" name="cpf" ng-model="ctrl.novo.cpf" ng-minlength="11" ng-maxlength="11" required>
       </label>
-      <label class="item item-input item-floating-label">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.rg.$invalid, 'no-errors' : formPaciente.rg.$valid}">
           <span class="input-label">RG</span>
-          <input type="text" placeholder="RG" name="paciente.rg" ng-model="ctrl.novo.rg">
+          <input type="text" placeholder="RG" name="rg" ng-model="ctrl.novo.rg" required>
       </label>
 
-      <label class="item item-input item-floating-label">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.responsavel.$invalid, 'no-errors' : formPaciente.responsavel.$valid}">
           <span class="input-label">Responsável</span>
-          <input type="text" placeholder="Responsável" ng-model="ctrl.novo.responsavel">
+          <input type="text" placeholder="Responsável" ng-model="ctrl.novo.responsavel" name="responsavel" ng-minlength="5" ng-maxlength="80" required>
       </label>
-      <label class="item item-input item-select" ng-init="sexos = ['Masculino','Feminino']">
-          <div class="input-label" width="10%">
-            Data Nascimento
-          </div>
-          <input type="date" id="date" name="date" ng-model="ctrl.novo.dataNascimento"
+      <label class="item item-input item-select" ng-init="sexos = ['Masculino','Feminino']" ng-class="{ 'has-errors' : formPaciente.dataNascimento.$invalid, 'no-errors' : formPaciente.dataNascimento.$valid}">
+          <div class="input-label" >Data Nascimento</div>
+          <input type="date" id="date" name="dataNascimento" ng-model="ctrl.novo.dataNascimento"
          placeholder="dd/MM/yyyy" min="1900-01-01" max="2050-12-30" required />
       </label>
-      <label class="item item-input item-floating-label">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.telefone.$invalid, 'no-errors' : formPaciente.telefone.$valid}">
           <span class="input-label">Telefone</span>
-          <input type="text" placeholder="Telefone" ng-model="ctrl.novo.telefone">
+          <input type="tel" placeholder="Telefone" name="telefone" ng-model="ctrl.novo.telefone" required>
       </label>
-      <label class="item item-input item-select" ng-init="">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.email.$invalid, 'no-errors' : formPaciente.email.$valid}">
+          <span class="input-label">Email</span>
+          <input type="email" placeholder="Email" name="email" ng-model="ctrl.novo.email" required>
+      </label>
+      <label class="item item-input item-select" ng-class="{ 'has-errors' : formPaciente.sexo.$invalid, 'no-errors' : formPaciente.sexo.$valid}">
         <div class="input-label" width="10%">
           Sexo
         </div>
-        <select width="90%" style="width: 90%" ng-model="ctrl.novo.sexo" ng-options="sexo for sexo in sexoList">
+        <select width="90%" style="width: 90%" ng-model="ctrl.novo.sexo" ng-options="sexo for sexo in sexoList" name="sexo">
         </select>
       </label>
-      <label class="item item-input item-select" >
+      <label class="item item-input item-select" ng-class="{ 'has-errors' : formPaciente.estadoCivil.$invalid, 'no-errors' : formPaciente.estadoCivil.$valid}">
         <div class="input-label" width="10%">
           Estado Civil
         </div>
-        <select width="90%" style="width: 90%" ng-model="ctrl.novo.estadoCivil" ng-options="estadoCivil for estadoCivil in estadoCivilList">
+        <select width="90%" style="width: 90%" name="estadoCivil" ng-model="ctrl.novo.estadoCivil" ng-options="estadoCivil for estadoCivil in estadoCivilList">
         </select>
       </label>
-      <label class="item item-input item-floating-label">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.naturalidade.$invalid, 'no-errors' : formPaciente.naturalidade.$valid}">
           <span class="input-label">Naturalidade</span>
-          <input type="text" placeholder="Naturalidade" ng-model="ctrl.novo.naturalidade">
+          <input type="text" placeholder="Naturalidade" name="naturalidade" ng-model="ctrl.novo.naturalidade">
       </label>
-      <label class="item item-input item-floating-label">
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.profissao.$invalid, 'no-errors' : formPaciente.profissao.$valid}">
           <span class="input-label">Profissão</span>
-          <input type="text" placeholder="Profissão" ng-model="ctrl.novo.profissao">
+          <input type="text" placeholder="Profissão" name="profissao" ng-model="ctrl.novo.profissao">
       </label>
       <div class="button-bar">
-        <a class="button button-positive" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
+        <button class="button button-positive" type="submit" ng-disabled="formPaciente.$invalid">
           <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
-        </a>
+        </button>
         <a class="button button-assertive" ng-click="ctrl.remove()" 
         ng-show="ctrl.novo.id">
           <span>Remover</span>
         </a>
       </div>
+
+    </form>
+
     </div>
     <div class="list">
       

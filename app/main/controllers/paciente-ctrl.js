@@ -10,28 +10,41 @@ angular.module('main')
   var count = 0;
   $rootScope.pacienteList = [];
   function refreshList() {
+    bind.novo = {};
     Main.pacientes(
       function (result) {
           $rootScope.pacienteList = result;
       }, msgErro);
   };
   refreshList();
-  bind.add = function () {
-  	FlashService.Question('Incluir novo registro?', 
-      function () {
-        Main.addPaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
-      });
+  bind.add = function (form) {
+    if (form.$valid) {
+    
+    	FlashService.Question('Incluir novo registro?', 
+        function () {
+          Main.addPaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+        });
+
+    } else {
+      return false;
+    }
+
   }
-  bind.edit = function () {
-    FlashService.Question('Alterar dados do registro?', 
-      function () {
-        Main.editPaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
-      });
+  bind.edit = function (form) {
+    if (form.$valid) {
+      FlashService.Question('Alterar dados do registro?', 
+        function () {
+          Main.editPaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+        });
+    } else {
+      return false;
+    }
+
   }
   bind.remove = function () {
     FlashService.Question('Remover este registro?', 
       function () {
-        Main.removePaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+        Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });
   };
   function msgErro() {

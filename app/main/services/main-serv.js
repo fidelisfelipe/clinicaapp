@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.service('Main', function ($log, $timeout, $http, $rootScope, Config) {
+.service('Main', function ($log, $filter, $timeout, $http, $rootScope, Config) {
   $log.log('Hello from your Service: Main in module main');
   var bind = this;
 
@@ -49,6 +49,7 @@ angular.module('main')
 
   bind.proxyState = '';
   this.addPaciente = function (novo, callback, fail) {
+    novo.dataNascimento =  castDateForBackend(novo.dataNascimento);
     $log.log('init paciente add request...');
     //$rootScope.pacientes.push(novo);
     this.proxyState = '...';
@@ -74,12 +75,12 @@ angular.module('main')
 
   };
 
-  this.removePaciente = function (object, callback, fail) {
+  this.removePaciente = function (id, callback, fail) {
     $log.log('init paciente remove request...');
     this.proxyState = '...';
     $http({
       method: 'POST',
-      data: JSON.stringify(object),
+      data: '{id:'+JSON.stringify(id)+'}',
       url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/remove'
     })
     .then(function (response) {
@@ -103,7 +104,9 @@ angular.module('main')
     $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/'+id)
     .then(function (response) {
       if (response.status === 200) {
-        callback(response.data.paciente);
+        var paciente = response.data.paciente;
+        paciente.dataNascimento = new Date(paciente.dataNascimento);
+        callback(paciente);
         $log.log('paciente unique request success!');
       } else {
          $log.log('paciente unique request fail!');
@@ -115,53 +118,9 @@ angular.module('main')
       }.bind(this), 6000));
   };
 
-  /**
-  [{'id': Math.floor((Math.random()*999)+3), 
-                           'nome': 'John',
-                           'responsavel': 'John Resp.',
-                           'dataNascimento': getDataRandon(),
-                           'telefone': getTelefoneRandon(),
-                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
-                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
-                           'naturalidade': 'Belo Horizonte - MG',
-                           'profissao': 'Estudante'},
-                          {'id': Math.floor((Math.random()*999)+3), 
-                           'nome': 'Bob',
-                           'responsavel': 'Bob Resp.',
-                           'dataNascimento': getDataRandon(),
-                           'telefone': getTelefoneRandon(),
-                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
-                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
-                           'naturalidade': 'Goiânia - GO',
-                           'profissao': 'Médico'},
-                          {'id': Math.floor((Math.random()*999)+3), 
-                           'nome': 'Thevis',
-                           'responsavel': 'Thevis Resp.',
-                           'dataNascimento': getDataRandon(),
-                           'telefone': getTelefoneRandon(),
-                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
-                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
-                           'naturalidade': 'Natal - RN',
-                           'profissao': 'Mecânico'},
-                          {'id': Math.floor((Math.random()*999)+3), 
-                           'nome': 'Toddy',
-                           'responsavel': 'Toddy Resp.',
-                           'dataNascimento': getDataRandon(),
-                           'telefone': getTelefoneRandon(),
-                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
-                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
-                           'naturalidade': 'Manaus - AM',
-                           'profissao': 'Engenheiro'},
-                          {'id': Math.floor((Math.random()*999)+3), 
-                           'nome': 'Bily',
-                           'responsavel': 'Bily Resp.',
-                           'dataNascimento': getDataRandon(),
-                           'telefone': getTelefoneRandon(),
-                           'sexo': $rootScope.sexoList[Math.floor((Math.random()*1))],
-                           'estadoCivil': $rootScope.estadoCivilList[Math.floor((Math.random()*2))],
-                           'naturalidade': 'Taguatinga - TO',
-                           'profissao': 'Estudante'}];
-                           **/
+  function castDateForBackend (data) {
+    return $filter('date')(data,"yyyy-MM-dd'T'HH:mm:ssZ");
+  }
   bind.registros = [
      {'id':'1', 'data': '10/01/2016', 'sigla': bind.siglasGeral()[0], 'value': Math.floor((Math.random()*99)+1)},
      {'id':'2', 'data': '10/02/2016', 'sigla': bind.siglasGeral()[1], 'value': Math.floor((Math.random()*99)+1)},
@@ -170,7 +129,9 @@ angular.module('main')
   $rootScope.registros = bind.registros;
 
   this.editPaciente = function (object, callback, fail) {
- $log.log('init paciente edit request...');
+  object.dataNascimento =  castDateForBackend(object.dataNascimento);
+
+  $log.log('init paciente edit request...');
     this.proxyState = '...';
     $http({
       method: 'POST',

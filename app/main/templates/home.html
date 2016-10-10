@@ -1,4 +1,15 @@
 <ion-view view-title="Home">
   <ion-content>
+
+	<div class="list">
+
+	  <a class="item item-icon-left" ui-sref="main.pacienteSearch">
+	    <i class="icon ion-person-stalker"></i>
+	    Pacientes
+	    <span class="badge badge-positive" ng-controller="PacienteCtrl as pacienteCtrl">{{pacienteList.length}}</span>
+	  </a>
+
+	</div>
+
   </ion-content>
 </ion-view>
