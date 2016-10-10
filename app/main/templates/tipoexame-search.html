@@ -1,0 +1,32 @@
+<ion-view view-title="Tipo de Exame">
+  <ion-content>
+
+    <div class="list" >
+      <a class="item item-icon-left item-icon-right" ui-sref="main.tipoExameAdd">
+        <span>Novo</span>
+        <i class="icon ion-person-add"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon" ></i>
+        <input type="text" placeholder="Search" 
+         ng-model="searchText">
+        <span class="badge badge-positive" ng-bind="tipoExameList.length"></span>
+      </label>
+
+      <a class="item" ng-show="tipoExameList.length === 0">
+        <span><center>Nenhum registro encontrado!</center></span>
+      </a>
+
+      <a class="item item-icon-right" 
+       ui-sref="main.tipoExameDetail({'tipoExameId': result.id})" ng-repeat="result in tipoExameList | filter:searchText | orderBy: 'id' ">
+        <span>{{result.id}} - {{result.nome}}</span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+
+    </div>
+    <div class="list" >
+    </div>
+  </ion-content>
+</ion-view>

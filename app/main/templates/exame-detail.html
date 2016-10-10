@@ -1,0 +1,43 @@
+<ion-view view-title="Exame">
+  <ion-content>
+    <div class="list" >
+
+  <form name="formPaciente" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(formPaciente) : ctrl.add(formPaciente)">
+
+      <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas" ng-show="{{ctrl.novo.id}}">
+        <span>Exames</span>
+        <i class="icon ion-ios-pulse-strong"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+
+      <label class="item item-input" ng-show="{{ctrl.novo.id}}">
+          <span class="input-label">ID</span>
+          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
+      </label>
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.nome.$invalid, 'no-errors' : formPaciente.nome.$valid}">
+          <span class="input-label">Nome</span>
+          <input type="text" placeholder="Nome" name="nome" ng-model="ctrl.novo.nome" ng-minlength="5" ng-maxlength="80" required>
+      </label>
+      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.sigla.$invalid, 'no-errors' : formPaciente.sigla.$valid}">
+          <span class="input-label">Sigla</span>
+          <input type="text" placeholder="Sigla" name="sigla" ng-model="ctrl.novo.sigla" ng-minlength="1" ng-maxlength="6" required>
+      </label>
+      
+      <div class="button-bar">
+        <button class="button button-positive" type="submit" ng-disabled="formPaciente.$invalid">
+          <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
+        </button>
+        <a class="button button-assertive" ng-click="ctrl.remove()" 
+        ng-show="ctrl.novo.id">
+          <span>Remover</span>
+        </a>
+      </div>
+
+    </form>
+
+    </div>
+    <div class="list">
+      
+    </div>
+  </ion-content>
+</ion-view>

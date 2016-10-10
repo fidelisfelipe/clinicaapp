@@ -8,6 +8,16 @@
 	    Pacientes
 	    <span class="badge badge-positive" ng-controller="PacienteCtrl as pacienteCtrl">{{pacienteList.length}}</span>
 	  </a>
+	  <a class="item item-icon-left" ui-sref="main.exameSearch">
+	    <i class="icon ion-person-stalker"></i>
+	    Exame
+	    <span class="badge badge-positive" ng-controller="ExameCtrl as exameCtrl">{{exameList.length}}</span>
+	  </a>
+	  <a class="item item-icon-left" ui-sref="main.tipoExameSearch">
+	    <i class="icon ion-person-stalker"></i>
+	    Tipo de Exame
+	    <span class="badge badge-positive" ng-controller="TipoExameCtrl as tipoExameCtrl">{{tipoExameList.length}}</span>
+	  </a>
 
 	</div>
 

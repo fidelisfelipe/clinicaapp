@@ -1,28 +1,28 @@
 'use strict';
 angular.module('main')
-.controller('PacienteCtrl', function ($log, $state, $stateParams, $rootScope, Main, FlashService) {
+.controller('ExameCtrl', function ($log, $state, $stateParams, $rootScope, Main, FlashService) {
 
-  $log.log('Hello from your Controller: PacienteCtrl in module main:. This is your controller:', this);
+  $log.log('Hello from your Controller: ExameCtrl in module main:. This is your controller:', this);
   var bind = this;
-  bind.novo = $stateParams.pacienteId ? Main.getPaciente($stateParams.pacienteId, function (result) {
+  bind.novo = $stateParams.exameId ? Main.getExame($stateParams.exameId, function (result) {
     bind.novo = result;
   }, msgErro) : {};
   var count = 0;
-  $rootScope.pacienteList = [];
+  $rootScope.exameList = [];
   function refreshList() {
     bind.novo = {};
-    Main.pacientes(
+    Main.exames(
       function (result) {
-          $rootScope.pacienteList = result;
-      }, msgErroLoadPacientes);
+          $rootScope.exameList = result;
+      }, msgErroLoadExames);
   };
   refreshList();
   bind.add = function (form) {
     if (form.$valid) {
     
-    	FlashService.Question('Incluir novo registro?', 
+      FlashService.Question('Incluir novo registro?', 
         function () {
-          Main.addPaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+          Main.addExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
         });
 
     } else {
@@ -33,7 +33,7 @@ angular.module('main')
     if (form.$valid) {
       FlashService.Question('Alterar dados do registro?', 
         function () {
-          Main.editPaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+          Main.editExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
         });
     } else {
       return false;
@@ -43,22 +43,22 @@ angular.module('main')
   bind.remove = function () {
     FlashService.Question('Remover este registro?', 
       function () {
-        Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
+        Main.removeExame(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });
   };
   function msgErro() {
     FlashService.Error('Não foi possivel editar o registro...');
   }
-  function msgErroLoadPacientes() {
+  function msgErroLoadExames() {
     FlashService.Error('Não foi possivel acessar os dados!');
   }
   function msgSucesso() {
-  	FlashService.Success('Operação realizada com sucesso');
-  	$state.go('main.pacienteSearch');
+    FlashService.Success('Operação realizada com sucesso');
+    $state.go('main.exameSearch');
   }
   function msgAddSucess() {
     FlashService.Success('Operação realizada com sucesso');
-    $state.go('main.pacienteSearch');
+    $state.go('main.exameSearch');
   }
 
 });

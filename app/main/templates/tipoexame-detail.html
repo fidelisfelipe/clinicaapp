@@ -1,0 +1,39 @@
+<ion-view view-title="Tipo de Exame">
+  <ion-content>
+    <div class="list" >
+
+  <form name="form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
+
+      <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas" ng-show="{{ctrl.novo.id}}">
+        <span>Tipo de Exame</span>
+        <i class="icon ion-ios-pulse-strong"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+
+      <label class="item item-input" ng-show="{{ctrl.novo.id}}">
+          <span class="input-label">ID</span>
+          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
+      </label>
+      <label class="item item-input" ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}">
+          <span class="input-label">Nome</span>
+          <input type="text" placeholder="Nome" name="nome" ng-model="ctrl.novo.nome" ng-minlength="2" ng-maxlength="80" required>
+      </label>
+      
+      <div class="button-bar">
+        <button class="button button-positive" type="submit" ng-disabled="form.$invalid">
+          <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
+        </button>
+        <a class="button button-assertive" ng-click="ctrl.remove()" 
+        ng-show="ctrl.novo.id">
+          <span>Remover</span>
+        </a>
+      </div>
+
+    </form>
+
+    </div>
+    <div class="list">
+      
+    </div>
+  </ion-content>
+</ion-view>

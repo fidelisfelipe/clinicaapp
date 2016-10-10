@@ -101,6 +101,62 @@ angular.module('main', [
           }
         }
       })
+      .state('main.exameSearch', {
+        url: '/exame/search',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/exame-search.html',
+            controller: 'ExameCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+     .state('main.exameAdd', {
+        url: '/exame/add',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/exame-detail.html',
+            controller: 'ExameCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.exameDetail', {
+        url: '/exame/detail/:exameId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/exame-detail.html',
+            controller: 'ExameCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.tipoExameSearch', {
+        url: '/tipoexame/search',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tipoexame-search.html',
+            controller: 'TipoExameCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+     .state('main.tipoExameAdd', {
+        url: '/tipoexame/add',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tipoexame-detail.html',
+            controller: 'TipoExameCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.tipoExameDetail', {
+        url: '/tipoexame/detail/:tipoExameId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tipoexame-detail.html',
+            controller: 'TipoExameCtrl as ctrl'
+          }
+        }
+      })
      .state('main.pacienteDetail', {
         url: '/paciente/detail/:pacienteId',
         views: {
@@ -110,6 +166,7 @@ angular.module('main', [
           }
         }
       })
+
     .state('main.config', {
         url: '/config',
         views: {
@@ -230,8 +287,25 @@ angular.module('main', [
           }
         }
       });
-}).run(function ($rootScope, $state, $log, Main) {
+}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, Main) {
   $rootScope.$on('$stateChangeSuccess', function () {$log.log($state.current.name === 'main.debug'); if ($state.current.name === 'main.debug') {Main.backendOnline();}});
+
+  $ionicPlatform.ready(function() {
+      if(window.Connection) {
+          if(navigator.connection.type == Connection.NONE) {
+              $ionicPopup.confirm({
+                  title: "Internet Disconnected",
+                  content: "The internet is disconnected on your device."
+              })
+              .then(function(result) {
+                  if(!result) {
+                      ionic.Platform.exitApp();
+                  }
+              });
+          }
+      }
+  });
+
 });
 
 angular.module('main').filter('unique', function () {
@@ -247,4 +321,3 @@ angular.module('main').filter('unique', function () {
     return uniqueList;
   };
 });
-

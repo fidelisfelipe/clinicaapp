@@ -41,11 +41,227 @@ angular.module('main')
          $log.log('pacientes request fail!');
         fail();
       }
+    }).catch(function (res) {
+      fail();
     }.bind(this))
       .then($timeout(function () {
         $log.log('end pacientes request...');
       }.bind(this), 6000));
   };
+
+  this.exames = function (callback, fail) {
+    $log.log('init exames request...');
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/exames')
+    .then(function (response) {
+      if (response.status === 200) {
+        callback(response.data.exameList);
+        $log.log('exames request success!');
+      } else {
+         $log.log('exames request fail!');
+        fail();
+      }
+    }).catch(function (res) {
+      fail();
+    }.bind(this))
+      .then($timeout(function () {
+        $log.log('end exames request...');
+      }.bind(this), 6000));
+  }
+  this.addExame = function (novo, callback, fail) {
+    //TODO: backend rest
+    novo.dataNascimento =  castDateForBackend(novo.dataNascimento);
+    $log.log('init exame add request...');
+    //$rootScope.exames.push(novo);
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(novo),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/exames/add'
+    })
+    .then(function (response) {
+      $log.log('exame add request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+      
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end exame add request...');
+    }.bind(this), 6000));
+  }
+  this.removeExame = function (id, callback, fail) {
+    $log.log('init exame remove request...');
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: '{id:'+JSON.stringify(id)+'}',
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/exames/remove'
+    })
+    .then(function (response) {
+      $log.log('exame remove request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end exame remove request...');
+    }.bind(this), 6000));
+  }
+  this.getExame = function (id, callback, fail) {
+    $log.log('init exame unique request...');
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/exames/'+id)
+    .then(function (response) {
+      if (response.status === 200) {
+        var exame = response.data.exame;
+        callback(exame);
+        $log.log('exame unique request success!');
+      } else {
+         $log.log('exame unique request fail!');
+        fail();
+      }
+    }.bind(this))
+      .then($timeout(function () {
+        $log.log('end exame unique request...');
+      }.bind(this), 6000));
+  };
+  this.editExame = function (object, callback, fail) {
+
+  $log.log('init exame edit request...');
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(object),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/exames'
+    })
+    .then(function (response) {
+      $log.log('exame edit request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end exame edit request...');
+    }.bind(this), 6000));
+  }
+
+  this.tipoExames = function (callback, fail) {
+    $log.log('init tipoexames request...');
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames')
+    .then(function (response) {
+      if (response.status === 200) {
+        callback(response.data.tipoExameList);
+        $log.log('tipoexames request success!');
+      } else {
+         $log.log('tipoexames request fail!');
+        fail();
+      }
+    }).catch(function (res) {
+      fail();
+    }.bind(this))
+      .then($timeout(function () {
+        $log.log('end tipoexames request...');
+      }.bind(this), 6000));
+  }
+  this.addTipoExame = function (novo, callback, fail) {
+
+    $log.log('init tipoexame add request...');
+    //$rootScope.exames.push(novo);
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(novo),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames/add'
+    })
+    .then(function (response) {
+      $log.log('tipoexame add request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+      
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end tipoexame add request...');
+    }.bind(this), 6000));
+  }
+  this.removeTipoExame = function (id, callback, fail) {
+    $log.log('init tipoexame remove request...');
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: '{id:'+JSON.stringify(id)+'}',
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames/remove'
+    })
+    .then(function (response) {
+      $log.log('tipoexame remove request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end tipoexame remove request...');
+    }.bind(this), 6000));
+  }
+  this.getTipoExame = function (id, callback, fail) {
+    $log.log('init tipoexame unique request...');
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames/'+id)
+    .then(function (response) {
+      if (response.status === 200) {
+        var exame = response.data.tipoExame;
+        callback(exame);
+        $log.log('tipoexame unique request success!');
+      } else {
+         $log.log('tipoexame unique request fail!');
+        fail();
+      }
+    }.bind(this))
+      .then($timeout(function () {
+        $log.log('end tipoexame unique request...');
+      }.bind(this), 6000));
+  };
+  this.editTipoExame = function (object, callback, fail) {
+
+  $log.log('init tipoexame edit request...');
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(object),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames'
+    })
+    .then(function (response) {
+      $log.log('tipoexame edit request success!');
+      this.proxyState = 'success (result printed to browser console)';
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+    }.bind(this))
+    .then($timeout(function () {
+      this.proxyState = 'ready';
+      $log.log('end tipoexame edit request...');
+    }.bind(this), 6000));
+  }
+
 
   bind.proxyState = '';
   this.addPaciente = function (novo, callback, fail) {
