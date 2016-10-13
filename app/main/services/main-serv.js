@@ -67,6 +67,24 @@ angular.module('main')
         $log.log('end exames request...');
       }.bind(this), 6000));
   }
+  this.examesPaciente = function (pacienteId, callback, fail) {
+    $log.log('init exames by paciente '+pacienteId+' request...');
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/exames')//TODO: add backend rest
+    .then(function (response) {
+      if (response.status === 200) {
+        callback(response.data.exameList);
+        $log.log('exames by paciente request success!');
+      } else {
+         $log.log('exames by paciente request fail!');
+        fail();
+      }
+    }).catch(function (res) {
+      fail();
+    }.bind(this))
+      .then($timeout(function () {
+        $log.log('end exames request...');
+      }.bind(this), 6000));
+  }
   this.addExame = function (novo, callback, fail) {
     //TODO: backend rest
     novo.dataNascimento =  castDateForBackend(novo.dataNascimento);

@@ -101,6 +101,24 @@ angular.module('main', [
           }
         }
       })
+     .state('main.pacienteDetail', {
+        url: '/paciente/detail/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-detail.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+     .state('main.pacienteExames', {
+        url: '/paciente/exames/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-exames-detail.html',
+            controller: 'PacienteExameCtrl as ctrl'
+          }
+        }
+      })
       .state('main.exameSearch', {
         url: '/exame/search',
         views: {
@@ -157,15 +175,7 @@ angular.module('main', [
           }
         }
       })
-     .state('main.pacienteDetail', {
-        url: '/paciente/detail/:pacienteId',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/paciente-detail.html',
-            controller: 'PacienteCtrl as ctrl'
-          }
-        }
-      })
+     
 
     .state('main.config', {
         url: '/config',
@@ -210,33 +220,6 @@ angular.module('main', [
           'pageContent': {
             templateUrl: 'main/templates/tabelas.html',
             controller: 'TabelaCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.itemSearch', {
-        url: '/itens/search',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/itens-search.html',
-            controller: 'ItemCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.itemAdd', {
-        url: '/item/add',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/item-add.html',
-            controller: 'ItemCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.itemDetail', {
-        url: '/item/detail/:itemId',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/item-detail.html',
-            controller: 'ItemCtrl as ctrl'
           }
         }
       })
