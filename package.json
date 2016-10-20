@@ -105,6 +105,9 @@
   },
   "cordovaPlugins": [],
   "cordovaPlatforms": [
-    "android"
+    {
+      "platform": "android",
+      "locator": "browser"
+    }
   ]
 }

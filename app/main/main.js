@@ -270,10 +270,115 @@ angular.module('main', [
           }
         }
       });
-}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, Main) {
-  $rootScope.$on('$stateChangeSuccess', function () {$log.log($state.current.name === 'main.debug'); if ($state.current.name === 'main.debug') {Main.backendOnline();}});
+}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, ConnectivityMonitor) {
+  $rootScope.appLoaded = false;
 
   $ionicPlatform.ready(function() {
+
+    $log.log('init app...');
+
+    $rootScope.appStatusView = 'Iniciando...';
+
+    $log.log('Platform online network: ' + navigator.onLine);
+    $log.log('Platform name:', ionic.Platform.platform());
+    $log.log('Platform version:', ionic.Platform.version());
+    $log.log('Platform isWebView:', ionic.Platform.isWebView());
+    $log.log('Platform isAndroid:', ionic.Platform.isAndroid());
+
+    Main.isOnline(function (isOnline) {
+      $rootScope.isOnline = isOnline;
+      $log.log('Main.isOnline:', $rootScope.isOnline);
+    });
+
+    $rootScope.appLoaded = true;
+    $rootScope.appStatusView = "Pronto!";
+  });
+
+}); 
+
+/**
+      $rootScope.isWebView = ionic.Platform.isWebView();
+      $rootScope.isAndroid = ionic.Platform.isAndroid();
+
+      $rootScope.currentPlatform = ionic.Platform.platform();
+      $rootScope.currentPlatformVersion = ionic.Platform.version();
+
+      $log.log('init app...');
+      $log.log('Platform isWebView:',   $rootScope.isWebView);
+      $log.log('Platform isAndroid:',   $rootScope.isAndroid);
+
+      $log.log('Platform Device current: ' +
+        $rootScope.currentPlatform +
+        ' version: ' +
+        $rootScope.currentPlatformVersion); 
+      $log.log('Platform isAndroid:',   $rootScope.isAndroid);
+      //check backend status init
+      $rootScope.backendStatus;
+      $rootScope.backendOnline = false;
+      $rootScope.backendOffline = true;
+      $rootScope.appLoading = true;
+      $rootScope.appLoaded = false;
+      $rootScope.appStatusView = 'Iniciando...';
+      $rootScope.appStatusValue = 10;
+
+      $rootScope.hideLoading = function() {
+         $rootScope.loading.hide();
+      }
+      $rootScope.showLoading = function(message) {
+          var message = message || "Chargement";
+
+          // Show the loading overlay and text
+          $rootScope.loading = $ionicLoading.show({
+
+            // The text to display in the loading indicator
+             template: '<i class=" ion-loading-c"></i> '+ message,
+
+            // The animation to use
+            animation: 'fade-in',
+
+            // Will a dark overlay or backdrop cover the entire view
+            showBackdrop: true,
+
+            // The maximum width of the loading indicator
+            // Text will be wrapped if longer than maxWidth
+            maxWidth: 200,
+
+            // The delay in showing the indicator
+            showDelay: 0
+          });
+      };
+
+      $rootScope.showLoading('Iniciando...');
+
+      Main.backendStatus(function (status) {
+        $rootScope.backendStatus = status;
+        $log.log('Backend status: ', $rootScope.backendStatus);
+        $rootScope.appStatusValue = 50;
+
+        if ($rootScope.backendStatus === 200) {
+            $rootScope.backendOnline = true;
+            $rootScope.appLoaded = true;
+            $rootScope.appStatusView = 'Pronto!';
+            $rootScope.hideLoading();
+        }
+
+        if ($rootScope.backendStatus === 'ERR_CONNECTION_REFUSED') {
+           $rootScope.backendOffline = true;
+            $ionicPopup.alert({
+                title: "Backend Disconnected",
+                content: "The server is disconnected on your device."
+            });
+            $rootScope.appStatusView = 'Dados não sincronizados.';
+            $rootScope.appLoaded = true;
+            $rootScope.hideLoading();
+        }
+
+        $rootScope.appStatusValue = 100;
+        
+      });
+
+      //check backend status end
+
       if(window.Connection) {
           if(navigator.connection.type == Connection.NONE) {
               $ionicPopup.confirm({
@@ -285,10 +390,56 @@ angular.module('main', [
                       ionic.Platform.exitApp();
                   }
               });
+          } else {
+            alert('isUnknown() ' + (navigator.connection.type === 'unknown'));
           }
       }
-  });
 
+  });
+**/
+
+
+angular.module('main').factory('ConnectivityMonitor', function($rootScope, $cordovaNetwork){
+ 
+  return {
+    isOnline: function(){
+      if(ionic.Platform.isWebView()){
+        return $cordovaNetwork.isOnline();    
+      } else {
+        return navigator.onLine;
+      }
+    },
+    isOffline: function(){
+      if(ionic.Platform.isWebView()){
+        return !$cordovaNetwork.isOnline();    
+      } else {
+        return !navigator.onLine;
+      }
+    },
+    startWatching: function(){
+        if(ionic.Platform.isWebView()){
+ 
+          $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+            console.log("went online");
+          });
+ 
+          $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+            console.log("went offline");
+          });
+ 
+        }
+        else {
+ 
+          window.addEventListener("online", function(e) {
+            console.log("went online");
+          }, false);    
+ 
+          window.addEventListener("offline", function(e) {
+            console.log("went offline");
+          }, false);  
+        }       
+    }
+  }
 });
 
 angular.module('main').filter('unique', function () {

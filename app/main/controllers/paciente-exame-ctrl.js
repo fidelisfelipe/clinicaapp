@@ -9,13 +9,7 @@ angular.module('main')
     bind.novo = result;
   }, msgErro) : {};
   bind.exameList = [];
-  function refreshList() {
-    Main.exames(
-      function (result) {
-          bind.exameList = result;
-      }, msgErro);
-  };
-  refreshList();
+
   bind.itensAssociados = [];
   function loadExamesPaciente(id) {
     Main.examesPaciente(id, 
@@ -24,8 +18,24 @@ angular.module('main')
       }, msgErro);
   };
   loadExamesPaciente($stateParams.pacienteId);
+
+  function refreshList() {
+    Main.examesPaciente($stateParams.pacienteId,
+      function (result) {
+          bind.exameList = result;
+
+          //lista de exames do paciente
+
+          //lista de exames geral
+
+
+
+      }, msgErro);
+  };
+  refreshList();
+
   bind.data = {
-    showDelete: true,
+    showDelete: false,
     showAdd: true
   };
 

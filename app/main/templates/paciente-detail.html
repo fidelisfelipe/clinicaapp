@@ -1,13 +1,19 @@
 <ion-view view-title="Paciente">
   <ion-content>
+      
     <div class="list" >
+	    <a class="item item-icon-left item-icon-right" ng-click="ctrl.showDataForm = !ctrl.showDataForm;">
+          <i class="icon ion-ios-pulse"></i>
+          Dados
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </a>
         <a class="item item-icon-left item-icon-right" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
           <i class="icon ion-ios-pulse"></i>
           Exames
           <i class="icon ion-chevron-right icon-accessory"></i>
         </a>
     
-  <form name="formPaciente" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(formPaciente) : ctrl.add(formPaciente)">
+  <form name="formPaciente" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(formPaciente) : ctrl.add(formPaciente)" ng-show="ctrl.showDataForm">
 
       <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas" ng-show="{{ctrl.novo.id}}">
         <span>Exames</span>

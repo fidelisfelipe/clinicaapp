@@ -1,21 +1,24 @@
 <ion-view view-title="Exames">
 
   <ion-content>
-
-    <div class="list" >
-
-      <label class="item item-input" ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}">
+      <label class="item item-input" ng-show="{{ctrl.novo.id}}">
           <span class="input-label">Nome: {{ctrl.novo.nome}}</span>
       </label>
-
+    
+    <div class="button-bar">	  
+	   
+       <button class="button button-positive">7 Resultados</button>
+      <button class="button icon ion-android-options"></button>
+      <button class="button icon ion-eye"></button>
     </div>
+
 
 
       <ion-list show-delete="ctrl.data.showDelete" show-reorder="ctrl.data.showAdd">
         <div class="item item-divider item-positive">
           Exames
         </div>
-        <ion-item ng-repeat="item in ctrl.itensAssociados" 
+        <ion-item ng-repeat="item in ctrl.itensAssociados | orderBy: 'id'" 
                   item="item"
                   class="item-remove-animate">
           {{ item.nome }}
@@ -32,7 +35,7 @@
           Exames Disponíveis
         </div>
 
-        <ion-item ng-repeat="item in ctrl.exameList" 
+        <ion-item ng-repeat="item in ctrl.exameList | orderBy: 'id'" 
                   item="item"
                   class="item-remove-animate">
           {{ item.nome }}
@@ -44,57 +47,6 @@
         </div>
 
       </ion-list>
-<!--
-    <div class="list" >
-      
-      <label class="item item-input item-floating-label" ng-show="{{ctrl.novo.id}}">
-          <span class="input-label">ID</span>
-          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
-      </label>
-      <label class="item item-input item-floating-label">
-          <span class="input-label">Nome</span>
-          <input type="text" placeholder="Nome" ng-model="ctrl.novo.nome">
-      </label>
-      <div class="button-bar">
-        <a class="button" ng-click="ctrl.novo.id ? ctrl.edit() : ctrl.add()">
-          <span></span>
-          <i class="icon ion-checkmark-circled"></i>
-        </a>
-        <a ng-show="{{ctrl.novo.id}}" class="button" ng-click="ctrl.remove()">
-          <span></span>
-          <i class="icon ion-close-circled"></i>
-        </a>
-      </div>
-      <div class="list">
-        <div class="item item-divider item-positive">
-          Itens da Tabela
-        </div>
-       </div>
 
-      <div class="list">
-        <a class="item item-icon-right" 
-         ui-sref="main.itemDetail({'itemId': result.id})" ng-repeat="result in ctrl.itensAssociados | filter:searchText">
-          <span>{{result.id}} - {{result.sigla}} - {{result.nome}}</span>
-          <i class="icon icon-accessory"></i>
-        </a>
-      </div>
-
-      <div class="item item-divider item-positive">
-        Associar novo item
-      </div>
-
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Itens
-        </div>
-        <select ng-model="ctrl.selectedItem" ng-options="result as result.nome for result in ctrl.itensGeral" ng-change="ctrl.selectedItemBind()" style="width: 100%">
-        </select>
-      </label>
-      <a class="item" ng-show="{{ctrl.selectedItem !== null}}">
-        <span>{{ctrl.selectedItem.id}} - {{ctrl.selectedItem.sigla}} - {{ctrl.selectedItem.nome}}</span>
-        <i class="icon icon-accessory"></i>
-      </a>
-    </div>
-  -->
   </ion-content>
 </ion-view>

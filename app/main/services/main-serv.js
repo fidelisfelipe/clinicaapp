@@ -69,10 +69,10 @@ angular.module('main')
   }
   this.examesPaciente = function (pacienteId, callback, fail) {
     $log.log('init exames by paciente '+pacienteId+' request...');
-    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/exames')//TODO: add backend rest
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames')//TODO: add backend rest
     .then(function (response) {
       if (response.status === 200) {
-        callback(response.data.exameList);
+        callback(response.data.tipoExameList);
         $log.log('exames by paciente request success!');
       } else {
          $log.log('exames by paciente request fail!');
@@ -463,6 +463,38 @@ angular.module('main')
     }.bind(this)).then($timeout(function () {
       $rootScope.backendOnline = bind.status;
       $rootScope.backendLabelTest = (bind.status ? 'OK' : 'Fail');
+    }.bind(this), 5000));
+  };
+
+  this.backendStatus = function (callback) {
+    $log.log('backend status testing init...');
+    bind.status = false;
+    $http({url: Config.ENV.DOMAIN_BACKEND_URL + '/', method: 'get', headers: {'Content-Type': 'application/json'}}).then(function (response) {
+       callback(response.status);
+    }.bind(this)).then($timeout(function () {
+      $log.log('backend status testing end!');
+
+      if(!$rootScope.backendStatus){
+        $log.log('backend not found!');
+        callback('ERR_CONNECTION_REFUSED');
+      }
+
+    }.bind(this), 5000));
+  };
+
+  this.isOnline = function (callback) {
+    $log.log('online testing init...');
+    bind.status = false;
+    $http({url: Config.ENV.DOMAIN_BACKEND_URL + '/', method: 'get', headers: {'Content-Type': 'application/json'}}).then(function (response) {
+      bind.online = response.status === 200;
+      callback(bind.online);     
+    }.bind(this)).then($timeout(function () {
+      $log.log('online testing end!');
+      if(!bind.online){
+        $log.log('network desconected...');
+        callback(bind.status);
+      }
+
     }.bind(this), 5000));
   };
 });
