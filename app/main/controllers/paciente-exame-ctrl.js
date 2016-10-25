@@ -10,25 +10,12 @@ angular.module('main')
   }, msgErro) : {};
   bind.exameList = [];
 
-  bind.itensAssociados = [];
-  function loadExamesPaciente(id) {
-    Main.examesPaciente(id, 
-      function (result) {
-          bind.itensAssociados = result;
-      }, msgErro);
-  };
-  loadExamesPaciente($stateParams.pacienteId);
-
   function refreshList() {
     Main.examesPaciente($stateParams.pacienteId,
       function (result) {
           bind.exameList = result;
 
-          //lista de exames do paciente
-
-          //lista de exames geral
-
-
+          //lista todos os exames cadastrados
 
       }, msgErro);
   };

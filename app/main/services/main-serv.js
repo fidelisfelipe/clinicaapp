@@ -69,7 +69,7 @@ angular.module('main')
   }
   this.examesPaciente = function (pacienteId, callback, fail) {
     $log.log('init exames by paciente '+pacienteId+' request...');
-    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames')//TODO: add backend rest
+    $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/tipoexames/por/paciente/' + pacienteId)//TODO: add backend rest
     .then(function (response) {
       if (response.status === 200) {
         callback(response.data.tipoExameList);

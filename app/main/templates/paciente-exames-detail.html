@@ -1,50 +1,38 @@
-<ion-view view-title="Exames">
+<ion-view view-title="Tipos de Exames">
 
   <ion-content>
-      <label class="item item-input" ng-show="{{ctrl.novo.id}}">
-          <span class="input-label">Nome: {{ctrl.novo.nome}}</span>
-      </label>
+ 
     
-    <div class="button-bar">	  
-	   
-       <button class="button button-positive">7 Resultados</button>
-      <button class="button icon ion-android-options"></button>
-      <button class="button icon ion-eye"></button>
+    <ion-list>	 
+       <label class="item item-input" >
+          <span class="input-label">Nome: {{ctrl.novo.nome}}</span>
+      </label> 
+    </ion-list>
+    <div class="list">
+        <a class="item item-icon-left item-icon-right" ng-repeat="item in ctrl.exameList | orderBy: 'id'" ui-sref="main.pacienteTipoExame({'pacienteId': ctrl.novo.id, 'tipoExameId': result.id})">
+          <i class="icon ion-ios-pulse"></i>
+          {{item.nome}}
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </a>
+        <div class="item item-light" ng-show="!ctrl.exameList[0]">
+          Nenhum exame associado ao paciente
+        </div>
     </div>
 
-
-
-      <ion-list show-delete="ctrl.data.showDelete" show-reorder="ctrl.data.showAdd">
+<!--      <ion-list show-delete="ctrl.data.showDelete" show-reorder="ctrl.data.showAdd">
         <div class="item item-divider item-positive">
-          Exames
+          Tipos de Exame
         </div>
-        <ion-item ng-repeat="item in ctrl.itensAssociados | orderBy: 'id'" 
+        <ion-item ng-repeat="item in ctrl.exameList | orderBy: 'id'" 
                   item="item"
-                  class="item-remove-animate">
+                   ng-class="item" ui-sref="main.tabelasList">
           {{ item.nome }}
           <ion-delete-button class="ion-minus-circled" 
                              ng-click="ctrl.onItemDelete(item)">
           </ion-delete-button>
         </ion-item>
+-->
 
-        <div class="item item-light" ng-show="!ctrl.itensAssociados[0]">
-          Nenhum exame associado ao paciente
-        </div>
-
-        <div class="item item-divider item-positive">
-          Exames Disponíveis
-        </div>
-
-        <ion-item ng-repeat="item in ctrl.exameList | orderBy: 'id'" 
-                  item="item"
-                  class="item-remove-animate">
-          {{ item.nome }}
-          <ion-reorder-button class="ion-ios-plus" ng-click="ctrl.onItemAdd(item)">
-          </ion-reorder-button>
-        </ion-item>
-        <div class="item item-light" ng-show="!ctrl.exameList[0]">
-          Nenhum exame disponível
-        </div>
 
       </ion-list>
 

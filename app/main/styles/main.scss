@@ -21,3 +21,9 @@ $ionicons-font-path: "../assets/fonts" !default;
 // Include all of Ionic
 @import "../../bower_components/ionic/scss/ionic";
 @import "formpacientevalidate";
+
+.formLogin{
+    text-align: center;
+    padding-left: 30%;
+    padding-right: 30%;
+}

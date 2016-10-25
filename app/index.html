@@ -24,15 +24,15 @@
     <!-- endinject -->
     <!-- endbuild -->
   </head>
-  <body ng-app="app" ng-cloak ng-init="showLoading">
+  <body ng-app="app" ng-cloak ng-init="showLoading" >
 
     <!-- the nav bar will be updated as we navigate between views -->
     <!-- <ion-nav-bar> can be removed when using sidemenu (contained in menu.html) -->
 
     <ion-nav-bar class="bar-balanced">
-      <ion-nav-back-button></ion-nav-back-button>
-    </ion-nav-bar>
-  
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>  
     <!-- the current view will be rendered in the <ion-nav-view> directive -->
 
     <ion-nav-view></ion-nav-view>
@@ -40,7 +40,7 @@
     <div class="bar bar-footer" ng-show="appLoaded">
       <button class="button" ng-class="isOnline ? 'button-positive' : 'button-assertive'">Network</button>
       <h1 class="title">
-      {{appStatusView}}
+      {{appStatusView}} <button class="button icon ion-power" ng-show="usuarioWeb.isLogado" ng-click="logout()"></button>
       </h1>
       <button class="button button-energized" >Bug Report?</button>
     </div>
@@ -71,6 +71,7 @@
     <!-- inject:js -->
     <script src="main/main.js"></script>
     <script src="main/services/main-serv.js"></script>
+    <script src="main/services/login-serv.js"></script>
     <script src="main/services/flash-serv.js"></script>
     <script src="main/services/data-serv.js"></script>
     <script src="main/controllers/tipoexame-ctrl.js"></script>
@@ -78,6 +79,7 @@
     <script src="main/controllers/paciente-exame-ctrl.js"></script>
     <script src="main/controllers/paciente-ctrl.js"></script>
     <script src="main/controllers/menu-ctrl.js"></script>
+    <script src="main/controllers/login-ctrl.js"></script>
     <script src="main/controllers/list-ctrl.js"></script>
     <script src="main/controllers/home-ctrl.js"></script>
     <script src="main/controllers/hemograma-form-ctrl.js"></script>
@@ -86,6 +88,7 @@
     <script src="main/controllers/eas-ctrl.js"></script>
     <script src="main/controllers/debug-ctrl.js"></script>
     <script src="main/controllers/config-ctrl.js"></script>
+    <script src="main/controllers/account-ctrl.js"></script>
     <script src="main/constants/config-const.js"></script>
     <script src="app.js"></script>
     <!-- endinject -->

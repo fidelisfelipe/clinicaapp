@@ -1,7 +1,11 @@
 <ion-view view-title="Home">
   <ion-content>
 
-	<div class="list">
+	<div class="button-bar" ng-show="!usuarioWeb.isLogado">
+      <button class="button button-positive" ui-sref="main.login">Login</button>
+    </div>
+
+	<div class="list" ng-show="usuarioWeb.isLogado">
 
 	  <a class="item item-icon-left" ui-sref="main.pacienteSearch">
 	    <i class="icon ion-person-stalker"></i>

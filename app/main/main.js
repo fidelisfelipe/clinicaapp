@@ -63,7 +63,7 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider) {
 
   // ROUTING with ui.router
-  $urlRouterProvider.otherwise('/main/home');
+  $urlRouterProvider.otherwise('/main/login');
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
@@ -72,7 +72,27 @@ angular.module('main', [
       templateUrl: 'main/templates/menu.html',
       controller: 'MenuCtrl as menu'
     })
-    .state('main.home', {
+    .state('main.login', {
+        url: '/login',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/login.html',
+            controller: 'LoginCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+      .state('main.account', {
+        url: '/account',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/account.html',
+            controller: 'AccountCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+      .state('main.home', {
         url: '/home',
         views: {
           'pageContent': {
@@ -116,6 +136,15 @@ angular.module('main', [
           'pageContent': {
             templateUrl: 'main/templates/paciente-exames-detail.html',
             controller: 'PacienteExameCtrl as ctrl'
+          }
+        }
+      })
+     .state('main.pacienteTipoExame', {
+        url: '/paciente/:pacienteId/tipoexame/:tipoExameId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-tipoexame-detail.html',
+            controller: 'HemogramaCtrl as ctrl'
           }
         }
       })
@@ -270,7 +299,7 @@ angular.module('main', [
           }
         }
       });
-}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, ConnectivityMonitor) {
+}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, FlashService, LoginService, ConnectivityMonitor) {
   $rootScope.appLoaded = false;
 
   $ionicPlatform.ready(function() {
@@ -291,7 +320,29 @@ angular.module('main', [
     });
 
     $rootScope.appLoaded = true;
-    $rootScope.appStatusView = "Pronto!";
+
+    $rootScope.usuarioWeb = {isLogado: false};
+    $rootScope.logout = function () {
+      //TODO: send request logout
+
+        FlashService.Question('Deseja realmente sair do sistema?', 
+        function () {
+          FlashService.Loading(true, 'Realizando Logout...');
+          LoginService.Logout(
+            function(){
+              $rootScope.usuarioWeb.isLogado = false;
+              $state.go('main.login');
+              FlashService.Success('Logout efetuado com sucesso!');
+            }, 
+            function(){
+              FlashService.Error('Falha ao realizar Logout!');
+            });
+          FlashService.Loading(false);
+        });
+    }
+
+    $rootScope.appStatusView = $rootScope.usuarioWeb.isLogado ? 'Bem vindo '+$rootScope.usuarioWeb.nome : 'Usuário não está logado!';
+
   });
 
 }); 
