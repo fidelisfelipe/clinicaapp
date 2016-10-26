@@ -1,10 +1,13 @@
 'use strict';
 angular.module('main')
-.controller('LoginCtrl', function ($ionicSideMenuDelegate, $ionicViewService, $log, $rootScope, $state, Main, LoginService, FlashService) {
+.controller('LoginCtrl', function ($ionicSideMenuDelegate, $ionicViewService, $log, $rootScope, $state, Main, LoginService, FlashService, UtilService) {
 
   $log.log('Hello from your Controller: LoginCtrl in module main:. This is your controller:', this);
   var bind = this;
-  bind.usuario = {email: 'test@test.com' , senha: '123456'};
+  
+  (function init () {
+  	bind.userCurrent = UtilService.getUserCurrentTest();
+  })();
 
   $ionicViewService.nextViewOptions({
     disableAnimate: true,
@@ -16,7 +19,7 @@ angular.module('main')
     	FlashService.Question('Deseja entrar no sistema?', 
         function () {
           FlashService.Loading(true, 'Realizando Login...');
-          LoginService.Login(bind.usuario, 
+          LoginService.Login(bind.userCurrent, 
           	function(){
           		FlashService.Success('Login efetuado com sucesso!');
           		$state.go('main.home');
@@ -28,7 +31,6 @@ angular.module('main')
         });
     }
   }
-
   function msgErro() {
     FlashService.Error('Não foi possivel efetuar seu login...');
   }

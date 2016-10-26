@@ -58,6 +58,11 @@ angular.module('main', [
   'ngCordova',
   'ui.router',
   'ngMessages',
+  //session mode dependency - begin
+  'ngCookies',
+  'ui.utils.masks',
+  'LocalForageModule',
+  //session mode dependency - end
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -70,7 +75,7 @@ angular.module('main', [
       url: '/main',
       abstract: true,
       templateUrl: 'main/templates/menu.html',
-      controller: 'MenuCtrl as menu'
+      controller: 'MenuCtrl as ctrl'
     })
     .state('main.login', {
         url: '/login',
@@ -204,9 +209,7 @@ angular.module('main', [
           }
         }
       })
-     
-
-    .state('main.config', {
+      .state('main.config', {
         url: '/config',
         views: {
           'pageContent': {
@@ -299,20 +302,84 @@ angular.module('main', [
           }
         }
       });
-}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, FlashService, LoginService, ConnectivityMonitor) {
+}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, UtilService, FlashService, LoginService, ConnectivityMonitor) {
   $rootScope.appLoaded = false;
 
   $ionicPlatform.ready(function() {
 
-    $log.log('init app...');
+    $log.info('init app...');
 
     $rootScope.appStatusView = 'Iniciando...';
-
+    var infoPlatform = ionic.Platform;
+    $log.log('Platform Info:',  JSON.stringify(infoPlatform));
     $log.log('Platform online network: ' + navigator.onLine);
     $log.log('Platform name:', ionic.Platform.platform());
     $log.log('Platform version:', ionic.Platform.version());
     $log.log('Platform isWebView:', ionic.Platform.isWebView());
     $log.log('Platform isAndroid:', ionic.Platform.isAndroid());
+
+//check plugins
+    $log.log('init cordova plugins');
+    if (window.cordova && window.cordova.plugins.Keyboard) {
+        $log.log('Keyboard cordova plugins detected!');
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }else{
+        $log.info('Keyboard cordova plugins not detected!');
+    }
+    if (window.StatusBar) {
+        $log.log('StatusBar cordova plugins detected!');
+        StatusBar.styleDefault();
+        //window.StatusBar.styleLightContent();
+    }else{
+      $log.info('StatusBar cordova plugins not detected!');
+    }
+//session ctrl
+//clean user session
+  	$log.debug('init session ctrl - begin');
+  	var userCurrent = UtilService.getUserCurrentTest();
+  	
+  	if(!userCurrent.isAuthorized) {
+  		$log.info('user not found...');
+  	} else {
+  		$log.log('user found:', userCurrent.name);
+  	}
+  	$log.debug('init session ctrl - end');
+
+   $rootScope.userCurrent = UtilService.getUserCurrentTest();
+
+//check redirect where isauthorized
+    if($rootScope.userCurrent.isAuthorized){
+      $log.info('You is Authorized');
+      if($state.current.name === 'main.login'){
+        $state.go('main.home');
+      }
+    }
+
+//watch for change state
+    $rootScope.$on('$stateChangeSuccess', function(evt){
+        $rootScope.userCurrent = UtilService.getUserCurrentTest();
+        if($rootScope.userCurrent.isAuthorized){
+          $log.info('You is Authorized');
+          if($state.current.name === 'main.login'){
+            $state.go('main.home');
+          }
+        } else {
+          $log.warn('You is Not Authorized');
+          $log.warn('Redirect Request for main.login...');
+          $state.go('main.login');
+        }
+      $log.log('state change success it: '+$state.current.name);
+    });//AuthSocialBackandService.onChangeSuccess
+//watch for signout
+$rootScope.$on('signout', function () {
+    $log.log('receiver in auth signout...');
+    $state.go('main.login');
+  });
+//watch for signin
+  $rootScope.$on('signin', function () {
+    $log.log('receiver in auth signin...');
+    $state.go('main.home');
+  });
 
     Main.isOnline(function (isOnline) {
       $rootScope.isOnline = isOnline;
@@ -321,7 +388,6 @@ angular.module('main', [
 
     $rootScope.appLoaded = true;
 
-    $rootScope.usuarioWeb = {isLogado: false};
     $rootScope.logout = function () {
       //TODO: send request logout
 
@@ -330,7 +396,6 @@ angular.module('main', [
           FlashService.Loading(true, 'Realizando Logout...');
           LoginService.Logout(
             function(){
-              $rootScope.usuarioWeb.isLogado = false;
               $state.go('main.login');
               FlashService.Success('Logout efetuado com sucesso!');
             }, 
@@ -341,40 +406,13 @@ angular.module('main', [
         });
     }
 
-    $rootScope.appStatusView = $rootScope.usuarioWeb.isLogado ? 'Bem vindo '+$rootScope.usuarioWeb.nome : 'Usuário não está logado!';
+    $rootScope.status = UtilService.getUserCurrentTest().isLogado ? 'Bem vindo '+UtilService.getUserCurrentTest().nome : 'Usuário não está logado!';
 
   });
 
 }); 
-
 /**
-      $rootScope.isWebView = ionic.Platform.isWebView();
-      $rootScope.isAndroid = ionic.Platform.isAndroid();
 
-      $rootScope.currentPlatform = ionic.Platform.platform();
-      $rootScope.currentPlatformVersion = ionic.Platform.version();
-
-      $log.log('init app...');
-      $log.log('Platform isWebView:',   $rootScope.isWebView);
-      $log.log('Platform isAndroid:',   $rootScope.isAndroid);
-
-      $log.log('Platform Device current: ' +
-        $rootScope.currentPlatform +
-        ' version: ' +
-        $rootScope.currentPlatformVersion); 
-      $log.log('Platform isAndroid:',   $rootScope.isAndroid);
-      //check backend status init
-      $rootScope.backendStatus;
-      $rootScope.backendOnline = false;
-      $rootScope.backendOffline = true;
-      $rootScope.appLoading = true;
-      $rootScope.appLoaded = false;
-      $rootScope.appStatusView = 'Iniciando...';
-      $rootScope.appStatusValue = 10;
-
-      $rootScope.hideLoading = function() {
-         $rootScope.loading.hide();
-      }
       $rootScope.showLoading = function(message) {
           var message = message || "Chargement";
 
@@ -400,34 +438,8 @@ angular.module('main', [
       };
 
       $rootScope.showLoading('Iniciando...');
-
-      Main.backendStatus(function (status) {
-        $rootScope.backendStatus = status;
-        $log.log('Backend status: ', $rootScope.backendStatus);
-        $rootScope.appStatusValue = 50;
-
-        if ($rootScope.backendStatus === 200) {
-            $rootScope.backendOnline = true;
-            $rootScope.appLoaded = true;
-            $rootScope.appStatusView = 'Pronto!';
-            $rootScope.hideLoading();
-        }
-
-        if ($rootScope.backendStatus === 'ERR_CONNECTION_REFUSED') {
-           $rootScope.backendOffline = true;
-            $ionicPopup.alert({
-                title: "Backend Disconnected",
-                content: "The server is disconnected on your device."
-            });
-            $rootScope.appStatusView = 'Dados não sincronizados.';
-            $rootScope.appLoaded = true;
-            $rootScope.hideLoading();
-        }
-
-        $rootScope.appStatusValue = 100;
-        
-      });
-
+**/
+/**
       //check backend status end
 
       if(window.Connection) {

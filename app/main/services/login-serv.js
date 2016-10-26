@@ -1,16 +1,12 @@
 'use strict';
 angular.module('main')
-.service('LoginService', function ($log, $filter, $timeout, $http, $rootScope, Config) {
+.service('LoginService', function ($log, $filter, $timeout, $http, $rootScope, Config, UtilService) {
   $log.log('Hello from your Service: LoginService in module main');
   var bind = this;
-  this.proxyState = '';
-  $rootScope.usuarioWeb = {isLogado: false};
-  this.getLogin = $rootScope.usuarioWeb;
 
   this.Logout = function (callback, fail) {
     $log.log('init logout...');
-    //$rootScope.exames.push(novo);
-    this.proxyState = '...';
+
     $http({
       method: 'POST',
       data: '{token:"TOKENFAKE"}',
@@ -18,12 +14,12 @@ angular.module('main')
     })
     .then(function (response) {
       $log.log('logout success!');
-      this.proxyState = 'success (result printed to browser console)';
-      $log.log('status request:', response.status);
+      $log.log('logout request:', response.status);
       if (response.status === 200) {
         //set usuario logado
-        $rootScope.usuarioWeb.isLogado = false;
-        $rootScope.appStatusView = 'Usuário não está logado';
+        $rootScope.status = 'Usuário não está logado';
+        UtilService.setNotAuthorized();
+        UtilService.refreshUserCurrentRoot();
         callback();
       } else {
         fail();
@@ -31,15 +27,14 @@ angular.module('main')
       
     }.bind(this))
     .then($timeout(function () {
-      this.proxyState = 'ready';
-      $log.log('end exame add request...');
+
+      $log.log('end logout request...');
     }.bind(this), 6000));
   }
 
   this.Login = function (usuarioWeb, callback, fail) {
-    $log.log('init login...');
+    $log.log('init login...', usuarioWeb.email);
     //$rootScope.exames.push(novo);
-    this.proxyState = '...';
     $http({
       method: 'POST',
       data: JSON.stringify(usuarioWeb),
@@ -47,22 +42,32 @@ angular.module('main')
     })
     .then(function (response) {
       $log.log('login success!');
-      this.proxyState = 'success (result printed to browser console)';
-      $log.log('status request:', response.status);
+      $log.log('login request:', response.status);
       if (response.status === 200) {
-        //set usuario logado
-        $rootScope.usuarioWeb.isLogado = true;
-        $rootScope.usuarioWeb.nome = 'Usuário Test';
-        $rootScope.appStatusView = 'Bem vindo '+$rootScope.usuarioWeb.nome;
+        usuarioWeb.nome = 'Usuário Test';
+        var user = UtilService.getUserCurrentTest();
+        user.email = usuarioWeb.email;
+        user.isAuthorized = true;
+        user.isLogado = true;
+        user.name = usuarioWeb.nome;
+        user.nome = usuarioWeb.nome;
+
+        UtilService.setUserCurrent(user);
+        UtilService.refreshUserCurrentRoot();
+
+    		if(user.isAuthorized){
+    			$log.info('success login!');
+    		} else{
+    			$log.warn('fail login!');
+    		}
+		
         callback();
       } else {
         fail();
       }
-      
     }.bind(this))
     .then($timeout(function () {
-      this.proxyState = 'ready';
-      $log.log('end exame add request...');
+      $log.log('end login request...');
     }.bind(this), 6000));
   }
 

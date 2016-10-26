@@ -1,17 +1,23 @@
 <ion-view view-title="Home">
   <ion-content>
 
-	<div class="button-bar" ng-show="!usuarioWeb.isLogado">
+	<div class="button-bar" ng-show="!ctrl.userCurrent.isAuthorized">
       <button class="button button-positive" ui-sref="main.login">Login</button>
     </div>
 
-	<div class="list" ng-show="usuarioWeb.isLogado">
+	<div class="list" ng-show="ctrl.userCurrent.isAuthorized">
 
 	  <a class="item item-icon-left" ui-sref="main.pacienteSearch">
 	    <i class="icon ion-person-stalker"></i>
 	    Pacientes
 	    <span class="badge badge-positive" ng-controller="PacienteCtrl as pacienteCtrl">{{pacienteList.length}}</span>
 	  </a>
+
+    	<div class="item item-divider item-positive" 
+    		ng-show="ctrl.userCurrent.isAuthorized" >
+      		Settings
+    	</div>
+
 	  <a class="item item-icon-left" ui-sref="main.exameSearch">
 	    <i class="icon ion-ios-pulse"></i>
 	    Exame
