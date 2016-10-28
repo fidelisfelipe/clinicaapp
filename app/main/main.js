@@ -121,7 +121,7 @@ angular.module('main', [
         url: '/paciente/add',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-detail.html',
+            templateUrl: 'main/templates/paciente-data.html',
             controller: 'PacienteCtrl as ctrl'
           }
         }
@@ -130,7 +130,16 @@ angular.module('main', [
         url: '/paciente/detail/:pacienteId',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-detail.html',
+            templateUrl: 'main/templates/paciente-data.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+      .state('main.pacienteData', {
+        url: '/paciente/data/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-data.html',
             controller: 'PacienteCtrl as ctrl'
           }
         }
@@ -336,16 +345,14 @@ angular.module('main', [
 //session ctrl
 //clean user session
   	$log.debug('init session ctrl - begin');
-  	var userCurrent = UtilService.getUserCurrentTest();
+    $rootScope.userCurrent = UtilService.getUserCurrentLocal();
   	
-  	if(!userCurrent.isAuthorized) {
+  	if(!$rootScope.userCurrent.isAuthorized) {
   		$log.info('user not found...');
   	} else {
-  		$log.log('user found:', userCurrent.name);
+  		$log.log('user found:', $rootScope.userCurrent.name);
   	}
   	$log.debug('init session ctrl - end');
-
-   $rootScope.userCurrent = UtilService.getUserCurrentTest();
 
 //check redirect where isauthorized
     if($rootScope.userCurrent.isAuthorized){
@@ -357,7 +364,7 @@ angular.module('main', [
 
 //watch for change state
     $rootScope.$on('$stateChangeSuccess', function(evt){
-        $rootScope.userCurrent = UtilService.getUserCurrentTest();
+       $rootScope.userCurrent = UtilService.getUserCurrentLocal();
         if($rootScope.userCurrent.isAuthorized){
           $log.info('You is Authorized');
           if($state.current.name === 'main.login'){
@@ -370,24 +377,23 @@ angular.module('main', [
         }
       $log.log('state change success it: '+$state.current.name);
     });//AuthSocialBackandService.onChangeSuccess
-//watch for signout
-$rootScope.$on('signout', function () {
-    $log.log('receiver in auth signout...');
-    $state.go('main.login');
-  });
-//watch for signin
-  $rootScope.$on('signin', function () {
-    $log.log('receiver in auth signin...');
-    $state.go('main.home');
-  });
-
+  //watch for signout
+    $rootScope.$on('signout', function () {
+      $log.log('receiver in auth signout...');
+      $state.go('main.login');
+    });
+  //watch for signin
+    $rootScope.$on('signin', function () {
+      $log.log('receiver in auth signin...');
+      $state.go('main.home');
+    });
+    //check backend online
     Main.isOnline(function (isOnline) {
       $rootScope.isOnline = isOnline;
       $log.log('Main.isOnline:', $rootScope.isOnline);
     });
 
     $rootScope.appLoaded = true;
-
     $rootScope.logout = function () {
       //TODO: send request logout
 
@@ -406,7 +412,7 @@ $rootScope.$on('signout', function () {
         });
     }
 
-    $rootScope.status = UtilService.getUserCurrentTest().isLogado ? 'Bem vindo '+UtilService.getUserCurrentTest().nome : 'Usuário não está logado!';
+    $rootScope.status = $rootScope.userCurrent.isAuthorized ? 'Bem vindo '+$rootScope.userCurrent.nome : 'Usuário não está logado!';
 
   });
 

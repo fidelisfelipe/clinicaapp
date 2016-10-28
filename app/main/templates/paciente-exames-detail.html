@@ -8,6 +8,11 @@
           <span class="input-label">Nome: {{ctrl.novo.nome}}</span>
       </label> 
     </ion-list>
+
+    <div class="list-inset">
+      <button class="button" ng-class="isOnline ? 'button-positive' : 'button-assertive'">Network</button>
+    </div>
+
     <div class="list">
         <a class="item item-icon-left item-icon-right" ng-repeat="item in ctrl.exameList | orderBy: 'id'" ui-sref="main.pacienteTipoExame({'pacienteId': ctrl.novo.id, 'tipoExameId': result.id})">
           <i class="icon ion-ios-pulse"></i>

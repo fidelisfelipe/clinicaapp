@@ -284,3 +284,18 @@
 [1019/093649:ERROR:process_info.cc(608)] range at 0xfe3e0000, size 0xf84 fully unreadable
 [1019/093649:ERROR:process_info.cc(608)] range at 0xfe3e9000, size 0xf84 fully unreadable
 [1024/163751:ERROR:file_io.cc(30)] read: expected 36, observed 0
+[1028/152206:ERROR:process_info.cc(608)] range at 0xff346000, size 0x230 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff34d000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff34a000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff345000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff21f000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff21c000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff219000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff216000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff213000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff210000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff20d000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff20a000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff207000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff204000, size 0xf84 fully unreadable
+[1028/152207:ERROR:process_info.cc(608)] range at 0xff201000, size 0xf84 fully unreadable

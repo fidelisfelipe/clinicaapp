@@ -2,11 +2,11 @@
   <!-- do you want padding? -->
   <ion-content class="padding">
 
-    <div class="list">
+    <div class="formLogin">
 
         <h1 class="title"><center>Clínica App</center></h1>
         <h3 class="title"><center>Informe suas credenciais</center></h3>
-      <form name="form" novalidate="" ng-submit="ctrl.login(form)" class="formLogin">
+      <form name="form" novalidate="" ng-submit="ctrl.login(form)" >
           <label class="item item-input" ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}">
             <input type="text" placeholder="Email" ng-model="ctrl.userCurrent.email" name="email"required>
           </label>
@@ -18,9 +18,48 @@
               <span>Login</span>
             </button>
           </div>
+          <div class="button-bar" >
+          <button class="button button-calm" ng-click="ctrl.signin()" >Cadastre-se</button>
+          <button class="button" ng-class="isOnline ? 'button-assertive' : 'button-assertive'">Esqueci minha senha?</button>
+          </div>
       </form>
 
     </div>
 
   </ion-content>
 </ion-view>
+
+<script id="signin.html" type="text/ng-template">
+  <ion-modal-view >
+    <ion-header-bar>
+      <h1 class="title">Cadastre-se</h1>
+    </ion-header-bar>
+    <ion-content  >
+      <form name="form" novalidate="" ng-submit="ctrl.sendSign(form)" >
+        <label class="item item-input" ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}">
+            <input type="text" placeholder="Nome" ng-model="ctrl.userCurrent.nome" name="nome"required>
+          </label>
+          <label class="item item-input" ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}">
+            <input type="text" placeholder="Email" ng-model="ctrl.userCurrent.email" name="email"required>
+          </label>
+          <label class="item item-input" ng-class="{ 'has-errors' : form.cpf.$invalid, 'no-errors' : form.cpf.$valid}">
+            <input type="text" placeholder="CPF" ng-model="ctrl.userCurrent.cpf" name="cpf"required>
+          </label>
+          <label class="item item-input" ng-class="{ 'has-errors' : form.telefone.$invalid, 'no-errors' : form.telefone.$valid}">
+            <input type="tel" placeholder="telefone" ng-model="ctrl.userCurrent.telefone" name="telefone"required>
+          </label>
+          <label class="item item-input" ng-class="{ 'has-errors' : form.senha.$invalid, 'no-errors' : form.senha.$valid}">
+            <input type="password" placeholder="Senha" ng-model="ctrl.userCurrent.senha" name="senha" required>
+          </label>
+          <label class="item item-input" ng-class="{ 'has-errors' : form.resenha.$invalid, 'no-errors' : form.resenha.$valid}">
+            <input type="password" placeholder="Confirme a Senha" ng-model="ctrl.userCurrent.resenha" name="resenha" required>
+          </label>
+          <div class="button-bar">
+            <button class="button button-positive" type="submit" ng-disabled="form.$invalid">
+              <span>Cadastrar</span>
+            </button>
+          </div>
+      </form>
+    </ion-content>
+  </ion-modal-view>
+</script>

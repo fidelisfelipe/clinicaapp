@@ -2,10 +2,9 @@
 angular.module('main')
 .service('UtilService', function ($log, $rootScope, $http, FlashService) {
   var user =  new function () {
-    this.userId = 0;
-    this.username = '';
+    this.id = null;
+    this.nome = '';
     this.email = '';
-    this.name = '';
     this.firstName = '';
     this.lastName = '';
     this.role = '';
@@ -66,13 +65,10 @@ angular.module('main')
  */
 //setUserCurrent
     setUserCurrent: function (data) {
-      user.userId = data.userId || data.id;
-      user.username = data.username;
-      user.email = data.email;
-      user.name = data.name;
+      user.id = data.id;
       user.nome = data.nome;
+      user.email = data.email;
       user.isAuthorized = data.isAuthorized;
-      user.isLogado = data.isLogado;
       user.firstName = data.firstName;
       user.lastName = data.lastName;
       user.role = data.role;
@@ -80,16 +76,10 @@ angular.module('main')
       user.srcImg = 'main/assets/images/profile.jpg';
       sessionStorage.currentUser = user;
     },
-//setUserForDataDomain
-    setUserForDataDomain: function (data) {
-      user.firstName = data.firstName;
-      user.lastName = data.lastName;
-    },
 //setUserCurrentBlank
     setUserCurrentBlank: function () {
-      user.userId = 0;
+      user.id = null;
       user.email = '';
-      user.name = '';
       user.nome = '';
       user.isAuthorized = false;
       user.isLogado = false;
@@ -99,6 +89,7 @@ angular.module('main')
       user.role = '';
       user.isAdmin = false;
       user.srcImg = '';
+      sessionStorage.removeItem('currentUser');
       sessionStorage.currentUser = user;
     },
 //setIsAuthorized
@@ -114,7 +105,7 @@ angular.module('main')
       return user.isAuthorized;
     },
 //getUserCurrent
-    getUserCurrentTest: function () {
+    getUserCurrentLocal: function () {
        if (JSON.parse(sessionStorage.getItem('currentUser')) !== null) {
          $log.log('get user for session storage...');
          return JSON.parse(sessionStorage.getItem('currentUser'));
@@ -140,6 +131,8 @@ angular.module('main')
       });
 
     }
+
   };
+
   return UtilService;
 });

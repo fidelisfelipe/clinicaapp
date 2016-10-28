@@ -4,5 +4,5 @@ angular.module('main')
 
   $log.log('Hello from your Controller: HomeCtrl in module main:. This is your controller:', this);
   var bind = this;
-  bind.userCurrent = UtilService.getUserCurrentTest();
+  bind.userCurrent = UtilService.getUserCurrentLocal();
 });

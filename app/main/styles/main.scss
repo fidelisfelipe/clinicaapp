@@ -22,8 +22,30 @@ $ionicons-font-path: "../assets/fonts" !default;
 @import "../../bower_components/ionic/scss/ionic";
 @import "formpacientevalidate";
 
+.formSignIn {
+    top: 10%;
+    right: 20%;
+    bottom: 10%;
+    left: 20%;
+    min-height: 240px;
+    width: 60%;
+}
+
 .formLogin{
     text-align: center;
-    padding-left: 30%;
-    padding-right: 30%;
+    padding-top: 10%;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.formLogin .scroll-content {
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin-top: -50px; /* the height of the centered content */
+  text-align: center;
+}
+.formLogin .scroll {
+  display: table-cell;
+  vertical-align: middle;
 }

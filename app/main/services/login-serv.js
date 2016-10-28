@@ -19,6 +19,7 @@ angular.module('main')
         //set usuario logado
         $rootScope.status = 'Usuário não está logado';
         UtilService.setNotAuthorized();
+        UtilService.setUserCurrentBlank();
         UtilService.refreshUserCurrentRoot();
         callback();
       } else {
@@ -39,36 +40,71 @@ angular.module('main')
       method: 'POST',
       data: JSON.stringify(usuarioWeb),
       url: Config.ENV.DOMAIN_BACKEND_URL + '/usuarios/login'
-    })
-    .then(function (response) {
+    }).then(function successCallback(response) {
+      // this callback will be called asynchronously
+      // when the response is available
       $log.log('login success!');
       $log.log('login request:', response.status);
       if (response.status === 200) {
-        usuarioWeb.nome = 'Usuário Test';
-        var user = UtilService.getUserCurrentTest();
-        user.email = usuarioWeb.email;
-        user.isAuthorized = true;
-        user.isLogado = true;
-        user.name = usuarioWeb.nome;
-        user.nome = usuarioWeb.nome;
-
+        $rootScope.status = response.data.erroMsg;
+        var user = response.data.userCurrent;
         UtilService.setUserCurrent(user);
         UtilService.refreshUserCurrentRoot();
 
-    		if(user.isAuthorized){
-    			$log.info('success login!');
-    		} else{
-    			$log.warn('fail login!');
-    		}
-		
-        callback();
+        if(user.isAuthorized){
+          $log.info('success login!');
+          $rootScope.status = 'Olá '+ user.name;
+          callback();
+        } else{
+          $log.warn('fail login!');
+          fail($rootScope.status);
+        }
+
       } else {
-        fail();
+        fail('Falha na requisição. Tente novamente. status:' + response.status);
       }
-    }.bind(this))
-    .then($timeout(function () {
-      $log.log('end login request...');
-    }.bind(this), 6000));
+    }, function errorCallback(response) {
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+
+       if(response.status === 401){
+         $rootScope.status = 'Usuário não autorizado!';
+         fail($rootScope.status);
+       }
+       $log.warn('fail login response: ', $rootScope.status);
+    });
+
   }
+
+  this.SignIn = function (usuarioWeb, callback, fail) {
+    $log.log('init sign in...', usuarioWeb.email);
+    //$rootScope.exames.push(novo);
+    $http({
+      method: 'POST',
+      data: JSON.stringify(usuarioWeb),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/usuarios/signin'
+    }).then(function successCallback(response) {
+      $log.log('sign success!');
+      $log.log('sign request:', response.status);
+      if (response.status === 200) {
+          $log.info('success sign!');
+          callback();
+      }else{
+        fail(response.statusText);
+      }
+    }, function errorCallback(response) {
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+
+       if(response.status === 401){
+         $rootScope.status = 'Usuário não autorizado!';
+         fail($rootScope.status);
+       }
+       $log.warn('fail sign response: ', $rootScope.status);
+    });
+
+  }
+
+
 
 });
