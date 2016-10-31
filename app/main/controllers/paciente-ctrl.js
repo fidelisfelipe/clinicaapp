@@ -1,22 +1,42 @@
 'use strict';
 angular.module('main')
-.controller('PacienteCtrl', function ($log, $state, $stateParams, $rootScope, Main, FlashService) {
+.controller('PacienteCtrl', function ($scope, $log, $state, $stateParams, $rootScope, $ionicModal, Main, FlashService, DataService) {
 
   $log.log('Hello from your Controller: PacienteCtrl in module main:. This is your controller:', this);
   var bind = this;
-  bind.novo = $stateParams.pacienteId ? Main.getPaciente($stateParams.pacienteId, function (result) {
-    bind.novo = result;
-  }, msgErro) : {};
+
+  bind.openModalShow = true;
+  bind.openModalEdit = false;
+  if ($stateParams.pacienteId)
+  bind.novo = $stateParams.pacienteId ? DataService.getPaciente($stateParams.pacienteId, 
+    function (result) {
+      bind.novo = result;
+    }, function (msgError) {
+      FlashService.Error(msgError);
+    }) : {};
+
   var count = 0;
   $rootScope.pacienteList = [];
   function refreshList() {
     bind.novo = {};
-    Main.pacientes(
-      function (result) {
-          $rootScope.pacienteList = result;
-      }, msgErroLoadPacientes);
+    DataService.getPacienteList(
+      function (pacienteList) {
+          $rootScope.pacienteList = pacienteList;
+      }, function (erroMsg) {
+        FlashService.Error(erroMsg);
+      });
+  };
+  function refreshListExames() {
+    if ($stateParams.pacienteId)
+    DataService.getExamesPaciente($stateParams.pacienteId,
+        function (result) {
+            bind.exameList = result;
+            //lista todos os exames cadastrados
+        }, msgErro);
   };
   refreshList();
+  refreshListExames();
+
   bind.add = function (form) {
     if (form.$valid) {
     
@@ -33,7 +53,19 @@ angular.module('main')
     if (form.$valid) {
       FlashService.Question('Alterar dados do registro?', 
         function () {
-          Main.editPaciente(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+          DataService.editPaciente(bind.novo,
+            function () {
+                DataService.getPaciente(bind.novo.id, 
+                  function (result) {
+                    bind.novo = result;
+                    FlashService.Success('Registro Atualizado com Sucesso!');
+                  }, function (msgError) {
+                    FlashService.Error(msgError);
+                  });
+                refreshList();
+            }, function (erroMsg) {
+              FlashService.Error(erroMsg);
+            });
         });
     } else {
       return false;

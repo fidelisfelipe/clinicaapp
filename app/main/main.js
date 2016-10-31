@@ -97,6 +97,16 @@ angular.module('main', [
           }
         }
       })
+      .state('main.userCurrent', {
+        url: '/userCurrent',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/userCurrent.html',
+            //controller: 'UserCurrentCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
       .state('main.home', {
         url: '/home',
         views: {
@@ -149,7 +159,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-exames-detail.html',
-            controller: 'PacienteExameCtrl as ctrl'
+            controller: 'PacienteCtrl as ctrl'
           }
         }
       })

@@ -66,12 +66,15 @@ angular.module('main')
     }, function errorCallback(response) {
       // called asynchronously if an error occurs
       // or server returns response with an error status.
-
-       if(response.status === 401){
+       if(response.status === -1){
+         fail('Servidor Indisponível!');
+       } else if(response.status === 401){
          $rootScope.status = 'Usuário não autorizado!';
          fail($rootScope.status);
+       }else{
+         $log.warn('fail login response: ', response);
+         fail(response.statusText + ' - ' + response.status);
        }
-       $log.warn('fail login response: ', $rootScope.status);
     });
 
   }

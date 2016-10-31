@@ -22,13 +22,14 @@ angular.module('main')
           FlashService.Loading(true, 'Realizando Login...');
           LoginService.Login(bind.userCurrent, 
           	function(){
+              FlashService.Loading(false);
           		FlashService.Success('Login efetuado com sucesso!');
           		$state.go('main.home');
           	}, 
           	function(erroMsg){
+              FlashService.Loading(false);
           		FlashService.Error(erroMsg);
           	});
-          FlashService.Loading(false);
         });
     }
   }

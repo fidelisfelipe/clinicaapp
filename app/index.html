@@ -40,7 +40,7 @@
     <div class="bar bar-footer" ng-show="appLoaded" >
       <button class="button" ng-class="isOnline ? 'button-positive' : 'button-assertive'">Network</button>
       <h1 class="title" ng-show="userCurrent.isAuthorized">
-      Bem vindo {{userCurrent.nome}}
+      {{userCurrent.nome}}
       <button class="button icon ion-power" ng-show="userCurrent.isAuthorized" ng-click="logout()"></button>
       </h1>
       <h1 class="title" ng-show="!userCurrent.isAuthorized">

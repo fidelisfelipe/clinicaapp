@@ -30,6 +30,7 @@ angular.module('main')
     //  return ['DENS', 'PH', 'ALB', 'GLIC', 'C.CETON', 'UROBIL', 'HEMOB', 'NITRITO'];
     //}
   }
+
   this.pacientes = function (callback, fail) {
     $log.log('init pacientes request...');
     $http.get(Config.ENV.DOMAIN_BACKEND_URL + '/pacientes')
