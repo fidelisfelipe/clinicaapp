@@ -52,7 +52,6 @@ angular.module('main')
     DataService.getTipoExameList(
       function (tipoExameList) {
           $rootScope.tipoExameList = tipoExameList;
-          bind.tipoExameSelected = {};
           FlashService.Loading(false);
       }, function (erroMsg) {
         FlashService.Error(erroMsg);
@@ -78,9 +77,9 @@ angular.module('main')
 
       FlashService.Question('Incluir novo resultado?', 
         function () {
-          FlashService.Loading(true, 'Incluindo novo resultado');
+          FlashService.Loading(true, 'Incluindo');
           DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, function(){
-            FlashService.Success('Resultado incluído com sucesso!');
+            FlashService.Success('Incluido com sucesso!');
             FlashService.Loading(false);
             bind.resultado = {};
             getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
@@ -100,13 +99,14 @@ angular.module('main')
 
       FlashService.Question('Remover este resultado?', 
         function () {
-          FlashService.Loading(true, 'Removendo resultado');
+          FlashService.Loading(true, 'Removendo');
           DataService.resultadoRemove($stateParams.pacienteId, objectRemove, function(){
-            FlashService.Success('Resultado removido com sucesso!');
+            FlashService.Success('Removido com sucesso!');
             FlashService.Loading(false);
             bind.resultado = {};
             getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
             bind.modal.hide();
+            //reload?
           }, function(msgErro){
             FlashService.Error(msgErro);
             FlashService.Loading(false);
@@ -210,8 +210,8 @@ angular.module('main')
       tipoExameId,
       function (resultadoExameList) {
           if(resultadoExameList.length === 0){
-            FlashService.Error('Nenhum Resultado encontrado para este paciente!');
             FlashService.Loading(false);
+            $rootScope.resultadoExameList = [];
             return;
           }
           $rootScope.resultadoExameList = resultadoExameList;

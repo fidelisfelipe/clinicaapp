@@ -1,20 +1,7 @@
 <ion-view view-title="Resultados" >
   <ion-content>
-    <div class="list">
-      <a class="item item-icon-left item-icon-right" ui-sref="main.hemogramaAdd" >
-        <span>Novo</span>
-        <i class="icon ion-person-add"></i>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </a>
-    </div>
 
-  <ion-modal-view 
-    style="top: -45%;bottom: 0%;left: 0%;width: 100%;min-height: 400px;margin-top: 5%;">
-   <ion-header-bar>
-      <h1 class="title">{{tipoExame.nome}}</h1>
-    </ion-header-bar>
 
-    <ion-content>
 
       <div class="button-bar" >
         <button class="button icon ion-grid" style="cursor:pointer" 
@@ -28,6 +15,8 @@
         <button class="button button-energized icon ion-ios-plus" style="cursor:pointer" 
           title="Inserir novo resultado" ng-click="ctrl.openModalAdd()"></button>
       </div>
+
+      <div class="button button-full button-energized icon ion-ios-plus" ng-show="dataList.length === 0" ng-click="ctrl.openModalAdd()"></div>
 
     <!-- grid-->
       <div class="button-bar" ng-show="ctrl.showGrid">
@@ -51,7 +40,6 @@
         </div> 
       </div>
 
-
       <!--table simple-->
 
       <table style="width:100%; heigth: 100%;" class="text-center" ng-show="ctrl.showTable">
@@ -70,15 +58,37 @@
           </td>
           <td ng-repeat="exameData in dataList | orderBy: 'data'">
             {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}
-          </td> 
-        </tr>  
+          </td>
+        </tr>
       </table>
-    </ion-content>
 
-  </ion-modal-view>
-
-  </ion-content>
-</ion-view>
+<div class="button-bar" >
+  <div class="button button-light" style="cursor:default;" >
+    Exame
+  </div>
+  <div class="button button-light" style="cursor:default">
+    Data
+  </div>
+  <div class="button button-light" style="cursor:default">
+    Valor
+  </div>
+  <div class="button button-light" style="cursor:default">
+    &nbsp;
+  </div>
+</div>
+<div class="button-bar" ng-repeat="resultado in resultadoExameList | orderBy: 'data':'data'">
+  <div class="button button-light" style="cursor:default" >
+    {{resultado.exame.nome}}
+  </div>
+  <div class="button button-light" style="cursor:default">
+    {{resultado.data | date: 'dd/MM/yyyy'}}
+  </div>
+  <div class="button button-light" style="cursor:default">
+    {{resultado.valor}}
+  </div>
+  <div class="button button-light ion-ios-trash" style="cursor:pointer" 
+          title="Remover" ng-click="ctrl.resultadoRemove(resultado)"></div>
+</div>
 
 
 <script id="resultado-exame-add.html" type="text/ng-template">
@@ -94,11 +104,12 @@
                       <input  type="date" id="date" name="data" ng-model="ctrl.resultado.data"
                      placeholder="dd/MM/yyyy" min="1900-01-01" max="2050-12-30" required />
                </label>
-               <label class="item item-input item-select" ng-class="{ 'has-errors' : form.tipoExame.$invalid, 'no-errors' : form.tipoExame.$valid}">
+
+               <label class="item item-input item-select" ng-class="{ 'has-errors' : form.tipo.$invalid, 'no-errors' : form.tipo.$valid}">
                   <div class="input-label" style="width: 5%" >
                     Tipo Exame:
                   </div>
-                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.tipo" ng-options="tipoExame.nome for tipoExame in tipoExameList" name="tipoExame" >
+                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.tipo" ng-options="tipoExame.nome for tipoExame in tipoExameList" name="tipo" >
                   </select>
                 </label>
 

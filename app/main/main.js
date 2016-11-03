@@ -65,7 +65,18 @@ angular.module('main', [
   //session mode dependency - end
   // TODO: load other modules selected during generation
 ])
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $provide) {
+    //force reload
+   $provide.decorator('$state', function($delegate, $stateParams) {
+        $delegate.forceReload = function() {
+            return $delegate.go($delegate.current, $stateParams, {
+                reload: true,
+                inherit: false,
+                notify: true
+            });
+        };
+        return $delegate;
+    });
 
   // ROUTING with ui.router
   $urlRouterProvider.otherwise('/main/login');
@@ -163,7 +174,8 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-tipoexame-detail.html',
-            controller: 'PacienteCtrl as ctrl'
+            controller: 'PacienteCtrl as ctrl',
+            cache: false, //required for state.forceReload
           }
         }
       })
