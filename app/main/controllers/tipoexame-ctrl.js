@@ -19,9 +19,22 @@ angular.module('main')
       FlashService.Error(msgErro);
       FlashService.Loading(false);
     });
+  };
+  function getExameAssociadoList() {
+    if($stateParams.tipoExameId){
+      FlashService.Loading(true, 'Carregando lista de tipo exame');
+      DataService.getExameAssociadoList($stateParams.tipoExameId, function(exameAssociadoList){
+        $rootScope.exameAssociadoList = exameAssociadoList;
+        FlashService.Loading(false);
+      }, function(msgErro){
+        FlashService.Error(msgErro);
+        FlashService.Loading(false);
+      });
+    }
 
   };
   refreshList();
+  getExameAssociadoList();
 
   bind.add = function (form) {
     if (form.$valid) {

@@ -32,6 +32,38 @@ angular.module('main')
          }
       });
     },
+    getExameAssociadoList: function (tipoExameId, callback, fail) {
+      $log.log('init get exames associados ao tipo list...');
+      $http({
+        method: 'GET',
+        //data: JSON.stringify(object),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/exames/por/tipo/'+tipoExameId
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get exames associados ao tipo list success!');
+        $log.log('get exames associados ao tipo list - status:', response.status);
+        if (response.status === 200) {
+           //init converte date util for input date
+            var exameAssociadoList = response.data.exameAssociadoList;
+            //end converte date util for input date
+            callback(exameAssociadoList);
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         }else{
+           $log.warn('get exames associados ao tipo list response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
     getPaciente: function (id, callback, fail) {
       $log.log('init get paciente one...');
       $http({

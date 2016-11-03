@@ -17,12 +17,11 @@ angular.module('main')
       }, msgErroLoadExames);
   };
   refreshList();
-
   getTipoExameList();
   function getTipoExameList() {
     DataService.getTipoExameList(
       function (tipoExameList) {
-          $rootScope.tipoExameList = tipoExameList;
+          $rootScope.exameAssociadoList = exameAssociadoList;
           FlashService.Loading(false);
       }, function (erroMsg) {
         FlashService.Error(erroMsg);
@@ -31,7 +30,10 @@ angular.module('main')
   }
   bind.add = function (form) {
     if (form.$valid) {
-    
+      if(!bind.novo.tipo){
+        FlashService.Error('Tipo de Exame é Obrigatório!');
+        return false;
+      }
       FlashService.Question('Incluir novo registro?', 
         function () {
           Main.addExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
@@ -43,6 +45,10 @@ angular.module('main')
   }
   bind.edit = function (form) {
     if (form.$valid) {
+      if(!bind.novo.tipo){
+        FlashService.Error('Tipo de Exame é Obrigatório!');
+        return false;
+      }
       FlashService.Question('Alterar dados do registro?', 
         function () {
           Main.editExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);

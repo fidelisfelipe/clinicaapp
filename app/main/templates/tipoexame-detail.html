@@ -33,7 +33,14 @@
 
     </div>
     <div class="list">
-      
+      <h4 class="title text-center">Exames Associados</h4>
+      <div class="list" >
+      <a class="item item-icon-right" 
+       ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameAssociadoList | filter:searchText | orderBy: 'id' ">
+        <span>{{result.id}} - {{result.nome}}</span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+    </div>
     </div>
   </ion-content>
 </ion-view>
