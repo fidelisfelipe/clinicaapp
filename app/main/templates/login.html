@@ -6,23 +6,24 @@
 
         <h1 class="title"><center>Clínica App</center></h1>
         <h3 class="title"><center>Informe suas credenciais</center></h3>
-      <form name="form" novalidate="" ng-submit="ctrl.login(form)" >
-          <label class="item item-input" ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}">
+      <form name="formLogin" novalidate="" ng-submit="ctrl.login(formLogin)" >
+          <label class="item item-input" ng-class="{ 'has-errors' : formLogin.email.$invalid, 'no-errors' : formLogin.email.$valid}">
             <input type="text" placeholder="Email" ng-model="ctrl.userCurrent.email" name="email"required>
           </label>
-          <label class="item item-input" ng-class="{ 'has-errors' : form.senha.$invalid, 'no-errors' : form.senha.$valid}">
+          <label class="item item-input" ng-class="{ 'has-errors' : formLogin.senha.$invalid, 'no-errors' : formLogin.senha.$valid}">
             <input type="password" placeholder="Senha" ng-model="ctrl.userCurrent.senha" name="senha" required>
           </label>
           <div class="button-bar">
-            <button class="button button-positive" type="submit" ng-disabled="form.$invalid">
+            <button class="button button-positive" type="submit" ng-disabled="formLogin.$invalid">
               <span>Login</span>
             </button>
           </div>
-          <div class="button-bar" >
+
+      </form>
+        <div class="button-bar" >
           <button class="button button-calm" ng-click="ctrl.signin()" >Cadastre-se</button>
           <button class="button" ng-class="isOnline ? 'button-assertive' : 'button-assertive'">Esqueci minha senha?</button>
-          </div>
-      </form>
+        </div>
 
     </div>
 
@@ -30,7 +31,7 @@
 </ion-view>
 
 <script id="signin.html" type="text/ng-template">
-  <ion-modal-view >
+  <ion-modal-view style="height: 63%;">
     <ion-header-bar>
       <h1 class="title">Cadastre-se</h1>
     </ion-header-bar>
