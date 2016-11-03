@@ -1,11 +1,14 @@
-<ion-view view-title="main module">
+<ion-view view-title="Meus Dados" >
   <!-- do you want padding? -->
   <ion-content class="padding">
-
- <h1 class="title">Meus Dados</h1>
- {{userCurrent.nome}}<br/>
- {{userCurrent.email}}<br/>
- <img ng-src="{{userCurrent.srcImg}}" />
+     <div class="list card" style="text-align: center;">
+      <div class="item item-avatar">
+         <img ng-src="{{userCurrent.srcImg}}" />
+        <h2 >{{userCurrent.nome}}</h2>
+        <p>{{userCurrent.data | date: 'dd/MM/yyyy'}}</p>
+        <p>Email: {{userCurrent.email}}</p>
+      </div>
+    </div>
 
   </ion-content>
 </ion-view>

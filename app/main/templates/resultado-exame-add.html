@@ -1,0 +1,52 @@
+  <ion-modal-view >
+    <ion-header-bar>
+      <h1 class="title">Novo Resultado de Exame</h1>
+    </ion-header-bar>
+    <ion-content  >
+    <div class="list" ng-init="ctrl.resultado = {}">
+      <form name="form" class="" novalidate="" ng-submit="ctrl.resultado.id ? ctrl.resultadoEdit(form) : ctrl.resultadoAdd(form)" >
+               <label class="item item-input item-select" ng-class="{ 'has-errors' : form.data.$invalid, 'no-errors' : form.data.$valid}">
+                      <div class="input-label"  style="width: 95%" >Data</div>
+                      <input  type="date" id="date" name="data" ng-model="ctrl.resultado.data"
+                     placeholder="dd/MM/yyyy" min="1900-01-01" max="2050-12-30" required />
+               </label>
+               <label class="item item-input item-select" ng-class="{ 'has-errors' : form.tipoExame.$invalid, 'no-errors' : form.tipoExame.$valid}">
+                  <div class="input-label" style="width: 5%" ng-load="ctrl.refreshTipoExameList()">
+                    Tipo Exame:
+                  </div>
+                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.tipoExame" ng-options="tipoExame.nome for tipoExame in tipoExameList" name="tipoExame" >
+                  </select>
+                </label>
+
+                <label class="item item-input item-select" ng-class="{ 'has-errors' : form.exame.$invalid, 'no-errors' : form.exame.$valid}">
+                  <div class="input-label" style="width: 5%" ng-init="ctrl.refreshExameList()">
+                    Exame:
+                  </div>
+                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.exame" ng-options="exame.nome for exame in exameList" name="exame" >
+                  </select>
+                </label>
+
+                <label class="item item-input item-select" ng-class="{ 'has-errors' : form.valor.$invalid, 'no-errors' : form.valor.$valid}">
+                    <div class="input-label" >Valor</div>
+                    <input type="text" id="valor" name="valor" ng-model="ctrl.resultado.valor"
+                   placeholder="Valor" required />
+                </label>
+
+      <div class="button-bar">
+        <button class="item button button-positive" ng-disabled="form.$invalid" type="submit" >
+          {{ctrl.resultado.id ? 'Editar' : 'Novo'}}
+        </button>
+      </div>
+
+      <div class="button-bar">
+        <a class="button button-assertive" ng-click="ctrl.resultadoRemove()" 
+        ng-show="ctrl.resultado.id">
+          <span>Remover</span>
+        </a>
+      </div>
+
+      </form>
+
+    </div>
+    </ion-content>
+  </ion-modal-view>

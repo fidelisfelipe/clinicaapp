@@ -8,11 +8,11 @@
         <i class="icon ion-chevron-right icon-accessory"></i>
       </a>
 
-      <label class="item item-input">
+      <label class="item item-icon-left item-icon-right">
         <i class="icon ion-search placeholder-icon" ></i>
         <input type="text" placeholder="Search" 
          ng-model="searchText">
-        <span class="badge badge-positive" ng-bind="pacienteList.length"></span>
+        <span class="badge badge-positive" >Total: {{pacienteList.length}}</span>
       </label>
 
       <a class="item" ng-show="pacienteList.length === 0">

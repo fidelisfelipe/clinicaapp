@@ -92,8 +92,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/account.html',
-            controller: 'AccountCtrl as ctrl',
-            cache: false
+            controller: 'AccountCtrl as ctrl'
           }
         }
       })
@@ -101,9 +100,7 @@ angular.module('main', [
         url: '/userCurrent',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/userCurrent.html',
-            //controller: 'UserCurrentCtrl as ctrl',
-            cache: false
+            templateUrl: 'main/templates/userCurrent.html'
           }
         }
       })
@@ -112,8 +109,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/home.html',
-            controller: 'HomeCtrl as ctrl',
-            cache: false
+            controller: 'HomeCtrl as ctrl'
           }
         }
       })
@@ -122,8 +118,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-search.html',
-            controller: 'PacienteCtrl as ctrl',
-            cache: false
+            controller: 'PacienteCtrl as ctrl'
           }
         }
       })
@@ -164,11 +159,11 @@ angular.module('main', [
         }
       })
      .state('main.pacienteTipoExame', {
-        url: '/paciente/:pacienteId/tipoexame/:tipoExameId',
+        url: '/paciente/:pacienteId/por/tipoexame/:tipoExameId',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-tipoexame-detail.html',
-            controller: 'HemogramaCtrl as ctrl'
+            controller: 'PacienteCtrl as ctrl'
           }
         }
       })
@@ -177,8 +172,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/exame-search.html',
-            controller: 'ExameCtrl as ctrl',
-            cache: false
+            controller: 'ExameCtrl as ctrl'
           }
         }
       })
@@ -205,8 +199,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/tipoexame-search.html',
-            controller: 'TipoExameCtrl as ctrl',
-            cache: false
+            controller: 'TipoExameCtrl as ctrl'
           }
         }
       })
@@ -233,8 +226,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/config.html',
-            controller: 'ConfigCtrl as ctrl',
-            cache: false
+            controller: 'ConfigCtrl as ctrl'
           }
         }
       })
@@ -279,8 +271,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/hemograma.html',
-            controller: 'HemogramaCtrl as ctrl',
-            cache: false
+            controller: 'HemogramaCtrl as ctrl'
           }
         }
       })
@@ -293,16 +284,7 @@ angular.module('main', [
           }
         }
       })
-      .state('main.eas', {
-        url: '/eas',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/eas.html',
-            controller: 'EasCtrl as ctrl',
-            cache: false
-          }
-        }
-      })
+
       .state('main.listDetail', {
         url: '/list/detail',
         views: {
@@ -534,3 +516,5 @@ angular.module('main').filter('unique', function () {
     return uniqueList;
   };
 });
+
+

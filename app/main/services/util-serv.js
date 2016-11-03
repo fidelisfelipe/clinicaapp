@@ -2,14 +2,20 @@
 angular.module('main')
 .service('UtilService', function ($log, $rootScope, $http, FlashService) {
   var user =  new function () {
+    //persistents
     this.id = null;
     this.nome = '';
     this.email = '';
+    
+    this.ativo = false;
+    //transients
+    this.isAuthorized = false;
+
     this.firstName = '';
     this.lastName = '';
     this.role = '';
-    this.isAuthorized = false;
     this.isAdmin = false;
+
   };
   var UtilService = {
 /**
@@ -79,7 +85,7 @@ angular.module('main')
 //setUserCurrentBlank
     setUserCurrentBlank: function () {
       user.id = null;
-      user.email = '';
+      user.email = ''; 
       user.nome = '';
       user.isAuthorized = false;
       user.isLogado = false;

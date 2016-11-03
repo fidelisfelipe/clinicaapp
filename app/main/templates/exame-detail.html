@@ -22,6 +22,14 @@
           <span class="input-label">Sigla</span>
           <input type="text" placeholder="Sigla" name="sigla" ng-model="ctrl.novo.sigla" ng-minlength="1" ng-maxlength="6" required>
       </label>
+
+      <label class="item item-input item-select" ng-class="{ 'has-errors' : form.tipo.$invalid, 'no-errors' : form.tipo.$valid}">
+        <div class="input-label" style="width: 5%" >
+          Tipo Exame:
+        </div>
+        <select width="90%" style="width: 100%" ng-model="ctrl.novo.tipo" ng-options="tipoExame.nome for tipoExame in tipoExameList" name="tipo" >
+        </select>
+      </label>
       
       <div class="button-bar">
         <button class="button button-positive" type="submit" ng-disabled="formPaciente.$invalid">

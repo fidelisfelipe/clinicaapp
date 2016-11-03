@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('ExameCtrl', function ($log, $state, $stateParams, $rootScope, Main, FlashService) {
+.controller('ExameCtrl', function ($log, $state, $stateParams, $rootScope, Main, FlashService, DataService) {
 
   $log.log('Hello from your Controller: ExameCtrl in module main:. This is your controller:', this);
   var bind = this;
@@ -17,6 +17,18 @@ angular.module('main')
       }, msgErroLoadExames);
   };
   refreshList();
+
+  getTipoExameList();
+  function getTipoExameList() {
+    DataService.getTipoExameList(
+      function (tipoExameList) {
+          $rootScope.tipoExameList = tipoExameList;
+          FlashService.Loading(false);
+      }, function (erroMsg) {
+        FlashService.Error(erroMsg);
+        FlashService.Loading(false);
+      });
+  }
   bind.add = function (form) {
     if (form.$valid) {
     

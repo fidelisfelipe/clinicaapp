@@ -48,6 +48,7 @@ angular.module('main')
       if (response.status === 200) {
         $rootScope.status = response.data.erroMsg;
         var user = response.data.userCurrent;
+        //cast date
         UtilService.setUserCurrent(user);
         UtilService.refreshUserCurrentRoot();
 
