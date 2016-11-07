@@ -5,33 +5,33 @@
       <button class="button button-positive" ui-sref="main.login">Login</button>
     </div>
 
-	<div class="list" ng-show="ctrl.userCurrent.isAuthorized">
+	<div class="list branco" ng-show="ctrl.userCurrent.isAuthorized" >
 
-	  <a class="item item-icon-left item-icon-right" ui-sref="main.userCurrent" >
+	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.userCurrent" >
 	      <i class="icon ion-android-contact"></i>
 	      Meus Dados
 	      <i class="icon ion-chevron-right icon-accessory"></i>
 	  </a>
 
-	  <a class="item item-icon-left item-icon-right" ui-sref="main.pacienteSearch">
+	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.pacienteSearch">
 	    <i class="icon ion-android-contacts"></i>
 	    Meus Pacientes
 	    <span class="badge badge-positive" >{{pacienteList.length}}</span>
 		<i class="icon ion-chevron-right icon-accessory"></i>
 	  </a>
 
-    	<div class="item item-divider item-positive" 
+    	<div class="item sem-cor item-divider item-positive" 
     		ng-show="ctrl.userCurrent.isAuthorized" >
       		Settings
     	</div>
 
-	  <a class="item item-icon-left item-icon-right" ui-sref="main.exameSearch">
+	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.exameSearch">
 	    <i class="icon ion-ios-pulse"></i>
 	    Exame
 	    <span class="badge badge-positive" ng-controller="ExameCtrl as exameCtrl">{{exameList.length}}</span>
 	    <i class="icon ion-chevron-right icon-accessory"></i>
 	  </a>
-	  <a class="item item-icon-left item-icon-right" ui-sref="main.tipoExameSearch">
+	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.tipoExameSearch">
 	    <i class="icon ion-ios-pricetag"></i>
 	    Tipo de Exame
 	    <span class="badge badge-positive" ng-controller="TipoExameCtrl as tipoExameCtrl">{{tipoExameList.length}}</span>

@@ -98,15 +98,6 @@ angular.module('main', [
           }
         }
       })
-      .state('main.account', {
-        url: '/account',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/account.html',
-            controller: 'AccountCtrl as ctrl'
-          }
-        }
-      })
       .state('main.userCurrent', {
         url: '/userCurrent',
         views: {
@@ -230,15 +221,6 @@ angular.module('main', [
           'pageContent': {
             templateUrl: 'main/templates/tipoexame-detail.html',
             controller: 'TipoExameCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.config', {
-        url: '/config',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/config.html',
-            controller: 'ConfigCtrl as ctrl'
           }
         }
       })

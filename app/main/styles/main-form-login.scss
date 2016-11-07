@@ -1,0 +1,16 @@
+
+.form-login{
+    padding-top:12%
+}
+
+.form-login .scroll-content {
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin-top: -50px; /* the height of the centered content */
+  text-align: center;
+}
+.form-login .scroll {
+  display: table-cell;
+  vertical-align: middle;
+}

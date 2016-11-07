@@ -2,14 +2,14 @@
 
   <ion-content>
 
-    <div class="list">
-        <a class="item item-icon-right" ng-repeat="item in tipoExameList | orderBy: 'id'" 
+    <div class="list branco" style="margin-botton: 20px">
+        <a class="item sem-cor item-icon-right" ng-repeat="item in tipoExameList | orderBy: 'id'" 
         ui-sref="main.pacienteTipoExame({'pacienteId': ctrl.novo.id, 'tipoExameId': item.id})">
           {{item.nome}}
 
           <i class="icon ion-chevron-right icon-accessory"></i>
         </a>
-        <div class="item item-light" ng-show="!tipoExameList[0]">
+        <div class="item sem-cor item-light" ng-show="!tipoExameList[0]">
           Nenhum exame associado ao paciente
         </div>
     </div>

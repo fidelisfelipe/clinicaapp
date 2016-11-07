@@ -4,7 +4,7 @@ in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
 */
-
+$backgroundimage:                 '/main/assets/images/degrade.jpg';
 $light:                           #fff !default;
 $stable:                          #f8f8f8 !default;
 $positive:                        #4a87ee !default;
@@ -20,32 +20,33 @@ $ionicons-font-path: "../assets/fonts" !default;
 
 // Include all of Ionic
 @import "../../bower_components/ionic/scss/ionic";
-@import "formpacientevalidate";
 
-.formSignIn {
-    top: 10%;
-    right: 20%;
-    bottom: 10%;
-    left: 20%;
-    min-height: 240px;
-    width: 60%;
+/**
+//background custom
+.scroll-content {
+    background: url($backgroundimage) no-repeat center center fixed; 
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+  background-size: cover;
 }
-
-.formLogin{
-    text-align: center;
-    padding-top: 10%;
-    padding-left: 20%;
-    padding-right: 20%;
-}
-
-.formLogin .scroll-content {
-  display: table !important;
-  width: 100% !important;
-  height: 100% !important;
-  margin-top: -50px; /* the height of the centered content */
+.title{
+  color: white;
   text-align: center;
 }
-.formLogin .scroll {
-  display: table-cell;
-  vertical-align: middle;
+.title-black{
+  color: black;
+  text-align: center;
 }
+//list custom
+.list{
+  padding-bottom: 40px;
+}
+//popup custom
+.popup-container .popup {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.popup-title, .popup-body{
+  color: white;
+}
+**/

@@ -65,7 +65,12 @@ angular.module('main')
     
       FlashService.Question('Incluir novo registro?', 
         function () {
-          Main.addPaciente(bind.novo, function () {refreshResultadoList(); msgSucesso();}, msgErro);
+          FlashService.Loading(true, 'Incluindo registro');
+          Main.addPaciente(bind.novo, function () {
+            refreshResultadoList(); msgSucesso();
+            FlashService.Loading(false);
+          }, msgErro);
+
         });
 
     } else {

@@ -1,8 +1,8 @@
 <ion-view view-title="Pacientes">
   <ion-content>
 
-    <div class="list" >
-      <a class="item item-icon-left item-icon-right" ui-sref="main.pacienteAdd">
+    <div class="list branco" >
+      <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.pacienteAdd">
         <span>Novo</span>
         <i class="icon ion-person-add"></i>
         <i class="icon ion-chevron-right icon-accessory"></i>
@@ -15,11 +15,11 @@
         <span class="badge badge-positive" >Total: {{pacienteList.length}}</span>
       </label>
 
-      <a class="item" ng-show="pacienteList.length === 0">
+      <a class="item sem-cor" ng-show="pacienteList.length === 0">
         <span><center>Nenhum registro encontrado!</center></span>
       </a>
 
-      <a class="item item-icon-right" 
+      <a class="item sem-cor item-icon-right" 
        ui-sref="main.pacienteDetail({'pacienteId': result.id})" ng-repeat="result in pacienteList | filter:searchText | orderBy: 'id' ">
         <span>{{result.id}} - {{result.nome}}</span>
         <i class="icon ion-chevron-right icon-accessory"></i>

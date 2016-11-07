@@ -21,7 +21,7 @@ angular.module('main')
   function getTipoExameList() {
     DataService.getTipoExameList(
       function (tipoExameList) {
-          $rootScope.exameAssociadoList = exameAssociadoList;
+          $rootScope.tipoExameList = tipoExameList;
           FlashService.Loading(false);
       }, function (erroMsg) {
         FlashService.Error(erroMsg);

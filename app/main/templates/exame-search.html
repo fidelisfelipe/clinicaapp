@@ -1,8 +1,8 @@
 <ion-view view-title="Exames">
   <ion-content>
 
-    <div class="list" >
-      <a class="item item-icon-left item-icon-right" ui-sref="main.exameAdd">
+    <div class="list branco" >
+      <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.exameAdd">
         <span>Novo</span>
         <i class="icon ion-person-add"></i>
         <i class="icon ion-chevron-right icon-accessory"></i>
@@ -15,11 +15,11 @@
         <span class="badge badge-positive" ng-bind="exameList.length"></span>
       </label>
 
-      <a class="item" ng-show="exameList.length === 0">
+      <a class="item sem-cor" ng-show="exameList.length === 0">
         <span><center>Nenhum registro encontrado!</center></span>
       </a>
 
-      <a class="item item-icon-right" 
+      <a class="item sem-cor item-icon-right" 
        ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameList | filter:searchText | orderBy: 'id' ">
         <span>{{result.id}} - {{result.sigla}} - {{result.nome}}</span>
         <i class="icon ion-chevron-right icon-accessory"></i>

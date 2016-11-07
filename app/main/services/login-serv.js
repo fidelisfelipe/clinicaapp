@@ -19,11 +19,11 @@ angular.module('main')
         //set usuario logado
         $rootScope.status = 'Usuário não está logado';
         UtilService.setNotAuthorized();
-        UtilService.setUserCurrentBlank();
+        //UtilService.setUserCurrentBlank();
         UtilService.refreshUserCurrentRoot();
         callback();
       } else {
-        fail();
+        fail('Falha no Login: '+response.status+'-'+response.statusText );
       }
       
     }.bind(this))

@@ -3,18 +3,18 @@
 
   <div class="button-bar">
     <button type="button" class="button icon ion-eye"
-     ng-class="ctrl.openModalShow ? 'button-positive' : 'button-light'" ng-click="ctrl.openModalShow = !ctrl.openModalShow; ctrl.openModalEdit = false;" ></button>
+     ng-class="ctrl.openModalShow ? 'button-positive' : 'sem-cor branco'" ng-click="ctrl.openModalShow = !ctrl.openModalShow; ctrl.openModalEdit = false;" ></button>
     <button type="button" class="button icon ion-edit" 
-    ng-class="ctrl.openModalEdit ? 'button-positive' : 'button-light'" ng-click="ctrl.openModalEdit = !ctrl.openModalEdit;ctrl.openModalShow=false;" ></button>
+    ng-class="ctrl.openModalEdit ? 'button-positive' : 'sem-cor branco'" ng-click="ctrl.openModalEdit = !ctrl.openModalEdit;ctrl.openModalShow=false;" ></button>
   </div>
-  <div class="list" ng-show="ctrl.openModalShow && ctrl.novo.id">
-    <a class="item item-icon-left item-icon-right" >
+  <div class="list branco" ng-show="ctrl.openModalShow && ctrl.novo.id">
+    <a class="item sem-cor item-icon-left item-icon-right" >
          <i class="icon ion-android-contact"></i>
         {{ctrl.novo.nome}}
         <i class="icon ion-chevron-right icon-accessory"></i>
     </a>
 
-    <a class="item item-icon-left item-icon-right" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
+    <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
       <i class="icon ion-ios-pulse"></i>
       Exames
       <i class="icon ion-chevron-right icon-accessory"></i>
@@ -38,7 +38,7 @@
 
                 <label class="item item-input" ng-class="{ 'has-errors' : form.cpf.$invalid, 'no-errors' : form.cpf.$valid}">
                     <span class="input-label">CPF</span>
-                    <input type="text" placeholder="CPF" name="cpf" ng-model="ctrl.novo.cpf" ng-minlength="11" ng-maxlength="11" required>
+                    <input type="text" placeholder="CPF" name="cpf" ng-model="ctrl.novo.cpf" required ui-br-cpfcnpj-mask maxlength="14">
                 </label>
 
                 <label class="item item-input" ng-class="{ 'has-errors' : form.rg.$invalid, 'no-errors' : form.rg.$valid}">
@@ -59,7 +59,7 @@
 
                 <label class="item item-input" ng-class="{ 'has-errors' : form.telefone.$invalid, 'no-errors' : form.telefone.$valid}">
                     <span class="input-label">Telefone</span>
-                    <input type="tel" placeholder="Telefone" name="telefone" ng-model="ctrl.novo.telefone" required>
+                    <input type="tel" placeholder="Telefone" name="telefone" ng-model="ctrl.novo.telefone" required  ui-br-phone-number>
                 </label>
 
                 <label class="item item-input" ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}">
