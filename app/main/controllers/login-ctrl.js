@@ -17,8 +17,7 @@ angular.module('main')
 
   bind.login = function (form) {
 	if (form.$valid) {
-    	FlashService.Question('Deseja entrar no sistema?', 
-        function () {
+
           FlashService.Loading(true, 'Realizando Login...');
           LoginService.Login(bind.userCurrent, 
           	function(){
@@ -30,7 +29,6 @@ angular.module('main')
               FlashService.Loading(false);
           		FlashService.Error(erroMsg);
           	});
-        });
     }
   }
   function msgErro() {

@@ -103,7 +103,9 @@
     "start": "gulp serve-prod --env=prod",
     "postinstall": "bower install && gulp build --minify"
   },
-  "cordovaPlugins": [],
+  "cordovaPlugins": [
+    "cordova-plugin-crosswalk-webview"
+  ],
   "cordovaPlatforms": [
     {
       "platform": "android",

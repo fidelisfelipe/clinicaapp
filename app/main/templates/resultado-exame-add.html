@@ -14,15 +14,15 @@
                   <div class="input-label" style="width: 5%" ng-load="ctrl.refreshTipoExameList()">
                     Tipo Exame:
                   </div>
-                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.tipoExame" ng-options="tipoExame.nome for tipoExame in tipoExameList" name="tipoExame" >
+                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.tipoExame" ng-options="tipoExame.nome for tipoExame in tipoExameList | orderBy: 'nome'" name="tipoExame" ng-change="ctrl.refreshExameList(ctrl.resultado.tipoExame.id)">
                   </select>
                 </label>
 
                 <label class="item item-input item-select" ng-class="{ 'has-errors' : form.exame.$invalid, 'no-errors' : form.exame.$valid}">
-                  <div class="input-label" style="width: 5%" ng-init="ctrl.refreshExameList()">
+                  <div class="input-label" style="width: 5%" >
                     Exame:
                   </div>
-                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.exame" ng-options="exame.nome for exame in exameList" name="exame" >
+                  <select width="90%" style="width: 100%" ng-model="ctrl.resultado.exame" ng-options="exame.nome for exame in exameList | orderBy: 'nome'" name="exame" >
                   </select>
                 </label>
 

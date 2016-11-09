@@ -6,11 +6,11 @@
       <div class="button-bar" >
         <button class="button icon ion-grid" style="cursor:pointer" 
           ng-click="ctrl.showGrid = !ctrl.showGrid;ctrl.showTable = !ctrl.showTable;"
-          ng-class="ctrl.showGrid ? 'button-calm' : 'button-stable'"
+          ng-class="ctrl.showGrid ? 'button-stable' : 'button-positive'"
           ></button>
         <button class="button icon ion-ios-grid-view" style="cursor:pointer" 
           ng-click="ctrl.showTable = !ctrl.showTable;ctrl.showGrid = !ctrl.showGrid;"
-          ng-class="ctrl.showTable ? 'button-calm' : 'button-stable'"
+          ng-class="ctrl.showTable ? 'button-stable' : 'button-positive'"
           ></button>
         <button class="button button-energized icon ion-ios-plus" style="cursor:pointer" 
           title="Inserir novo resultado" ng-click="ctrl.openModalAdd()"></button>
@@ -19,7 +19,7 @@
       <div class="button button-full button-energized icon ion-ios-plus" ng-show="dataList.length === 0" ng-click="ctrl.openModalAdd()"></div>
 
     <!-- grid-->
-      <div class="button-bar" ng-show="ctrl.showGrid">
+      <div class="button-bar" ng-show="ctrl.showGrid && resultadoExameList.length !== 0">
         <div class="item button" >
           <button class="button"></button>
         </div>
@@ -42,7 +42,7 @@
 
       <!--table simple-->
 
-      <table style="width:100%; heigth: 100%;" class="text-center" ng-show="ctrl.showTable">
+      <table style="width:100%; heigth: 100%;" class="text-center" ng-show="ctrl.showTable && resultadoExameList.length !== 0">
         <tr >
           <th>
               &nbsp;
@@ -62,33 +62,48 @@
         </tr>
       </table>
 
-<div class="button-bar" >
-  <div class="button button-light" style="cursor:default;" >
-    Exame
-  </div>
-  <div class="button button-light" style="cursor:default">
-    Data
-  </div>
-  <div class="button button-light" style="cursor:default">
-    Valor
-  </div>
-  <div class="button button-light" style="cursor:default">
-    &nbsp;
-  </div>
-</div>
-<div class="button-bar" ng-repeat="resultado in resultadoExameList | orderBy: 'data':'data'">
-  <div class="button button-light" style="cursor:default" >
-    {{resultado.exame.nome}}
-  </div>
-  <div class="button button-light" style="cursor:default">
-    {{resultado.data | date: 'dd/MM/yyyy'}}
-  </div>
-  <div class="button button-light" style="cursor:default">
-    {{resultado.valor}}
-  </div>
-  <div class="button button-light ion-ios-trash" style="cursor:pointer" 
-          title="Remover" ng-click="ctrl.resultadoRemove(resultado)"></div>
-</div>
+       <div class="button button-full" ng-class="ctrl.showListResult ? 'button-energized' : 'button-positive'" ng-click="ctrl.showListResult = !ctrl.showListResult;" >
+          Resultados 
+          <span class="badge badge-positive" ng-bind="resultadoExameList.length"></span>
+        </div>
+
+      <div class="button-bar" ng-show="ctrl.showListResult">
+        <div class="button button-positive" style="cursor:default;" >
+          Exame
+        </div>
+        <div class="button button-positive" style="cursor:default">
+          Data
+        </div>
+        <div class="button button-positive" style="cursor:default">
+          Valor
+        </div>
+        <div class="item item-positive ion-arrow-down-b col-5" >
+        </div>
+      </div>
+      <div class="button-bar" ng-repeat="resultado in resultadoExameList | orderBy: 'data':'data'" ng-show="ctrl.showListResult">
+        <div class="button" 
+        ng-class="$index % 2 === 0? 'button-light' : 'button-positive'" 
+        style="cursor:default" >
+          {{resultado.exame.nome}}
+        </div>
+        <div class="button" 
+        ng-class="$index % 2 === 0? 'button-light' : 'button-positive'"
+        style="cursor:default">
+          {{resultado.data | date: 'dd/MM/yyyy'}}
+        </div>
+        <div class="button" 
+        ng-class="$index % 2 === 0? 'button-light' : 'button-positive'"
+        style="cursor:default">
+          {{resultado.valor}}
+        </div>
+        <div class="item item-assertive ion-ios-trash col-5" style="cursor:pointer" 
+                title="Remover" ng-click="ctrl.resultadoRemove(resultado)"></div>
+      </div>
+      <div class="button-bar" ng-show="resultadoExameList.length === 0">
+        <div class="button button-light" style="cursor:default" >
+          Nenhum registro encontrado!
+        </div>
+      </div>
 
 
 <script id="resultado-exame-add.html" type="text/ng-template">

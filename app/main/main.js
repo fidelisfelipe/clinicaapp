@@ -299,7 +299,6 @@ angular.module('main', [
       });
 }).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, UtilService, FlashService, LoginService, ConnectivityMonitor) {
   $rootScope.appLoaded = false;
-
   $ionicPlatform.ready(function() {
 
     $log.info('init app...');
@@ -313,11 +312,25 @@ angular.module('main', [
     $log.log('Platform isWebView:', ionic.Platform.isWebView());
     $log.log('Platform isAndroid:', ionic.Platform.isAndroid());
 
+    if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+            $ionicPopup.confirm({
+                title: "Internet Disconnected",
+                content: "The internet is disconnected on your device."
+            })
+            .then(function(result) {
+                if(!result) {
+                    ionic.Platform.exitApp();
+                }
+            });
+        }
+    }
+
 //check plugins
     $log.log('init cordova plugins');
     if (window.cordova && window.cordova.plugins.Keyboard) {
         $log.log('Keyboard cordova plugins detected!');
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
     }else{
         $log.info('Keyboard cordova plugins not detected!');
     }
@@ -434,21 +447,7 @@ angular.module('main', [
 /**
       //check backend status end
 
-      if(window.Connection) {
-          if(navigator.connection.type == Connection.NONE) {
-              $ionicPopup.confirm({
-                  title: "Internet Disconnected",
-                  content: "The internet is disconnected on your device."
-              })
-              .then(function(result) {
-                  if(!result) {
-                      ionic.Platform.exitApp();
-                  }
-              });
-          } else {
-            alert('isUnknown() ' + (navigator.connection.type === 'unknown'));
-          }
-      }
+
 
   });
 **/

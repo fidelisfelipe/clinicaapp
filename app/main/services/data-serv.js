@@ -150,8 +150,8 @@ angular.module('main')
         // or server returns response with an error status.
          if(response.status === -1){
            fail('Servidor Indisponível!');
-         } else if(response.status === 401){
-           fail('Usuário não autorizado!');
+         } else if(response.status === 406){
+           fail('Já existe este registro!');
          }else{
            $log.warn('add resultado response: ', response);
            fail(response.statusText + ' - ' + response.status);

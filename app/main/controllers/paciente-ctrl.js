@@ -27,6 +27,7 @@ angular.module('main')
       $rootScope.dataList = [];
       $rootScope.siglaList = [];
       $rootScope.pacienteList = [];
+      $rootScope.profissaoList = [{nome: 'Desenvolvedor'},{nome: 'Professor'}];
 
       initModalResultAdd();
   })();
@@ -46,6 +47,7 @@ angular.module('main')
       bind.modal = modal;
     });
   }
+
   bind.openModalAdd = function () {
     FlashService.Loading(true);
     //get list tipo exame
@@ -152,10 +154,13 @@ angular.module('main')
         Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });
   };
-  bind.refreshExameList = function () {
+  bind.refreshExameList = function (tipoId) {
+
      //get list exame
-    DataService.getExameList(
+    if(tipoId)
+    DataService.getExameAssociadoList(tipoId,
       function (exameList) {
+          $rootScope.exameList = [];
           $rootScope.exameList = exameList;
           FlashService.Loading(false);
       }, function (erroMsg) {
