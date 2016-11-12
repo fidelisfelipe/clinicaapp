@@ -116,7 +116,7 @@
       <form name="form" class="" novalidate="" ng-submit="ctrl.resultado.id ? ctrl.resultadoEdit(form) : ctrl.resultadoAdd(form)" >
                <label class="item item-input item-select" ng-class="{ 'has-errors' : form.data.$invalid, 'no-errors' : form.data.$valid}">
                       <div class="input-label"  style="width: 95%" >Data</div>
-                      <input  type="date" id="date" name="data" ng-model="ctrl.resultado.data"
+                      <input  type="date" id="date" name="data" ng-model="ctrl.resultado.data | date: 'dd/MM/yyyy'"
                      placeholder="dd/MM/yyyy" min="1900-01-01" max="2050-12-30" required />
                </label>
 

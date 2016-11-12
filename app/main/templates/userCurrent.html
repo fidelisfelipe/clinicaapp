@@ -3,7 +3,7 @@
   <ion-content class="padding">
      <div class="list card" style="text-align: center;">
       <div class="item item-avatar">
-         <img ng-src="/main/assets/images/yo@2x.png" />
+         <i class="ion-android-contact"></i>
         <h2 >{{userCurrent.nome}}</h2>
         <p>{{userCurrent.data | date: 'dd/MM/yyyy'}}</p>
         <p>Email: {{userCurrent.email}}</p>
@@ -27,7 +27,7 @@
                 </label>
                <label class="item item-input" >
                     <span class="input-label">Senha</span>
-                    <input type="text" placeholder="******" ng-model="userCurrent.senha">
+                    <input type="password" placeholder="******" ng-model="userCurrent.senha">
                 </label>
 
     </div>
