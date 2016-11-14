@@ -102,7 +102,9 @@ angular.module('main', [
         url: '/userCurrent',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/userCurrent.html'
+            templateUrl: 'main/templates/userCurrent.html',
+            controller: 'UserCurrentCtrl as ctrl',
+            cache: false
           }
         }
       })
@@ -111,7 +113,8 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/home.html',
-            controller: 'HomeCtrl as ctrl'
+            controller: 'HomeCtrl as ctrl',
+            cache: false
           }
         }
       })
@@ -315,8 +318,8 @@ angular.module('main', [
     if(window.Connection) {
         if(navigator.connection.type == Connection.NONE) {
             $ionicPopup.confirm({
-                title: "Internet Disconnected",
-                content: "The internet is disconnected on your device."
+                title: "Sua Internet está Desconectada",
+                content: "Deseja habilitar sua conexão com a Internet?"
             })
             .then(function(result) {
                 if(!result) {

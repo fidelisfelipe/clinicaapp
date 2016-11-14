@@ -109,6 +109,4 @@ angular.module('main')
 
   }
 
-
-
 });

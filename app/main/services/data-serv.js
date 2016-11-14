@@ -151,7 +151,7 @@ angular.module('main')
          if(response.status === -1){
            fail('Servidor Indisponível!');
          } else if(response.status === 406){
-           fail('Já existe este registro!');
+           
          }else{
            $log.warn('add resultado response: ', response);
            fail(response.statusText + ' - ' + response.status);
@@ -376,6 +376,70 @@ angular.module('main')
            fail('Usuário não autorizado!');
          }else{
            $log.warn('get resultado one response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
+    getLogin: function (usuarioWeb, callback, fail) {
+      $log.log('init get login one...');
+      $http({
+        method: 'GET',
+        //data: JSON.stringify(object),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/usuarios/'+usuarioWeb.id
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get login one success!');
+        $log.log('get login one - status:', response.status);
+        if (response.status === 200) {
+           //init converte date util for input date
+            var userCurrent = response.data.userCurrent;
+            userCurrent.data = new Date(userCurrent.data);
+            //end converte date util for input date
+
+            callback(userCurrent);
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         }else{
+           $log.warn('get login one response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
+    editLogin: function (paciente, callback, fail) {
+      paciente.dataNascimento = castDateForBackend(paciente.dataNascimento);
+      $log.log('init edit paciente...');
+      $http({
+        method: 'POST',
+        data: JSON.stringify(paciente),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes'
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get paciente one success!');
+        $log.log('get paciente one - status:', response.status);
+        if (response.status === 200) {
+            callback();
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         }else{
+           $log.warn('get paciente one response: ', response);
            fail(response.statusText + ' - ' + response.status);
          }
       });
