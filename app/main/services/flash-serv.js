@@ -5,8 +5,11 @@ angular
   .factory('FlashService', FlashService);
 
 FlashService.$inject = ['$rootScope', '$ionicPopup', '$ionicLoading'];
-function FlashService ($rootScope, $ionicPopup, $ionicLoading) {
+
+function FlashService($rootScope, $ionicPopup, $ionicLoading) {
   var service = {};
+
+  componentHandler.upgradeDom('mdl-spinner');
 
   service.Success = Success;
   service.Error = Error;
@@ -16,59 +19,78 @@ function FlashService ($rootScope, $ionicPopup, $ionicLoading) {
 
   return service;
 
-  function initService () {
-    $rootScope.$on('$locationChangeStart', function () {
+  function initService() {
+    $rootScope.$on('$locationChangeStart', function() {
       clearFlashMessage();
     });
 
-    function clearFlashMessage () {
+    function clearFlashMessage() {
       var flash = $rootScope.flash;
       if (flash) {
         if (!flash.keepAfterLocationChange) {
           delete $rootScope.flash;
         } else {
-// only keep for a single location change
+          // only keep for a single location change
           flash.keepAfterLocationChange = false;
         }
       }
     }
   }
 
-  function Success (message) {
-    $ionicPopup.alert({
-      title: 'Success',
-      template: '<center>' + message + '</center>',
-      cssClass: 'positive'
+  function Success(message) {
+
+    swal({
+      title: "Success!",
+      text: message,
+      type: "success",
+      customClass: "success-swa"
     });
+
   }
 
-  function Loading (isLoading, message) {
+  function Loading(isLoading, message) {
+
+    var spinner = '<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active is-upgraded"></div>';
+    message = '<div class="loading-message">' + message + '</div>';
+
     if (isLoading) {
-      $ionicLoading.show({
-        template: '<center>' + (message ? message : 'Loading...') + '</center>'
+      swal({
+        title: '',
+        text: spinner + message,
+        html: true,
+        customClass: "loading-swa",
+        animation: 'none'
       });
     } else {
-      $ionicLoading.hide();
+      swal.close();
+    }
+
+  }
+
+  function Error(message) {
+
+    swal({
+      title: "Oops!",
+      text: message,
+      type: "error",
+      customClass: "error-swa"
+    });
+
+  }
+
+  function Question(message, yes) {
+
+    swal({
+        title: "Tem certeza?",
+        text: message,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Sim",
+        closeOnConfirm: false,
+        customClass: 'warning-swa'
+      }, function(){
+        yes();
+      });
     }
   }
-  function Error (message) {
-    $ionicPopup.alert({
-      title: 'Warning',
-      template: '<center>' + message + '</center>',
-      cssClass: 'assertive'
-    });
-  }
-  function Question (message, yes) {
-    var question = $ionicPopup.confirm({
-      title: 'Question',
-      template: '<center>' + message + '</center>',
-      cssClass: 'assertive'
-    });
-    question.then(function (res) {
-      if (res) {
-        yes();
-      }
-    });
-  }
-}
-

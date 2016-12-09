@@ -1,53 +1,52 @@
-<ion-view view-title="Exame">
-  <ion-content>
-    <div class="list" >
+<ion-view view-title="{{(ctrl.novo.nome)? ctrl.novo.nome : 'Novo Exame'}}">
 
-  <form name="formPaciente" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(formPaciente) : ctrl.add(formPaciente)">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-      <a class="item item-icon-left item-icon-right" ui-sref="main.tabelas" ng-show="{{ctrl.novo.id}}">
-        <span>Exames</span>
-        <i class="icon ion-ios-pulse-strong"></i>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </a>
-
-      <label class="item item-input" ng-show="{{ctrl.novo.id}}">
-          <span class="input-label">ID</span>
-          <input type="text" placeholder="ID" ng-model="ctrl.novo.id">
-      </label>
-      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.nome.$invalid, 'no-errors' : formPaciente.nome.$valid}">
-          <span class="input-label">Nome</span>
-          <input type="text" placeholder="Nome" name="nome" ng-model="ctrl.novo.nome" ng-minlength="5" ng-maxlength="80" required>
-      </label>
-      <label class="item item-input" ng-class="{ 'has-errors' : formPaciente.sigla.$invalid, 'no-errors' : formPaciente.sigla.$valid}">
-          <span class="input-label">Sigla</span>
-          <input type="text" placeholder="Sigla" name="sigla" ng-model="ctrl.novo.sigla" ng-minlength="1" ng-maxlength="6" required>
-      </label>
-
-      <label class="item item-input item-select" ng-class="{ 'has-errors' : form.tipo.$invalid, 'no-errors' : form.tipo.$valid}">
-        <div class="input-label" style="width: 5%" >
-          Tipo Exame:
-        </div>
-        <select width="90%" style="width: 100%" ng-model="ctrl.novo.tipo.id" 
-        ng-options="tipo.id as tipo.nome for tipo in tipoExameList" name="tipo" >
-
-        </select>
-      </label>
-      
-      <div class="button-bar">
-        <button class="button button-positive" type="submit" ng-disabled="formPaciente.$invalid">
-          <span>{{ctrl.novo.id ? 'Editar' : 'Novo'}}</span>
-        </button>
-        <a class="button button-assertive" ng-click="ctrl.remove()" 
-        ng-show="ctrl.novo.id">
-          <span>Remover</span>
-        </a>
+    <header ion-nav-bar class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">{{(ctrl.novo.nome)? ctrl.novo.nome : 'Novo Exame'}}</span>
       </div>
+    </header>
 
-    </form>
+    <main class="mdl-layout__content">
+      <ion-content class="login-background">
+      <div class="page-content">
+        <div class="user-edit-delete-form-container">
 
-    </div>
-    <div class="list">
-      
-    </div>
-  </ion-content>
+          <form name="formPaciente" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(formPaciente) : ctrl.add(formPaciente)">
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="id-input" ng-model="ctrl.novo.id" readonly pattern="-?[0-9]*(\.[0-9]+)?">
+              <label class="mdl-textfield__label" for="id-input">ID</label>
+            </div>
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <!-- ng-class="{ 'has-errors' : formPaciente.nome.$invalid, 'no-errors' : formPaciente.nome.$valid}" -->
+              <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="5" ng-maxlength="80">
+              <label class="mdl-textfield__label" for="nome-input">Nome</label>
+            </div>
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <!-- ng-class="{ 'has-errors' : formPaciente.sigla.$invalid, 'no-errors' : formPaciente.sigla.$valid}" -->
+              <input class="mdl-textfield__input" type="text" id="sigla-input" ng-model="ctrl.novo.sigla" ng-minlength="1" ng-maxlength="6">
+              <label class="mdl-textfield__label" for="sigla-input">Sigla</label>
+            </div>
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <!-- ng-class="{ 'has-errors' : form.tipo.$invalid, 'no-errors' : form.tipo.$valid}" -->
+              <select class="mdl-textfield__input" ng-model="ctrl.novo.tipo.id" ng-options="tipo.id as tipo.nome for tipo in tipoExameList" id="tipo-input"></select>
+              <label class="mdl-textfield__label" for="tipo-input">Tipo Exame</label>
+            </div>
+
+              <div class="mdl-textfield button-field">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="formPaciente.$invalid">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">Remover</button>
+              </div>
+            </form>
+        </div>
+      </div>
+      </ion-content>
+    </main>
+  </div>
+
 </ion-view>

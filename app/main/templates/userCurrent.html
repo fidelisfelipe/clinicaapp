@@ -1,41 +1,72 @@
-<ion-view view-title="Meus Dados" >
-  <!-- do you want padding? -->
-  <ion-content class="padding">
-  <div class="list" >
-     <div class="card" >
-      <div class="item">
-         
-        <h2 ><i class="ion-android-contact"></i>&nbsp;{{userCurrent.nome}}</h2>
-        <p>{{userCurrent.data | date: 'dd/MM/yyyy'}}</p>
-        <p>Email: {{userCurrent.email}}</p>
+<ion-view view-title="Perfil: {{userCurrent.nome}}">
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header ion-nav-bar class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Perfil: {{userCurrent.nome}}</span>
       </div>
-    </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      <ion-content class="login-background">
+        <div class="page-content">
+
+          <div class="profile-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">{{userCurrent.nome}}</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <ul class="demo-list-icon mdl-list">
+                <li class="mdl-list__item" ng-if="userCurrent.data">
+                  <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon">event</i>
+                  {{userCurrent.data | date: 'dd/MM/yyyy'}}
+                  </span>
+                </li>
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon">email</i>
+                  {{userCurrent.email}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Editar Perfil
+              </a>
+            </div>
+            <div class="mdl-card__menu">
+              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">settings</i>
+              </button>
+            </div>
+          </div>
+
+          <form name="form" class="" novalidate="" ng-hide="true" ng-submit="ctrl.edit(form)" >
+                    <label class="item item-input" >
+                        <span class="input-label">Nome</span>
+                        <input type="text" placeholder="Nome" ng-model="ctrl.userCurrent.nome">
+                    </label>
+                     <label class="item item-input" >
+                        <span class="input-label">Email</span>
+                        <input type="text" placeholder="Email" disabled ng-model="ctrl.userCurrent.email">
+                    </label>
+    <!--                <label class="item item-input" >
+                        <span class="input-label">CPF</span>
+                        <input type="text" placeholder="CPF" disabled ng-model="ctrl.userCurrent.cpf" ui-br-cpfcnpj-mask/>
+                    </label>
+                    <div class="button-bar">
+                      <button class="button button-positive" type="submit" ng-disabled="form.$invalid">
+                        <span>Editar</span>
+                      </button>
+                    </div>
+    -->
+          </form>
+        </div>
+      </ion-content>
+    </main>
   </div>
-  <!-- form edit-->
 
-  <div class="list" >
-      <form name="form" class="" novalidate="" ng-hide="true" ng-submit="ctrl.edit(form)" >
-                <label class="item item-input" >
-                    <span class="input-label">Nome</span>
-                    <input type="text" placeholder="Nome" ng-model="ctrl.userCurrent.nome">
-                </label>
-                 <label class="item item-input" >
-                    <span class="input-label">Email</span>
-                    <input type="text" placeholder="Email" disabled ng-model="ctrl.userCurrent.email">
-                </label>
-<!--                <label class="item item-input" >
-                    <span class="input-label">CPF</span>
-                    <input type="text" placeholder="CPF" disabled ng-model="ctrl.userCurrent.cpf" ui-br-cpfcnpj-mask/>
-                </label>
-                <div class="button-bar">
-                  <button class="button button-positive" type="submit" ng-disabled="form.$invalid">
-                    <span>Editar</span>
-                  </button>
-                </div>
--->
-      </form>
-
-    </div>
-
-  </ion-content>
 </ion-view>

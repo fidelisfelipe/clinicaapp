@@ -1,0 +1,365 @@
+.mdl-layout__drawer-force-open {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.loading-swa {
+  margin-top: 0;
+  margin-left: 0;
+  left: 50%;
+  right: inherit;
+  width: 60%;
+  top: 50%;
+  transform: translate3d(-50%,-50%,0);
+
+  .sa-button-container,
+  .sa-error-container,
+  fieldset,
+  h2 {
+    display: none;
+  }
+
+  p {
+    display: table!important;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .loading-message {
+    display: table-cell;
+    padding: 0 15px;
+    vertical-align: middle;
+  }
+}
+
+.success-swa,
+.warning-swa {
+  fieldset {
+    display: none;
+  }
+}
+//bypass auto-complete
+input:-webkit-autofill,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover {
+  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+  -webkit-transition-delay: 9999s;
+}
+
+input[name="menu"] {
+  display: none;
+}
+
+.hz-menu {
+  width: 100%;
+  height: 60px;
+  overflow: hidden;
+  background: rgb(30, 100, 255);
+  position: absolute;
+  bottom: 0;
+  z-index: 3;
+}
+
+.hz-menu .link-wrap {
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+
+.hz-menu .link-wrap > label {
+  color: #fff;
+  z-index: 999;
+  min-width: 80px;
+  max-width: 168px;
+  width: 25%;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 12px;
+  text-align: center;
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hz-menu .link-wrap > label > i,
+.hz-menu .link-wrap > label > span {
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
+}
+
+.hz-menu .link-wrap > label > span {
+  height: 0;
+  display: block;
+  font-weight: 500;
+  -webkit-transform: translateY(45px);
+  transform: translateY(45px);
+}
+
+.hz-menu .overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 56px;
+  display: table;
+  position: absolute;
+}
+
+.hz-menu .overlay > span {
+  width: 1%;
+  position: relative;
+  display: table-cell;
+}
+
+.hz-menu .overlay > span:after {
+  top: 50%;
+  left: 50%;
+  content: '';
+  width: 100%;
+  height: 24px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: #fff;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+#bug:checked ~ .hz-menu label[for="bug"] > span,
+#logout:checked ~ .hz-menu label[for="logout"] > span,
+#network:checked ~ .hz-menu label[for="network"] > span {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  height: auto;
+}
+
+#bug:checked + .hz-menu .overlay .overlay-bug:after,
+#logout:checked + input + .hz-menu .overlay .overlay-logout:after,
+#network:checked + input + input + .hz-menu .overlay .overlay-network:after {
+  z-index: 1;
+  -webkit-animation: active 0.4s linear forwards;
+  animation: active 0.4s linear forwards;
+}
+
+#network:checked ~ .hz-menu .overlay .overlay-network:after,
+.hz-menu .overlay .overlay-network:after {
+  background-color: #546e7a;
+}
+
+#logout:checked ~ .hz-menu .overlay .overlay-logout:after,
+.hz-menu .overlay .overlay-logout:after {
+  background-color: rgb(33,150,243);
+}
+
+#bug:checked ~ .hz-menu .overlay .overlay-bug:after,
+.hz-menu .overlay .overlay-bug:after {
+  background-color: #8d6e63;
+}
+@-webkit-keyframes active {
+  from {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  to {
+    -webkit-transform: scale(40);
+    transform: scale(40);
+  }
+}
+@keyframes active {
+  from {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  to {
+    -webkit-transform: scale(40);
+    transform: scale(40);
+  }
+}
+
+.right-bottom-fab{
+  position: absolute;
+  bottom: 70px;
+  right: 10px;
+  z-index: 5;
+}
+
+.search-field{
+  input{
+    color: #fff;
+    margin-top: -10px;
+  }
+}
+
+//hacking navbar to only show navigation buttons and menu button
+
+ion-header-bar.bar-hacked{
+  border: 0!important;
+  background: transparent!important;
+  width: 60px;
+height: 57px;
+
+  .title{
+    display: none!important;
+  }
+
+  .buttons{
+    margin: 10px;
+    color: #fff;
+    background: transparent;
+  }
+
+  .back-text{
+    display: none;
+  }
+}
+
+// hacking has-header
+
+ion-content:not(.no-header){
+  top: 0!important;
+  height: calc(100% - 55px)!important;
+}
+
+.mdl-wtf-tabs-hack{
+  bottom: 0;
+}
+
+.mdl-tabs-container-hack{
+  .mdl-layout__tab-bar-container{
+    display: none;
+  }
+}
+
+.user-info-card.mdl-card {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-50%,0);
+
+
+  .mdl-card__title {
+    color: #fff;
+    background:
+      url('https://rinj.chiromatrixbase.com/clients/1926/images/Medical_Exam.jpg') center / cover no-repeat #46B6AC;
+  }
+  .mdl-card__title-text {
+    background: rgba(96, 96, 97, 0.55);
+    padding: 10px 30px;
+    border-radius: 5px;
+    font-weight: 900;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.38);
+  }
+  .mdl-card__menu {
+    color: #fff;
+  }
+}
+
+.user-edit-delete-form{
+  .button-field{
+    display: flex;
+justify-content: space-between;
+align-items: center;
+    button{
+      position: relative;
+      bottom: 0;
+    }
+  }
+}
+
+.user-edit-delete-form-container{
+
+  position: relative;
+
+  &:not(.second-container){
+    position: relative;
+    top: 30px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  &.second-container{
+    top: 40px;
+
+    .title {
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 400;
+
+      &.title-background{
+        background: rgba(0,0,0,.3);
+        padding: 15px;
+      }
+
+      &.title-custom{
+        width: 100vw;
+        text-align: center;
+      }
+
+    }
+  }
+
+  .mdl-textfield__input {
+    color: #fff!important;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+  }
+
+  .mdl-textfield__label {
+    color: rgba(255,255,255,.3)!important;
+    font-size: 14px;
+
+    &:after {
+      background-color: #fff!important;
+    }
+  }
+
+  .mdl-textfield__error {
+    color: #fff!important;
+  }
+
+  input[readonly]{
+    background: transparent;
+  }
+}
+
+.white-list-icon{
+  .mdl-list__item, .mdl-list__item-secondary-action, .mdl-list__item-icon{
+    color: #fff;
+  }
+  .mdl-list__item{
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    &:last-child{
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+.profile-card-wide.mdl-card {
+  min-width: 370px;
+  width: calc(90vw - 40px);
+  max-width: 500px;
+  margin: 20px auto;
+
+  .mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background: url('https://getmdl.io/assets/demos/welcome_card.jpg') center / cover;
+  }
+
+  .mdl-card__menu {
+    color: #fff;
+  }
+}

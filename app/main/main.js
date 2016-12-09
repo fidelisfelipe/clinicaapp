@@ -306,6 +306,11 @@ angular.module('main', [
 
     $log.info('init app...');
 
+    setTimeout(function(){
+      componentHandler.upgradeDom();
+      console.warn('domUpdated');
+    }, 0);
+
     $rootScope.appStatusView = 'Iniciando...';
     var infoPlatform = ionic.Platform;
     $log.log('Platform Info:',  JSON.stringify(infoPlatform));
@@ -348,7 +353,7 @@ angular.module('main', [
 //clean user session
   	$log.debug('init session ctrl - begin');
     $rootScope.userCurrent = UtilService.getUserCurrentLocal();
-  	
+
   	if(!$rootScope.userCurrent.isAuthorized) {
   		$log.info('user not found...');
   	} else {
@@ -366,6 +371,13 @@ angular.module('main', [
 
 //watch for change state
     $rootScope.$on('$stateChangeSuccess', function(evt){
+      setTimeout(function(){
+        componentHandler.upgradeDom();
+        console.warn('domUpdated');
+      },0);
+
+      document.getElementById("logout").checked = true;
+
        $rootScope.userCurrent = UtilService.getUserCurrentLocal();
         if($rootScope.userCurrent.isAuthorized){
           $log.info('You is Authorized');
@@ -399,14 +411,14 @@ angular.module('main', [
     $rootScope.logout = function () {
       //TODO: send request logout
 
-        FlashService.Question('Deseja realmente sair do sistema?', 
+        FlashService.Question('Deseja realmente sair do sistema?',
         function () {
           FlashService.Loading(true, 'Realizando Logout...');
           LoginService.Logout(
             function(){
               $state.go('main.login');
               FlashService.Success('Logout efetuado com sucesso!');
-            }, 
+            },
             function(){
               FlashService.Error('Falha ao realizar Logout!');
             });
@@ -418,7 +430,7 @@ angular.module('main', [
 
   });
 
-}); 
+});
 /**
 
       $rootScope.showLoading = function(message) {
@@ -457,44 +469,44 @@ angular.module('main', [
 
 
 angular.module('main').factory('ConnectivityMonitor', function($rootScope, $cordovaNetwork){
- 
+
   return {
     isOnline: function(){
       if(ionic.Platform.isWebView()){
-        return $cordovaNetwork.isOnline();    
+        return $cordovaNetwork.isOnline();
       } else {
         return navigator.onLine;
       }
     },
     isOffline: function(){
       if(ionic.Platform.isWebView()){
-        return !$cordovaNetwork.isOnline();    
+        return !$cordovaNetwork.isOnline();
       } else {
         return !navigator.onLine;
       }
     },
     startWatching: function(){
         if(ionic.Platform.isWebView()){
- 
+
           $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
             console.log("went online");
           });
- 
+
           $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
             console.log("went offline");
           });
- 
+
         }
         else {
- 
+
           window.addEventListener("online", function(e) {
             console.log("went online");
-          }, false);    
- 
+          }, false);
+
           window.addEventListener("offline", function(e) {
             console.log("went offline");
-          }, false);  
-        }       
+          }, false);
+        }
     }
   }
 });
@@ -512,5 +524,3 @@ angular.module('main').filter('unique', function () {
     return uniqueList;
   };
 });
-
-

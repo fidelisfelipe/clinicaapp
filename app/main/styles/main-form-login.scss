@@ -1,16 +1,135 @@
+.login-box-container {
 
-.form-login{
-    padding-top:12%
+  &:not(.signup-box){
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%,-50%,0);
+  }
+
+  &.signup-box{
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+  }
+
+  .title {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 200;
+  }
+
+  .form-login {
+
+    &:not(.form-signup){
+      padding-top: 12%;
+    }
+
+    &.form-signup{
+      padding-top: 0;
+    }
+
+    .scroll-content {
+      display: table !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin-top: -50px;
+      /* the height of the centered content */
+      text-align: center;
+    }
+
+    .scroll {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .mdl-textfield__input {
+      color: #fff!important;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.3);
+    }
+
+    .mdl-textfield__label {
+      color: rgba(255,255,255,.3)!important;
+      font-size: 14px;
+
+      &:after {
+        background-color: #fff!important;
+      }
+    }
+
+    .mdl-textfield__error {
+      color: #fff!important;
+    }
+
+    &:not(.form-signup) {
+      .mdl-textfield {
+        margin: 20px 0;
+
+        &.is-focused {
+          .mdl-textfield__label {
+            color: #fff!important;
+          }
+        }
+      }
+    }
+
+    &.form-signup{
+      .mdl-textfield {
+
+        transition: margin-bottom 100ms ease-in-out;
+
+        &.button-field{
+          margin: 40px 0 0 0;
+        }
+
+        &.is-invalid.is-dirty {
+          margin-bottom: 15px;
+          transition: margin-bottom 100ms ease-in-out;
+        }
+
+        &.is-focused {
+          .mdl-textfield__label {
+            color: #fff!important;
+          }
+        }
+      }
+    }
+
+    .some-helps {
+      text-align: center;
+      color: #fff;
+      font-size: 13px;
+      margin: 0;
+      padding: 0;
+
+      p{
+        margin: 15px 0;
+      }
+    }
+
+    .login-button {
+      background: #fff;
+      color: #04A0DA;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0 30px;
+    }
+  }
 }
 
-.form-login .scroll-content {
-  display: table !important;
-  width: 100% !important;
-  height: 100% !important;
-  margin-top: -50px; /* the height of the centered content */
-  text-align: center;
+.button-close-modal{
+  margin: 20px;
+  color: #fff;
 }
-.form-login .scroll {
-  display: table-cell;
-  vertical-align: middle;
+
+.login-background {
+  background: #04A0DA;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(-45deg, #7F50D6 , #04A0DA);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(-45deg, #7F50D6 , #04A0DA);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

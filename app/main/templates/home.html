@@ -1,44 +1,52 @@
-<ion-view view-title="Home">
-  <ion-content>
+<ion-view hide-nav-bar="true" view-title="App Clínica">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
 
-	<div class="button-bar" ng-show="!ctrl.userCurrent.isAuthorized">
-      <button class="button button-positive" ui-sref="main.login">Login</button>
-    </div>
+      <div class="mdl-layout__header-row">
+        <i menu-toggle="left" class="material-icons" style="position:absolute;left:20px;">menu</i>
+        <span class="mdl-layout-title">Clínica App</span>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <ion-content>
 
-	<div class="list branco" ng-show="ctrl.userCurrent.isAuthorized" >
+          <div class="button-bar" ng-show="!ctrl.userCurrent.isAuthorized">
+            <button class="button button-positive" ui-sref="main.login">Login</button>
+          </div>
 
-	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.userCurrent" >
-	      <i class="icon ion-android-contact"></i>
-	      Meus Dados
-	      <i class="icon ion-chevron-right icon-accessory"></i>
-	  </a>
-
-	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.pacienteSearch">
-	    <i class="icon ion-android-contacts"></i>
-	    Meus Pacientes
-	    <span class="badge badge-positive" >{{pacienteList.length}}</span>
-		<i class="icon ion-chevron-right icon-accessory"></i>
-	  </a>
-
-    	<div class="item sem-cor item-divider item-positive" 
-    		ng-show="ctrl.userCurrent.isAuthorized" >
-      		Settings
-    	</div>
-
-	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.exameSearch">
-	    <i class="icon ion-ios-pulse"></i>
-	    Exame
-	    <span class="badge badge-positive" ng-controller="ExameCtrl as exameCtrl">{{exameList.length}}</span>
-	    <i class="icon ion-chevron-right icon-accessory"></i>
-	  </a>
-	  <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.tipoExameSearch">
-	    <i class="icon ion-ios-pricetag"></i>
-	    Tipo de Exame
-	    <span class="badge badge-positive" ng-controller="TipoExameCtrl as tipoExameCtrl">{{tipoExameList.length}}</span>
-	    <i class="icon ion-chevron-right icon-accessory"></i>
-	  </a>
-
-	</div>
-
-  </ion-content>
+          <ul class="demo-list-icon mdl-list" ng-show="ctrl.userCurrent.isAuthorized">
+            <li class="mdl-list__item" ui-sref="main.userCurrent">
+              <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">person</i>
+            Meus Dados
+            </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
+            <li class="mdl-list__item" ui-sref="main.pacienteSearch">
+              <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">supervisor_account</i>
+            <span class="mdl-badge" data-badge="{{pacienteList.length}}">Meus Pacientes</span>
+              </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
+            <li class="mdl-list__item" ui-sref="main.exameSearch">
+              <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">map</i>
+            <span class="mdl-badge" ng-controller="ExameCtrl as exameCtrl" data-badge="{{exameList.length}}">Exame</span>
+              </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
+            <li class="mdl-list__item" ui-sref="main.tipoExameSearch">
+              <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">label</i>
+            <span class="mdl-badge" ng-controller="TipoExameCtrl as tipoExameCtrl" data-badge="{{tipoExameList.length}}">Tipo de Exame</span>
+              </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
+          </ul>
+        </ion-content>
+      </div>
+    </main>
+  </div>
 </ion-view>

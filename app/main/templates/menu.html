@@ -5,14 +5,14 @@
 
     <!-- header bar -->
     <!-- the nav bar will be updated as we navigate between views -->
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-hacked">
       <!-- back button, shown if applicable -->
       <ion-nav-back-button>
+        <i class="icon material-icons">chevron_left</i>
       </ion-nav-back-button>
       <!-- nav button, shown if applicable -->
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
+        <i class="icon material-icons" menu-toggle="left">menu</i>
       </ion-nav-buttons>
     </ion-nav-bar>
 
@@ -23,57 +23,53 @@
 
   <!-- SIDEMENU -->
   <ion-side-menu side="left">
-
-    <!-- menu header -->
-    <ion-header-bar class="bar-positive">
-      <h1 class="title">Clínica App</h1>
-    </ion-header-bar>
-
     <!-- menu content -->
-    <ion-content>
-      <div class="list branco">
-
-        <a class="item sem-cor menu-close item-icon-left item-icon-right" ui-sref="main.home">
-          <i class="icon ion-home"></i>
-          Home
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </a>
-        <a class="item sem-cor menu-close item-icon-left item-icon-right" ui-sref="main.login"
-         ng-show="!ctrl.userCurrent.isAuthorized">
-          <i class="icon ion-person-stalker"></i>
-          Login
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </a>
-
-        <a class="item sem-cor menu-close item-icon-left item-icon-right" ui-sref="main.userCurrent" 
-        ng-show="ctrl.userCurrent.isAuthorized">
-          <i class="icon ion-android-contact"></i>
-          Meus Dados
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </a>
-
-        <a class="item sem-cor menu-close item-icon-left item-icon-right" ui-sref="main.pacienteSearch" 
-        ng-show="ctrl.userCurrent.isAuthorized">
-          <i class="icon ion-android-contacts"></i>
-          Meus Pacientes
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </a>
-
-        <div class="item item-divider item-positive" ng-show="ctrl.userCurrent.isAuthorized">
-          Settings
-        </div>
-        
-        <a class="item sem-cor menu-close item-icon-left item-icon-right" ui-sref="main.exameSearch" ng-show="ctrl.userCurrent.isAuthorized">
-          <i class="icon ion-ios-pulse"></i>
-          Exames
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </a>
-        <a class="item sem-cor menu-close item-icon-left item-icon-right" ui-sref="main.tipoExameSearch" ng-show="ctrl.userCurrent.isAuthorized">
-          <i class="icon ion-ios-pricetag"></i>
-          Tipo de Exame
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </a>
-      </div>
+    <ion-content class="mdl-layout__drawer mdl-layout__drawer-force-open" scroll="false">
+      <span class="mdl-layout-title">Menu</span>
+      <ul class="mdl-list menu-close" ng-show="ctrl.userCurrent.isAuthorized">
+        <li class="mdl-list__item" ui-sref="main.home">
+          <span class="mdl-list__item-primary-content">
+        <i class="material-icons mdl-list__item-icon">home</i>
+        Home
+        </span>
+          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+        </li>
+        <li class="mdl-list__item" ui-sref="main.login" ng-show="!ctrl.userCurrent.isAuthorized">
+          <span class="mdl-list__item-primary-content">
+        <i class="material-icons mdl-list__item-icon">home</i>
+        Login
+        </span>
+          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+        </li>
+        <li class="mdl-list__item" ui-sref="main.userCurrent" ng-show="ctrl.userCurrent.isAuthorized">
+          <span class="mdl-list__item-primary-content">
+        <i class="material-icons mdl-list__item-icon">person</i>
+        Meus Dados
+        </span>
+          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+        </li>
+        <li class="mdl-list__item" ui-sref="main.pacienteSearch" ng-show="ctrl.userCurrent.isAuthorized">
+          <span class="mdl-list__item-primary-content">
+        <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" data-badge="{{pacienteList.length}}">supervisor_account</i>
+        <span>Meus Pacientes</span>
+          </span>
+          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+        </li>
+        <li class="mdl-list__item" ui-sref="main.exameSearch" ng-show="ctrl.userCurrent.isAuthorized">
+          <span class="mdl-list__item-primary-content">
+        <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" ng-controller="ExameCtrl as exameCtrl" data-badge="{{exameList.length}}">map</i>
+        <span>Exame</span>
+          </span>
+          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+        </li>
+        <li class="mdl-list__item" ui-sref="main.tipoExameSearch" ng-show="ctrl.userCurrent.isAuthorized">
+          <span class="mdl-list__item-primary-content">
+        <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" ng-controller="TipoExameCtrl as tipoExameCtrl" data-badge="{{tipoExameList.length}}">label</i>
+        <span>Tipo de Exame</span>
+          </span>
+          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+        </li>
+      </ul>
     </ion-content>
 
   </ion-side-menu>

@@ -38,8 +38,8 @@ angular.module('main')
 
   bind.add = function (form) {
     if (form.$valid) {
-    
-      FlashService.Question('Incluir novo registro?', 
+
+      FlashService.Question('Incluir novo registro?',
         function () {
           Main.addTipoExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
         });
@@ -50,7 +50,7 @@ angular.module('main')
   }
   bind.edit = function (form) {
     if (form.$valid) {
-      FlashService.Question('Alterar dados do registro?', 
+      FlashService.Question('Alterar dados do registro?',
         function () {
           Main.editTipoExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
         });
@@ -60,7 +60,7 @@ angular.module('main')
 
   }
   bind.remove = function () {
-    FlashService.Question('Remover este registro?', 
+    FlashService.Question('Remover este registro?',
       function () {
         Main.removeTipoExame(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });

@@ -10,7 +10,7 @@ angular.module('main')
   bind.showGrid = true;
   bind.showTable = false;
   if ($stateParams.pacienteId)
-  bind.novo = $stateParams.pacienteId ? DataService.getPaciente($stateParams.pacienteId, 
+  bind.novo = $stateParams.pacienteId ? DataService.getPaciente($stateParams.pacienteId,
     function (result) {
       bind.novo = result;
     }, function (msgError) {
@@ -18,7 +18,7 @@ angular.module('main')
     }) : {};
   var count = 0;
    //get list exame
-  
+
   (function init(){
       $rootScope.tipoExame = {};
       $rootScope.tipoExameList = [];
@@ -59,13 +59,13 @@ angular.module('main')
         FlashService.Error(erroMsg);
         FlashService.Loading(false);
       });
-   
+
     bind.modal.show();
   };
   bind.add = function (form) {
     if (form.$valid) {
-    
-      FlashService.Question('Incluir novo registro?', 
+
+      FlashService.Question('Incluir novo registro?',
         function () {
           FlashService.Loading(true, 'Incluindo registro');
           Main.addPaciente(bind.novo, function () {
@@ -82,7 +82,7 @@ angular.module('main')
   bind.resultadoAdd = function (form) {
     if (form.$valid) {
 
-      FlashService.Question('Incluir novo resultado?', 
+      FlashService.Question('Incluir novo resultado?',
         function () {
           FlashService.Loading(true, 'Incluindo');
           DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, function(){
@@ -104,7 +104,7 @@ angular.module('main')
   };
   bind.resultadoRemove = function (objectRemove) {
 
-      FlashService.Question('Remover este resultado?', 
+      FlashService.Question('Remover este resultado?',
         function () {
           FlashService.Loading(true, 'Removendo');
           DataService.resultadoRemove($stateParams.pacienteId, objectRemove, function(){
@@ -127,11 +127,11 @@ angular.module('main')
   }
   bind.edit = function (form) {
     if (form.$valid) {
-      FlashService.Question('Alterar dados do registro?', 
+      FlashService.Question('Alterar dados do registro?',
         function () {
           DataService.editPaciente(bind.novo,
             function () {
-                DataService.getPaciente(bind.novo.id, 
+                DataService.getPaciente(bind.novo.id,
                   function (result) {
                     bind.novo = result;
                     FlashService.Success('Registro Atualizado com Sucesso!');
@@ -149,7 +149,7 @@ angular.module('main')
 
   };
   bind.remove = function () {
-    FlashService.Question('Remover este registro?', 
+    FlashService.Question('Remover este registro?',
       function () {
         Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });

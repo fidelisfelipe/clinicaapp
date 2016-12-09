@@ -1,30 +1,49 @@
 <ion-view view-title="Exames">
-  <ion-content>
 
-    <div class="list branco" >
-      <a class="item sem-cor item-icon-left item-icon-right" ui-sref="main.exameAdd">
-        <span>Novo</span>
-        <i class="icon ion-person-add"></i>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </a>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon" ></i>
-        <input type="text" placeholder="Search" 
-         ng-model="searchText">
-        <span class="badge badge-positive" ng-bind="exameList.length"></span>
-      </label>
+    <header ion-nav-bar class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Exames</span>
 
-      <a class="item sem-cor" ng-show="exameList.length === 0">
-        <span><center>Nenhum registro encontrado!</center></span>
-      </a>
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right search-field">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp" ng-model="searchText">
+          </div>
+        </div>
 
-      <a class="item sem-cor item-icon-right" 
-       ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameList | filter:searchText | orderBy: 'id' ">
-        <span>{{result.id}} - {{result.sigla}} - {{result.nome}}</span>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </a>
+      </div>
+    </header>
 
-    </div>
-  </ion-content>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <ion-content>
+
+          <ul class="mdl-list">
+            <li class="mdl-list__item" ng-show="exameList.length === 0" style="opacity:.5;pointer-events:none;">
+              <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">warning</i>
+                Nenhum registro encontrado!
+                </span>
+            </li>
+            <li class="mdl-list__item" ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameList | filter:searchText | orderBy: 'id' ">
+              <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">label</i>
+                <!-- {{result.id}} - --> {{result.sigla}} - {{result.nome}}
+                </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
+          </ul>
+
+        </ion-content>
+      </div>
+    </main>
+    <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ui-sref="main.exameAdd">
+      <i class="material-icons">add</i>
+    </button>
+  </div>
 </ion-view>

@@ -1,61 +1,103 @@
-<ion-view view-title="Login" hide-nav-bar="true" >
+<ion-view view-title="Login" hide-nav-bar="true">
   <!-- do you want padding? -->
-  <ion-content >
+  <ion-content class="login-background no-header">
 
+    <div class="login-box-container">
       <h1 class="title text-center">Clínica App</h1>
-      <form name="formLogin" class="form-login" novalidate="" ng-submit="ctrl.login(formLogin)" 
-      >
-          <label class="item item-input" ng-class="{ 'has-errors' : formLogin.email.$invalid, 'no-errors' : formLogin.email.$valid}">
-            <input type="email" placeholder="Email" ng-model="ctrl.userCurrent.email" name="email"required>
-          </label>
-          <label class="item item-input" ng-class="{ 'has-errors' : formLogin.senha.$invalid, 'no-errors' : formLogin.senha.$valid}">
-            <input type="password" placeholder="Senha" ng-model="ctrl.userCurrent.senha" name="senha" required>
-          </label>
-          <div class="button-bar">
-            <button class="button button-positive" type="submit" ng-disabled="formLogin.$invalid">
-              <span>Entrar</span>
-            </button>
-          </div>
+      <form name="formLogin" class="form-login" novalidate="" ng-submit="ctrl.login(formLogin)" autocomplete="off" autocomplete="false">
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <!-- ng-class="{ 'is-invalid' : formLogin.email.$invalid, 'is-valid' : formLogin.email.$valid}" -->
+          <input class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email">
+          <label class="mdl-textfield__label" for="email-input">Entre com seu email</label>
+          <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
+        </div>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <!-- ng-class="{ 'is-invalid' : formLogin.senha.$invalid, 'is-valid' : formLogin.senha.$valid}" -->
+          <input class="mdl-textfield__input" type="password" id="email-input" ng-model="ctrl.userCurrent.senha" name="senha">
+          <label class="mdl-textfield__label" for="email-input">Senha</label>
+          <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
+        </div>
+
+        <div class="mdl-textfield">
+          <button class="login-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" ng-disabled="formLogin.$invalid">Login</button>
+        </div>
+        <div class="mdl-textfield some-helps">
+          <p ng-click="ctrl.signin()">Não tem uma conta? <b>Crie agora!</b></p>
+          <p>Esqueceu a senha?</p>
+        </div>
+
       </form>
-      <div class="button-bar" >
-        <button class="button button-calm" ng-click="ctrl.signin()" >Cadastre-se</button>
-        <button class="button disabled" ng-class="isOnline ? 'button-assertive' : 'button-assertive'" >Esqueci minha senha?</button>
-      </div>
+    </div>
 
   </ion-content>
 </ion-view>
 
 <script id="signin.html" type="text/ng-template">
-  <ion-modal-view >
-    <ion-header-bar >
-      <h1 class="title-black">Cadastre-se</h1>
-    </ion-header-bar>
-    <ion-content  >
-      <form name="form" class="form-sign-in" novalidate="" ng-submit="ctrl.sendSign(form)" >
-        <label class="item item-input" ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}">
-            <input type="text" placeholder="Nome" ng-model="ctrl.userCurrent.nome" name="nome"required>
-          </label>
-          <label class="item item-input" ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}">
-            <input type="text" placeholder="Email" ng-model="ctrl.userCurrent.email" name="email"required>
-          </label>
-          <label class="item item-input" ng-class="{ 'has-errors' : form.cpf.$invalid, 'no-errors' : form.cpf.$valid}">
-            <input type="text" placeholder="CPF" ng-model="ctrl.userCurrent.cpf" name="cpf"required ui-br-cpfcnpj-mask maxlength="14">
-          </label>
-          <label class="item item-input" ng-class="{ 'has-errors' : form.telefone.$invalid, 'no-errors' : form.telefone.$valid}">
-            <input type="tel" maxlength="16" placeholder="telefone" ng-model="ctrl.userCurrent.telefone" name="telefone"required ui-br-phone-number>
-          </label>
-          <label class="item item-input" ng-class="{ 'has-errors' : form.senha.$invalid, 'no-errors' : form.senha.$valid}">
-            <input type="password" placeholder="Senha" ng-model="ctrl.userCurrent.senha" name="senha" required>
-          </label>
-          <label class="item item-input" ng-class="{ 'has-errors' : form.resenha.$invalid, 'no-errors' : form.resenha.$valid}">
-            <input type="password" placeholder="Confirme a Senha" ng-model="ctrl.userCurrent.resenha" name="resenha" required>
-          </label>
-          <div class="button-bar">
-            <button class="button button-positive" type="submit" ng-disabled="form.$invalid">
-              <span>Cadastrar</span>
-            </button>
+  <ion-modal-view>
+    <ion-content class="login-background no-header">
+
+      <button class="mdl-button mdl-js-button mdl-button--icon button-close-modal" ng-click="ctrl.closeModal()">
+        <i class="material-icons">close</i>
+      </button>
+
+      <div class="login-box-container signup-box">
+
+        <h1 class="title text-center">Clínica App</h1>
+        <h5 class="title text-center">Cadastro</h5>
+
+        <form name="form" class="form-login form-signup" novalidate="" ng-submit="ctrl.sendSign(form)">
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <!-- ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}" -->
+            <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.userCurrent.nome" name="nome">
+            <label class="mdl-textfield__label" for="nome-input">Nome</label>
+            <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
           </div>
-      </form>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <!-- ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}" -->
+            <input class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email">
+            <label class="mdl-textfield__label" for="nome-input">Email</label>
+            <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <!-- ng-class="{ 'has-errors' : form.cpf.$invalid, 'no-errors' : form.cpf.$valid}" -->
+            <input class="mdl-textfield__input" type="text" id="cpf-input" ng-model="ctrl.userCurrent.cpf" name="cpf" ui-br-cpfcnpj-mask maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+            <label class="mdl-textfield__label" for="nome-input">CPF</label>
+            <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <!-- ng-class="{ 'has-errors' : form.telefone.$invalid, 'no-errors' : form.telefone.$valid}" -->
+            <input class="mdl-textfield__input" type="tel" maxlength="16" id="tel-input" ng-model="ctrl.userCurrent.telefone" name="telefone" ui-br-phone-number>
+            <label class="mdl-textfield__label" for="tel-input">Telefone</label>
+            <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <!-- ng-class="{ 'has-errors' : form.senha.$invalid, 'no-errors' : form.senha.$valid}" -->
+            <input class="mdl-textfield__input" type="password" id="pass-input" ng-model="ctrl.userCurrent.senha" name="senha">
+            <label class="mdl-textfield__label" for="pass-input">Senha</label>
+            <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <!-- ng-class="{ 'has-errors' : form.resenha.$invalid, 'no-errors' : form.resenha.$valid}" -->
+            <input class="mdl-textfield__input" type="password" id="repass-input" ng-model="ctrl.userCurrent.resenha" name="resenha">
+            <label class="mdl-textfield__label" for="repass-input">Confirme a Senha</label>
+            <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
+          </div>
+
+          <div class="mdl-textfield button-field">
+            <button class="login-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" ng-disabled="form.$invalid">SING UP</button>
+          </div>
+
+        </form>
+
+      </div>
     </ion-content>
   </ion-modal-view>
 </script>

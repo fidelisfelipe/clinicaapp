@@ -2,11 +2,13 @@
 angular.module('main')
 .controller('LoginCtrl', function ($scope, $ionicModal, $ionicSideMenuDelegate, $ionicViewService, $log, $rootScope, $state, Main, LoginService, FlashService, UtilService) {
 
+  componentHandler.upgradeDom();
+
   $log.log('Hello from your Controller: LoginCtrl in module main:. This is your controller:', this);
   var bind = this;
   bind.userCurrent = UtilService.getUserCurrentLocal();
   (function init () {
-  	
+
   })();
 
   $ionicViewService.nextViewOptions({
@@ -19,12 +21,12 @@ angular.module('main')
 	if (form.$valid) {
 
           FlashService.Loading(true, 'Realizando Login...');
-          LoginService.Login(bind.userCurrent, 
+          LoginService.Login(bind.userCurrent,
           	function(){
               FlashService.Loading(false);
           		FlashService.Success('Login efetuado com sucesso!');
           		$state.go('main.home');
-          	}, 
+          	},
           	function(erroMsg){
               FlashService.Loading(false);
           		FlashService.Error(erroMsg);
@@ -42,11 +44,11 @@ angular.module('main')
   	if (form.$valid) {
 
           FlashService.Loading(true, 'Realizando Cadastro...');
-          LoginService.SignIn(bind.userCurrent, 
+          LoginService.SignIn(bind.userCurrent,
           	function(){
           		FlashService.Success('Cadastro realizado com sucesso!');
           		$state.go('main.home');
-          	}, 
+          	},
           	function(erroMsg){
           		FlashService.Error(erroMsg);
           	});
@@ -83,6 +85,7 @@ angular.module('main')
   bind.signin = function () {
   	$log.log('sigin...');
   	bind.openModal();
+    componentHandler.upgradeDom();
   }
 
 });
