@@ -20,7 +20,9 @@ $ionicons-font-path: "../assets/fonts" !default;
 
 // Include all of Ionic
 @import "../../bower_components/ionic/scss/ionic";
-
+.pointer{
+  cursor:pointer;
+}
 /**
 //background custom
 .scroll-content {

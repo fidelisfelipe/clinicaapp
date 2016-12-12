@@ -69,12 +69,14 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
 
   function Error(message) {
 
-    swal({
-      title: "Oops!",
-      text: message,
-      type: "error",
-      customClass: "error-swa"
-    });
+      swal({
+        title: "Oops...",
+        text: message,
+        type: "error",
+        allowOutsideClick: true,
+        showCancelButton: false,
+        showConfirmButton: false,
+      });
 
   }
 

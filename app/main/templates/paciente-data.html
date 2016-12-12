@@ -55,9 +55,26 @@
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
                   <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
-                    Ver Exames
+                      <i class="material-icons mdl-list__item-icon">show_chart</i>
+                    Exames
+                  </a>
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteDocumentos({'pacienteId': ctrl.novo.id })">
+                    <i class="material-icons mdl-list__item-icon">contact_phone</i>
+                    Documentos
+                  </a>
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
+                    <i class="material-icons mdl-list__item-icon">clear_all</i>
+                    Consultas
+                  </a>
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
+                    <i class="material-icons mdl-list__item-icon">info</i>
+                    Observações
+                  </a>
+                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
+                  <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" ng-controller="TipoExameCtrl as tipoExameCtrl" data-badge="{{tipoExameList.length}}">label</i>
                   </a>
                 </div>
+
               </div>
 
             </div>

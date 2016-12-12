@@ -163,6 +163,15 @@ angular.module('main', [
           }
         }
       })
+      .state('main.pacienteDocumentos', {
+        url: '/paciente/documentos/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-documentos-detail.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
      .state('main.pacienteTipoExame', {
         url: '/paciente/:pacienteId/por/tipoexame/:tipoExameId',
         views: {
@@ -417,7 +426,6 @@ angular.module('main', [
           LoginService.Logout(
             function(){
               $state.go('main.login');
-              FlashService.Success('Logout efetuado com sucesso!');
             },
             function(){
               FlashService.Error('Falha ao realizar Logout!');
@@ -431,42 +439,6 @@ angular.module('main', [
   });
 
 });
-/**
-
-      $rootScope.showLoading = function(message) {
-          var message = message || "Chargement";
-
-          // Show the loading overlay and text
-          $rootScope.loading = $ionicLoading.show({
-
-            // The text to display in the loading indicator
-             template: '<i class=" ion-loading-c"></i> '+ message,
-
-            // The animation to use
-            animation: 'fade-in',
-
-            // Will a dark overlay or backdrop cover the entire view
-            showBackdrop: true,
-
-            // The maximum width of the loading indicator
-            // Text will be wrapped if longer than maxWidth
-            maxWidth: 200,
-
-            // The delay in showing the indicator
-            showDelay: 0
-          });
-      };
-
-      $rootScope.showLoading('Iniciando...');
-**/
-/**
-      //check backend status end
-
-
-
-  });
-**/
-
 
 angular.module('main').factory('ConnectivityMonitor', function($rootScope, $cordovaNetwork){
 

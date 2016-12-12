@@ -24,7 +24,7 @@
           <button class="login-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" ng-disabled="formLogin.$invalid">Login</button>
         </div>
         <div class="mdl-textfield some-helps">
-          <p ng-click="ctrl.signin()">Não tem uma conta? <b>Crie agora!</b></p>
+            <p>Não tem uma conta? <b ng-click="ctrl.signin()" class="pointer">Crie agora!</b></p>
           <p>Esqueceu a senha?</p>
         </div>
 
@@ -66,7 +66,7 @@
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <!-- ng-class="{ 'has-errors' : form.cpf.$invalid, 'no-errors' : form.cpf.$valid}" -->
             <input class="mdl-textfield__input" type="text" id="cpf-input" ng-model="ctrl.userCurrent.cpf" name="cpf" ui-br-cpfcnpj-mask maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
-            <label class="mdl-textfield__label" for="nome-input">CPF</label>
+            <label class="mdl-textfield__label" for="cpf-input">CPF</label>
             <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
           </div>
 

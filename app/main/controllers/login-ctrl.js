@@ -28,7 +28,6 @@ angular.module('main')
           		$state.go('main.home');
           	},
           	function(erroMsg){
-              FlashService.Loading(false);
           		FlashService.Error(erroMsg);
           	});
     }

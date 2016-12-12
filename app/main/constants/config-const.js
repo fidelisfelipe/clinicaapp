@@ -5,9 +5,9 @@ angular.module('main')
   // gulp environment: injects environment vars
   ENV: {
     /*inject-env*/
-    'SERVER_URL': 'https://PRODSERVER/api',
-    'SOME_OTHER_URL': 'https://clinicabackend.herokuapp.com',
-    'DOMAIN_BACKEND_URL': 'https://clinicabackend.herokuapp.com'
+    'SERVER_URL': 'https://DEVSERVER/api',
+    'SOME_OTHER_URL': '/proxy',
+    'DOMAIN_BACKEND_URL': 'http://localhost:8080/clinicabackend'
     /*endinject*/
   },
 
