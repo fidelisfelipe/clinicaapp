@@ -43,7 +43,10 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
       title: "Success!",
       text: message,
       type: "success",
-      customClass: "success-swa"
+      customClass: "success-swa",
+      allowOutsideClick: true,
+      showCancelButton: false,
+      showConfirmButton: false
     });
 
   }

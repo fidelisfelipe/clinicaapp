@@ -69,9 +69,11 @@ angular.module('main')
         function () {
           FlashService.Loading(true, 'Incluindo registro');
           Main.addPaciente(bind.novo, function () {
-            refreshResultadoList(); msgSucesso();
-            FlashService.Loading(false);
-          }, msgErro);
+            getPacienteList();
+            msgSucesso();
+          }, function (msgErro) {
+            FlashService.Error(msgErro);
+          });
 
         });
 
@@ -171,13 +173,12 @@ angular.module('main')
   };
   bind.refreshResultadoList = function () {
      //get list exame
-    DataService.getResultadoList(
+    DataService.getResultadoExameList(
       function (resultadoList) {
           $rootScope.resultadoList = resultadoList;
           FlashService.Loading(false);
       }, function (erroMsg) {
         FlashService.Error(erroMsg);
-        FlashService.Loading(false);
       });
   };
   bind.getValorPorDataPorSigla = function (data, sigla) {
@@ -189,6 +190,13 @@ angular.module('main')
       return $rootScope.resultadoExameList[i];
     }
   };
+  bind.calcularIdade = function (nascimento) {
+        // parâmetro nascimento deve ser um objeto do tipo Date
+        var idadeDifMs = Date.now() - new Date(nascimento).getTime();
+        var idadeData = new Date(idadeDifMs);
+
+        return Math.abs(idadeData.getUTCFullYear() - 1970);
+    }
   function getTipoExameList() {
     DataService.getTipoExameList(
       function (tipoExameList) {
