@@ -1,5 +1,4 @@
 <ion-view view-title="{{(ctrl.novo.nome)? ctrl.novo.nome : 'Novo Paciente'}}">
-
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-wtf-tabs-hack" ng-class="{'mdl-layout--fixed-tabs' : ctrl.novo.id || ctrl.openModalEdit, 'mdl-tabs-container-hack' : !ctrl.novo.id}">
 
     <header ion-nav-bar class="mdl-layout__header">
@@ -17,73 +16,51 @@
     </header>
 
     <main class="mdl-layout__content">
+
           <section class="mdl-layout__tab-panel is-active" id="view-user-tab" ng-show="ctrl.openModalShow && ctrl.novo.id">
             <ion-content scroll="false" class="login-background">
             <div class="page-content">
-
-              <div class="user-info-card mdl-card mdl-shadow--2dp">
+              <div class="user-info-card mdl-card mdl-shadow--2dp" >
                 <div class="mdl-card__title mdl-card--expand">
-                  <h2 class="mdl-card__title-text">{{ctrl.novo.nome}}</h2>
+                  <h2 class="mdl-card__title-text">{{ctrl.novo.nome}} | {{ctrl.calcularIdade(ctrl.novo.dataNascimento)}} Anos</h2>
                 </div>
                 <div class="mdl-card__supporting-text">
-                  <ul class="demo-list-icon mdl-list">
-                    <li class="mdl-list__item">
-                      <span class="mdl-list__item-primary-content">
-                      <i class="material-icons mdl-list__item-icon">person</i>
-                      {{ctrl.novo.nome}}
-                  </span>
-                    </li>
-                    <li class="mdl-list__item">
-                      <span class="mdl-list__item-primary-content">
-                      <i class="material-icons mdl-list__item-icon">event</i>
-                      {{ctrl.novo.dataNascimento | date: 'dd/MM/yyyy'}}
-                    </span>
-                    </li>
-                    <li class="mdl-list__item">
-                      <span class="mdl-list__item-primary-content">
-                      <i class="material-icons mdl-list__item-icon">perm_contact_calendar</i>
-                      {{ctrl.calcularIdade(ctrl.novo.dataNascimento)}} Anos
-                    </span>
-                    </li>
-                    <li class="mdl-list__item">
-                      <span class="mdl-list__item-primary-content">
-                      <i class="material-icons mdl-list__item-icon">email</i>
-                      {{ctrl.novo.email}}
-                    </span>
-                    </li>
-                    <li class="mdl-list__item">
-                      <span class="mdl-list__item-primary-content">
-                      <i class="material-icons mdl-list__item-icon">phone</i>
-                      {{ctrl.novo.telefone}}
-                    </span>
-                    </li>
-                  </ul>
+
+                  <button title="Exames" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">assessment</i>
+                  </button>
+
+                  <button title="Prontuário" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">assignment</i>
+                  </button>
+                  
+                  <button title="Agenda" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">note_add</i>
+                  </button>
+                  <button title="Histórico" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">timeline</i>
+                  </button>
+                  <button title="Notas" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">comment</i>
+                  </button>
+                  <button title="Ligar" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">call</i>
+                  </button>
+                  <button title="Documentos" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">attach_file</i>
+                  </button>
+                  
                 </div>
-                <div class="mdl-card__actions mdl-card--border">
-                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
-                      <i class="material-icons mdl-list__item-icon">show_chart</i>
-                    Exames
-                  </a>
-                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteDocumentos({'pacienteId': ctrl.novo.id })">
-                    <i class="material-icons mdl-list__item-icon">contact_phone</i>
-                    Documentos
-                  </a>
-                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
-                    <i class="material-icons mdl-list__item-icon">clear_all</i>
-                    Consultas
-                  </a>
-                  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })">
-                    <i class="material-icons mdl-list__item-icon">info</i>
-                    Observações
-                  </a>
-                </div>
+                
 
               </div>
 
+
+
             </div>
+
             </ion-content>
           </section>
-
           <section class="mdl-layout__tab-panel is-active" id="edit-user-tab" ng-show="ctrl.openModalEdit || !ctrl.novo.id">
             <ion-content class="login-background">
             <div class="page-content">

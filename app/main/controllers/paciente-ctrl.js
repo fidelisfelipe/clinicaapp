@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('PacienteCtrl', function ($filter, $scope, $log, $state, $stateParams, $rootScope, $ionicModal, Main, FlashService, DataService) {
+.controller('PacienteCtrl', function ($filter, $scope, $log, $state, $stateParams, $rootScope, $ionicModal, $ionicPopover, Main, FlashService, DataService) {
 
   $log.log('Hello from your Controller: PacienteCtrl in module main:. This is your controller:', this);
   var bind = this;
@@ -36,7 +36,18 @@ angular.module('main')
   getTipoExameList();
   getTipoExame($stateParams.tipoExameId);
   getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
-
+  
+  $ionicPopover.fromTemplateUrl('main/templates/paciente-dados-popover.html', {
+    scope: $scope
+  }).then(function(popover) {
+    bind.popover = popover;
+  });
+  bind.openDados = function($event) {
+    bind.popover.show($event);
+  };
+  bind.closeDados = function() {
+    bind.popover.hide();
+  };
 //config modal add result
   function initModalResultAdd(){
     $log.log('modal result exame add configured...');

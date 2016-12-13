@@ -9,17 +9,18 @@ FlashService.$inject = ['$rootScope', '$ionicPopup', '$ionicLoading'];
 function FlashService($rootScope, $ionicPopup, $ionicLoading) {
   var service = {};
 
-  componentHandler.upgradeDom('mdl-spinner');
 
+  initService();
   service.Success = Success;
   service.Error = Error;
   service.Loading = Loading;
   service.Question = Question;
-  initService();
+
 
   return service;
 
   function initService() {
+    componentHandler.upgradeDom('mdl-spinner');
     $rootScope.$on('$locationChangeStart', function() {
       clearFlashMessage();
     });
@@ -84,15 +85,17 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
   }
 
   function Question(message, yes) {
-
+    
     swal({
         title: "Tem certeza?",
         text: message,
         type: "warning",
-        showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Sim",
         closeOnConfirm: false,
+        allowOutsideClick: true,
+        showCancelButton: true,
+        showConfirmButton: true,
         customClass: 'warning-swa'
       }, function(){
         yes();
