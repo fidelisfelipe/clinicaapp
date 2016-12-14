@@ -30,6 +30,7 @@ angular.module('main')
   }
   bind.add = function (form) {
     if (form.$valid) {
+      bind.novo.id = null;
       if(!bind.novo.tipo){
         FlashService.Error('Tipo de Exame é Obrigatório!');
         return false;

@@ -32,6 +32,35 @@ angular.module('main')
          }
       });
     },
+    getSiglaAllList: function (callback, fail) {
+      $log.log('init get sigla all...');
+      $http({
+        method: 'GET',
+        //data: JSON.stringify(object),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/exames/siglaalllist'
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get sigla all success!');
+        $log.log('get sigla all - status:', response.status);
+        if (response.status === 200) {
+          callback(response.data.siglaAllList);
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         }else{
+           $log.warn('get sigla all fail response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
     getExameAssociadoList: function (tipoExameId, callback, fail) {
       $log.log('init get exames associados ao tipo list...');
       $http({

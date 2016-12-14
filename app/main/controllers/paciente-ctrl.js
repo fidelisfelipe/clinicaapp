@@ -26,12 +26,13 @@ angular.module('main')
       $rootScope.exameList = [];
       $rootScope.dataList = [];
       $rootScope.siglaList = [];
+      $rootScope.siglaAllList = [];
       $rootScope.pacienteList = [];
       $rootScope.profissaoList = [{nome: 'Desenvolvedor'},{nome: 'Professor'}];
 
       initModalResultAdd();
   })();
-
+  getSiglaAllList();
   getPacienteList();
   getTipoExameList();
   getTipoExame($stateParams.tipoExameId);
@@ -255,6 +256,11 @@ angular.module('main')
                 $rootScope.siglaList.push($rootScope.resultadoExameList[i].exame.sigla);
               }
           };
+          for (var i = 0; i < $rootScope.siglaAllList.length; i++) {
+            if($rootScope.siglaList.indexOf($rootScope.siglaAllList[i].sigla) === -1){
+                $rootScope.siglaList.push($rootScope.siglaAllList[i].sigla);
+              }
+          }
           FlashService.Loading(false);
       }, function (erroMsg) {
         FlashService.Error(erroMsg);
@@ -266,6 +272,15 @@ angular.module('main')
     DataService.getPacienteList(
       function (pacienteList) {
           $rootScope.pacienteList = pacienteList;
+      }, function (erroMsg) {
+        FlashService.Error(erroMsg);
+      });
+  }
+  function getSiglaAllList() {
+    bind.novo = {};
+    DataService.getSiglaAllList(
+      function (siglaList) {
+          $rootScope.siglaAllList = siglaList;
       }, function (erroMsg) {
         FlashService.Error(erroMsg);
       });

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "607347890439",
+    "firebase_url": "https://project-263344792902730854.firebaseio.com",
+    "project_id": "project-263344792902730854",
+    "storage_bucket": "project-263344792902730854.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607347890439:android:69b5dc10ad0140db",
+        "android_client_info": {
+          "package_name": "br.com.caelum.vraptor.clinicaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607347890439-urnkpdr2au46ut6qlsen34732at3d42m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ8XcL4B9E2STGyJICPenRcckZxXoxLgo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -314,6 +314,15 @@ angular.module('main', [
   $ionicPlatform.ready(function() {
 
     $log.info('init app...');
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAyNwpCiUxEpBf9E473z81ku0pNROBFyf4",
+      authDomain: "project-263344792902730854.firebaseapp.com",
+      databaseURL: "https://project-263344792902730854.firebaseio.com",
+      storageBucket: "project-263344792902730854.appspot.com",
+      messagingSenderId: "607347890439"
+    };
+    firebase.initializeApp(config);
 
     setTimeout(function(){
       componentHandler.upgradeDom();

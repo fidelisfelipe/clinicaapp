@@ -15,7 +15,7 @@
 
           <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" ng-show="ctrl.novo.id">
               <input class="mdl-textfield__input" type="text" id="id-input" ng-model="ctrl.novo.id" readonly pattern="-?[0-9]*(\.[0-9]+)?">
               <label class="mdl-textfield__label" for="id-input">ID</label>
             </div>
