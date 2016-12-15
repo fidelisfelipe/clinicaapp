@@ -472,6 +472,30 @@ angular.module('main')
            fail(response.statusText + ' - ' + response.status);
          }
       });
+    },
+    addExame: function (exame, callback, fail) {
+      exame.dataNascimento = castDateForBackend(exame.dataNascimento);
+      $log.log('init edit exame...');
+      $http({
+        method: 'POST',
+        data: JSON.stringify(exame),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/exames'
+      }).then(function successCallback(response) {
+        if (response.status === 200) {
+            callback();
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Registro já existe!');
+         }else{
+           $log.warn('get exame one response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
     }
   };
 

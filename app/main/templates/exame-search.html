@@ -34,7 +34,7 @@
             ng-repeat="result in exameList | filter:searchText | orderBy: 'id' ">
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">label</i>
-                <!-- {{result.id}} - --> {{result.sigla}} - {{result.nome}}
+                {{result.tipo.nome}} - {{result.sigla}} - {{result.nome}} <!-- {{result.id}} -->
                 </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
             </li>

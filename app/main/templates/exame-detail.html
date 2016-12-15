@@ -1,4 +1,4 @@
-<ion-view view-title="{{(ctrl.novo.nome)? ctrl.novo.nome : 'Novo Exame'}}">
+<ion-view view-title="{{(ctrl.novo.nome)? Exame: 'Novo Exame'}}">
 
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
@@ -15,7 +15,7 @@
 
           <form name="formPaciente" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(formPaciente) : ctrl.add(formPaciente)">
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" ng-show="ctrl.novo.id > 0">
               <input class="mdl-textfield__input" type="text" id="id-input" ng-model="ctrl.novo.id" readonly pattern="-?[0-9]*(\.[0-9]+)?">
               <label class="mdl-textfield__label" for="id-input">ID</label>
             </div>
@@ -28,7 +28,7 @@
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <!-- ng-class="{ 'has-errors' : formPaciente.sigla.$invalid, 'no-errors' : formPaciente.sigla.$valid}" -->
-              <input class="mdl-textfield__input" type="text" id="sigla-input" ng-model="ctrl.novo.sigla" ng-minlength="1" ng-maxlength="6">
+              <input class="mdl-textfield__input" type="text" id="sigla-input" ng-model="ctrl.novo.sigla" ng-minlength="1" ng-maxlength="10">
               <label class="mdl-textfield__label" for="sigla-input">Sigla</label>
             </div>
 
@@ -36,7 +36,7 @@
               <!-- ng-class="{ 'has-errors' : form.tipo.$invalid, 'no-errors' : form.tipo.$valid}" -->
               <select class="mdl-textfield__input" ng-model="ctrl.novo.tipo.id" ng-options="tipo.id as tipo.nome for tipo in tipoExameList" id="tipo-input"></select>
               <label class="mdl-textfield__label" for="tipo-input">Tipo Exame</label>
-            </div>
+            </div>            
 
               <div class="mdl-textfield button-field">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="formPaciente.$invalid">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>

@@ -86,32 +86,6 @@ angular.module('main')
         $log.log('end exames request...');
       }.bind(this), 6000));
   }
-  this.addExame = function (novo, callback, fail) {
-    //TODO: backend rest
-    novo.dataNascimento =  castDateForBackend(novo.dataNascimento);
-    $log.log('init exame add request...');
-    //$rootScope.exames.push(novo);
-    this.proxyState = '...';
-    $http({
-      method: 'POST',
-      data: JSON.stringify(novo),
-      url: Config.ENV.DOMAIN_BACKEND_URL + '/exames/add'
-    })
-    .then(function (response) {
-      $log.log('exame add request success!');
-      this.proxyState = 'success (result printed to browser console)';
-      if (response.status === 200) {
-        callback();
-      } else {
-        fail();
-      }
-      
-    }.bind(this))
-    .then($timeout(function () {
-      this.proxyState = 'ready';
-      $log.log('end exame add request...');
-    }.bind(this), 6000));
-  }
   this.removeExame = function (id, callback, fail) {
     $log.log('init exame remove request...');
     this.proxyState = '...';

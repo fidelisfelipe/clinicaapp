@@ -37,7 +37,13 @@ angular.module('main')
       }
       FlashService.Question('Incluir novo registro?', 
         function () {
-          Main.addExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+          //TODO: mover para DataService
+          DataService.addExame(bind.novo, function () {
+            refreshList(); 
+            msgSucesso();
+          }, function () {
+            FlashService.Error('Não foi possivel incluir o registro...');
+          });
         });
 
     } else {
