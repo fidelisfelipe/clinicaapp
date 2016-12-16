@@ -1,0 +1,52 @@
+<ion-view >
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header ion-nav-bar class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Meus Dados</span>
+      </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      <ion-content class="login-background">
+        <div class="page-content">
+
+          <div class="profile-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">{{userCurrent.nome}}</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <ul class="demo-list-icon mdl-list">
+                
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon">email</i>
+                  {{ctrl.userCurrent.email}}
+                  </span>
+                </li>
+                <li class="mdl-list__item" >
+                  <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon">event</i>
+                  {{ctrl.userCurrent.data | date: 'dd/MM/yyyy'}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+            <!-- sem botoes -->
+            </div>
+            <div class="mdl-card__menu">
+              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
+              ui-sref="main.accountDetail">
+                <i class="material-icons">settings</i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </ion-content>
+    </main>
+  </div>
+
+</ion-view>

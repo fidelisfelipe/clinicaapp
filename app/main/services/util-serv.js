@@ -5,8 +5,8 @@ angular.module('main')
     //persistents
     this.id = null;
     this.nome = '';
+    this.senha = '';
     this.email = '';
-    
     this.ativo = false;
     //transients
     this.isAuthorized = false;
@@ -74,12 +74,14 @@ angular.module('main')
       user.id = data.id;
       user.nome = data.nome;
       user.email = data.email;
+      user.data = data.data;
       user.isAuthorized = data.isAuthorized;
       user.firstName = data.firstName;
       user.lastName = data.lastName;
       user.role = data.role;
       user.isAdmin = (user.role === 'Admin');
       user.srcImg = 'main/assets/images/profile.jpg';
+      user.senha = data.senha;
       sessionStorage.currentUser = user;
     },
 //setUserCurrentBlank
@@ -87,6 +89,8 @@ angular.module('main')
       user.id = null;
       user.email = ''; 
       user.nome = '';
+      user.data = '';
+      user.senha = '';
       user.isAuthorized = false;
       user.isLogado = false;
       user.username = '';

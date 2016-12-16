@@ -98,12 +98,32 @@ angular.module('main', [
           }
         }
       })
-      .state('main.userCurrent', {
-        url: '/userCurrent',
+      .state('main.account', {
+        url: '/account',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/userCurrent.html',
-            controller: 'UserCurrentCtrl as ctrl',
+            templateUrl: 'main/templates/account.html',
+            controller: 'AccountCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+      .state('main.accountDetail', {
+        url: '/account/detail',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/account-detail.html',
+            controller: 'AccountCtrl as ctrl',
+            cache: false
+          }
+        }
+      })
+      .state('main.prontuario', {
+        url: '/prontuario',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/prontuario.html',
+            controller: 'AccountCtrl as ctrl', 
             cache: false
           }
         }

@@ -362,6 +362,29 @@ angular.module('main')
     }.bind(this), 6000));
   }
 
+  //TODO: Migrar
+  this.editLogin = function (object, callback, fail) {
+
+  $log.log('init edit login edit request...');
+    this.proxyState = '...';
+    $http({
+      method: 'POST',
+      data: JSON.stringify(object),
+      url: Config.ENV.DOMAIN_BACKEND_URL + '/usuarios'
+    })
+    .then(function (response) {
+      $log.log('edit login request success!');
+      if (response.status === 200) {
+        callback();
+      } else {
+        fail();
+      }
+    }.bind(this))
+    .then($timeout(function () {
+      $log.log('end login edit request...');
+    }.bind(this), 6000));
+  }
+
   this.render = function () {
     return $rootScope.render;
   };

@@ -21,6 +21,7 @@ angular.module('main')
 	if (form.$valid) {
 
           FlashService.Loading(true, 'Realizando Login...');
+          bind.userCurrent.data = null;
           LoginService.Login(bind.userCurrent,
           	function(){
               FlashService.Loading(false);

@@ -252,7 +252,7 @@ ion-content:not(.no-header){
   .mdl-card__title {
     color: #fff;
     background:
-      url('https://rinj.chiromatrixbase.com/clients/1926/images/Medical_Exam.jpg') center / cover no-repeat #46B6AC;
+      url('../assets/images/fundo3.jpg') center / cover no-repeat;
   }
   .mdl-card__title-text {
     background: rgba(96, 96, 97, 0.55);
@@ -356,7 +356,7 @@ align-items: center;
   .mdl-card__title {
     color: #fff;
     height: 176px;
-    background: url('https://getmdl.io/assets/demos/welcome_card.jpg') center / cover;
+    background: url('../assets/images/fundo3.jpg') center / cover;
   }
 
   .mdl-card__menu {

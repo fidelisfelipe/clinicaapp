@@ -443,18 +443,18 @@ angular.module('main')
          }
       });
     },
-    editLogin: function (paciente, callback, fail) {
-      paciente.dataNascimento = castDateForBackend(paciente.dataNascimento);
-      $log.log('init edit paciente...');
+    editLogin: function (usuario, callback, fail) {
+      usuario.dataNascimento = castDateForBackend(usuario.dataNascimento);
+      $log.log('init edit user...');
       $http({
         method: 'POST',
-        data: JSON.stringify(paciente),
-        url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes'
+        data: JSON.stringify(usuario),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/usuarios'
       }).then(function successCallback(response) {
         // this callback will be called asynchronously
         // when the response is available
-        $log.log('get paciente one success!');
-        $log.log('get paciente one - status:', response.status);
+        $log.log('get user one success!');
+        $log.log('get user one - status:', response.status);
         if (response.status === 200) {
             callback();
         } else {
@@ -468,7 +468,7 @@ angular.module('main')
          } else if(response.status === 401){
            fail('Usuário não autorizado!');
          }else{
-           $log.warn('get paciente one response: ', response);
+           $log.warn('get user one response: ', response);
            fail(response.statusText + ' - ' + response.status);
          }
       });

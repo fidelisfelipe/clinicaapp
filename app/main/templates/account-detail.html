@@ -1,0 +1,40 @@
+<ion-view view-title="Meus Dados">
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header ion-nav-bar class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Meus Dados</span>
+      </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      <ion-content class="login-background">
+      <div class="page-content">
+        <div class="user-edit-delete-form-container">
+
+          <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.edit(form)">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="number" id="id-input" ng-model="ctrl.userCurrent.id" disabled>
+              <label class="mdl-textfield__label" for="id-input">ID</label>
+            </div>   
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.userCurrent.nome" ng-minlength="5" ng-maxlength="80">
+              <label class="mdl-textfield__label" for="nome-input">Nome</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="password" id="senha-input" ng-model="ctrl.userCurrent.senha" >
+              <label class="mdl-textfield__label" for="senha-input">Senha</label>
+            </div>       
+
+              <div class="mdl-textfield button-field">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">Editar</button>
+              </div>
+            </form>
+        </div>
+      </div>
+      </ion-content>
+    </main>
+  </div>
+
+</ion-view>

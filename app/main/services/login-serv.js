@@ -35,7 +35,6 @@ angular.module('main')
 
   this.Login = function (usuarioWeb, callback, fail) {
     $log.log('init login...', usuarioWeb.email);
-    //$rootScope.exames.push(novo);
     $http({
       method: 'POST',
       data: JSON.stringify(usuarioWeb),
@@ -46,8 +45,8 @@ angular.module('main')
       $log.log('login success!');
       $log.log('login request:', response.status);
       if (response.status === 200) {
-        $rootScope.status = response.data.erroMsg;
         var user = response.data.userCurrent;
+        user.data = new Date(user.data);
         //cast date
         UtilService.setUserCurrent(user);
         UtilService.refreshUserCurrentRoot();
@@ -107,6 +106,47 @@ angular.module('main')
        $log.warn('fail sign response: ', $rootScope.status);
     });
 
+  }
+
+  this.LoginEdit = function (usuario, callback, fail) {
+      usuario.data = castDateForBackend(usuario.data);
+      $log.log('init edit usuario...');
+      $http({
+        method: 'POST',
+        data: JSON.stringify(usuario),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/usuarios'
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get usuario edit success!');
+        $log.log('get usuario edit - status:', response.status);
+        if (response.status === 200) {
+          var user = response.data.userCurrent;
+          user.data = new Date(user.data);
+          //cast date
+          UtilService.setUserCurrent(user);
+          UtilService.refreshUserCurrentRoot();
+          callback();
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         }else{
+           $log.warn('get usuario one response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+
+  }
+
+  function castDateForBackend (data) {
+    return $filter('date')(data,"yyyy-MM-dd'T'HH:mm:ssZ");
   }
 
 });

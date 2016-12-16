@@ -15,6 +15,7 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
   service.Error = Error;
   service.Loading = Loading;
   service.Question = Question;
+  service.FormEdit = FormEdit;
 
 
   return service;
@@ -99,6 +100,18 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
         customClass: 'warning-swa'
       }, function(){
         yes();
+      });
+    }
+
+    function FormEdit(){
+      swal({
+        title: "Success!",
+        text: "Teste",
+        type: "success",
+        customClass: "success-swa",
+        allowOutsideClick: true,
+        showCancelButton: false,
+        showConfirmButton: false
       });
     }
   }

@@ -7,16 +7,16 @@
       <form name="formLogin" class="form-login" novalidate="" ng-submit="ctrl.login(formLogin)" autocomplete="off" autocomplete="false">
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <!-- ng-class="{ 'is-invalid' : formLogin.email.$invalid, 'is-valid' : formLogin.email.$valid}" -->
-          <input class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email">
+
+          <input class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email" value="test@test.com" >
           <label class="mdl-textfield__label" for="email-input">Entre com seu email</label>
           <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
         </div>
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <!-- ng-class="{ 'is-invalid' : formLogin.senha.$invalid, 'is-valid' : formLogin.senha.$valid}" -->
-          <input class="mdl-textfield__input" type="password" id="email-input" ng-model="ctrl.userCurrent.senha" name="senha">
-          <label class="mdl-textfield__label" for="email-input">Senha</label>
+
+          <input class="mdl-textfield__input" type="password" value="test" id="senha-input" ng-model="ctrl.userCurrent.senha" name="senha">
+          <label class="mdl-textfield__label" for="senha-input">Senha</label>
           <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
         </div>
 
@@ -50,21 +50,18 @@
         <form name="form" class="form-login form-signup" novalidate="" ng-submit="ctrl.sendSign(form)">
 
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <!-- ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}" -->
             <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.userCurrent.nome" name="nome">
             <label class="mdl-textfield__label" for="nome-input">Nome</label>
             <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
           </div>
 
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <!-- ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}" -->
-            <input class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email">
-            <label class="mdl-textfield__label" for="nome-input">Email</label>
+            <input class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email" >
+            <label class="mdl-textfield__label" for="email-input">Email</label>
             <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
           </div>
 
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <!-- ng-class="{ 'has-errors' : form.cpf.$invalid, 'no-errors' : form.cpf.$valid}" -->
             <input class="mdl-textfield__input" type="text" id="cpf-input" ng-model="ctrl.userCurrent.cpf" name="cpf" ui-br-cpfcnpj-mask maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
             <label class="mdl-textfield__label" for="cpf-input">CPF</label>
             <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
