@@ -21,7 +21,6 @@
             </div>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <!-- ng-class="{ 'has-errors' : formPaciente.nome.$invalid, 'no-errors' : formPaciente.nome.$valid}" -->
               <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="2" ng-maxlength="80">
               <label class="mdl-textfield__label" for="nome-input">Nome</label>
             </div>
@@ -41,17 +40,17 @@
                   Nenhum registro encontrado!
                   </span>
               </li>
-              <li class="mdl-list__item" ui-sref="main.exameSearch" ng-show="exameAssociadoList.length === 0" >
+              <li class="mdl-list__item" ui-sref="main.exameSearch"  >
                       <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" ng-controller="ExameCtrl as exameCtrl" data-badge="{{exameList.length}}">map</i>
                     <span>Associar Exame</span>
                       </span>
                       <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
-                    </li>
-              <li class="mdl-list__item" ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameAssociadoList | filter:searchText | orderBy: 'id' ">
+              </li>
+              <li class="mdl-list__item" ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameAssociadoList  | orderBy: 'id' ">
                 <span class="mdl-list__item-primary-content">
-                  <i class="material-icons mdl-list__item-icon">local_hospital</i>
-                  {{result.nome}} <!-- {{result.id}} -->
+                  <i class="material-icons mdl-list__item-icon">map</i>
+                  {{result.nome}}
                   </span>
                 <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
               </li>

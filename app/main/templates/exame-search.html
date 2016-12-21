@@ -8,11 +8,11 @@
 
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right search-field">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="searchText">
             <i class="material-icons">search</i>
           </label>
           <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp" ng-model="searchText">
+            <input class="mdl-textfield__input" type="text" name="searchText" id="searchText" ng-model="ctrl.searchText">
           </div>
         </div>
 
@@ -31,9 +31,9 @@
                 </span>
             </li>
             <li class="mdl-list__item" ui-sref="main.exameDetail({'exameId': result.id})" 
-            ng-repeat="result in exameList | filter:searchText | orderBy: 'id' ">
+            ng-repeat="result in exameList | filter:ctrl.searchText | orderBy: 'id' ">
               <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-icon">label</i>
+                <i class="material-icons mdl-list__item-icon">map</i>
                 {{result.tipo.nome}} - {{result.sigla}} - {{result.nome}} <!-- {{result.id}} -->
                 </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>

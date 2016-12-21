@@ -6,15 +6,13 @@
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">Tipo de Exame</span>
 
-          <!-- {{pacienteList.length}} -->
-
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right search-field">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="searchText">
             <i class="material-icons">search</i>
           </label>
           <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp" ng-model="searchText">
+            <input class="mdl-textfield__input" type="text" name="searchText" id="searchText" ng-model="ctrl.searchText">
           </div>
         </div>
 
@@ -32,7 +30,7 @@
                 Nenhum registro encontrado!
                 </span>
             </li>
-            <li class="mdl-list__item" ui-sref="main.tipoExameDetail({'tipoExameId': result.id})" ng-repeat="result in tipoExameList | filter:searchText | orderBy: 'id' ">
+            <li class="mdl-list__item" ui-sref="main.tipoExameDetail({'tipoExameId': result.id})" ng-repeat="result in tipoExameList | filter:ctrl.searchText | orderBy: 'id' ">
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">local_hospital</i>
                 {{result.nome}} <!-- {{result.id}} -->

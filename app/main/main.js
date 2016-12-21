@@ -88,6 +88,16 @@ angular.module('main', [
       templateUrl: 'main/templates/menu.html',
       controller: 'MenuCtrl as ctrl'
     })
+   .state('main.home', {
+      url: '/home',
+      views: {
+        'pageContent': {
+          templateUrl: 'main/templates/home.html',
+          controller: 'HomeCtrl as ctrl',
+          cache: false
+        }
+      }
+    })
     .state('main.login', {
         url: '/login',
         views: {
@@ -118,32 +128,13 @@ angular.module('main', [
           }
         }
       })
-      .state('main.prontuario', {
-        url: '/prontuario',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/prontuario.html',
-            controller: 'AccountCtrl as ctrl', 
-            cache: false
-          }
-        }
-      })
-      .state('main.home', {
-        url: '/home',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/home.html',
-            controller: 'HomeCtrl as ctrl',
-            cache: false
-          }
-        }
-      })
      .state('main.pacienteSearch', {
         url: '/paciente/search',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-search.html',
-            controller: 'PacienteCtrl as ctrl'
+            controller: 'PacienteCtrl as ctrl',
+            cache: false
           }
         }
       })
@@ -207,7 +198,8 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/exame-search.html',
-            controller: 'ExameCtrl as ctrl'
+            controller: 'ExameCtrl as ctrl',
+            cache: false
           }
         }
       })
@@ -234,7 +226,8 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/tipoexame-search.html',
-            controller: 'TipoExameCtrl as ctrl'
+            controller: 'TipoExameCtrl as ctrl',
+            cache: false
           }
         }
       })
@@ -253,60 +246,6 @@ angular.module('main', [
           'pageContent': {
             templateUrl: 'main/templates/tipoexame-detail.html',
             controller: 'TipoExameCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.tabelaAdd', {
-        url: '/tabela/add',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/tabela-detail.html',
-            controller: 'TabelaCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.tabelaDetail', {
-        url: '/tabela/detail/:tabelaId',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/tabela-detail.html',
-            controller: 'TabelaCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.tabelaSearch', {
-        url: '/tabelas/search',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/tabelas-search.html',
-            controller: 'TabelaCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.tabelasList', {
-        url: '/tabelas/list',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/tabelas.html',
-            controller: 'TabelaCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.hemograma', {
-        url: '/hemograma',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/hemograma.html',
-            controller: 'HemogramaCtrl as ctrl'
-          }
-        }
-      })
-      .state('main.hemogramaAdd', {
-        url: '/hemograma/add',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/hemograma-form.html',
-            controller: 'HemogramaFormCtrl as ctrl'
           }
         }
       })

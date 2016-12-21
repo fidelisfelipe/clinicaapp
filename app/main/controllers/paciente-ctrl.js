@@ -20,6 +20,7 @@ angular.module('main')
    //get list exame
 
   (function init(){
+      
       $rootScope.tipoExame = {};
       $rootScope.tipoExameList = [];
       $rootScope.resultadoExameList = [];
@@ -285,16 +286,7 @@ angular.module('main')
         FlashService.Error(erroMsg);
       });
   }
-  /*
-  function refreshListExames() {
-    if ($stateParams.pacienteId)
-    DataService.getExamesPaciente($stateParams.pacienteId,
-        function (result) {
-            bind.exameList = result;
-            //lista todos os exames cadastrados
-        }, msgErro);
-  };
-  */
+
   function refreshListTipoExames() {
     if ($stateParams.tipoExameId)
     DataService.getExamesPorPacientePorTipo(
