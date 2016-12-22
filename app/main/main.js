@@ -142,7 +142,7 @@ angular.module('main', [
         url: '/paciente/add',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-data.html',
+            templateUrl: 'main/templates/paciente-detail.html',
             controller: 'PacienteCtrl as ctrl'
           }
         }
@@ -151,20 +151,12 @@ angular.module('main', [
         url: '/paciente/detail/:pacienteId',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-data.html',
+            templateUrl: 'main/templates/paciente-detail.html',
             controller: 'PacienteCtrl as ctrl'
           }
         }
       })
-      .state('main.pacienteData', {
-        url: '/paciente/data/:pacienteId',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/paciente-data.html',
-            controller: 'PacienteCtrl as ctrl'
-          }
-        }
-      })
+      
      .state('main.pacienteExames', {
         url: '/paciente/exames/:pacienteId',
         views: {
@@ -174,7 +166,39 @@ angular.module('main', [
           }
         }
       })
-      .state('main.pacienteDocumentos', {
+      .state('main.pacienteProntuario', {
+        url: '/paciente/prontuario/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-prontuario-detail.html'
+          }
+        }
+      })
+       .state('main.pacienteAgenda', {
+        url: '/paciente/agenda/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-agenda-detail.html'
+          }
+        }
+      })
+        .state('main.pacienteHistorico', {
+        url: '/paciente/historico/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-historico-detail.html'
+          }
+        }
+      })
+          .state('main.pacienteNotas', {
+        url: '/paciente/notas/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-notas-detail.html'
+          }
+        }
+      })
+        .state('main.pacienteDocumentos', {
         url: '/paciente/documentos/:pacienteId',
         views: {
           'pageContent': {
@@ -193,6 +217,17 @@ angular.module('main', [
           }
         }
       })
+     .state('main.pacienteLigar', {
+        url: '/paciente/ligar/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-ligar-detail.html',
+            controller: 'PacienteCtrl as ctrl',
+            cache: false, //required for state.forceReload
+          }
+        }
+      })
+    
       .state('main.exameSearch', {
         url: '/exame/search',
         views: {
@@ -250,15 +285,6 @@ angular.module('main', [
         }
       })
 
-      .state('main.listDetail', {
-        url: '/list/detail',
-        views: {
-          'pageContent': {
-            templateUrl: 'main/templates/list-detail.html',
-            controller: 'ListCtrl as ctrl'
-          }
-        }
-      })
       .state('main.debug', {
         url: '/debug',
         views: {

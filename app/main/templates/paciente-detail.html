@@ -24,39 +24,49 @@
                 <div class="mdl-card__title mdl-card--expand">
                   <h2 class="mdl-card__title-text">{{ctrl.novo.nome}} | {{ctrl.calcularIdade(ctrl.novo.dataNascimento)}} Anos</h2>
                 </div>
-                <div class="mdl-card__supporting-text">
 
-                  <button title="Exames" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                  <i class="material-icons">assessment</i>
-                  </button>
-
-                  <button ui-sref="main.prontuario"title="Prontuário" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                  <i class="material-icons">assignment</i>
-                  </button>
-                  
-                  <button title="Agenda" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                  <i class="material-icons">note_add</i>
-                  </button>
-                  <button title="Histórico" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                  <i class="material-icons">timeline</i>
-                  </button>
-                  <button title="Notas" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                  <i class="material-icons">comment</i>
-                  </button>
-                  <button title="Ligar" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                  <i class="material-icons">call</i>
-                  </button>
-                  <button title="Documentos" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                  <i class="material-icons">attach_file</i>
-                  </button>
-                  
-                </div>
                 <div class="mdl-card__menu">
-                  <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-                  ui-sref="#">
+                        <!-- Right aligned menu below button -->
+                  <button id="demo-menu-lower-right"
+                          class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">settings</i>
                   </button>
                 </div>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    for="demo-menu-lower-right">
+                  <li class="mdl-menu__item" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" title="Exames" >
+                      <i class="material-icons">assessment</i>
+                     Exames
+                  </li>
+                  <li class="mdl-menu__item" ui-sref="main.pacienteProntuario({'pacienteId': ctrl.novo.id })" title="Prontuário">
+                      <i class="material-icons">assignment</i>
+                     Prontuário
+                  </li>
+                  <li class="mdl-menu__item" title="Agenda" ui-sref="main.pacienteAgenda({'pacienteId': ctrl.novo.id })">
+                      <i class="material-icons">event</i>
+                     Agenda
+                  </li>
+                  <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteHistorico({'pacienteId': ctrl.novo.id })">
+                      <i class="material-icons">timeline</i>
+                     Histórico
+                  </li>
+                  <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteNotas({'pacienteId': ctrl.novo.id })">
+                      <i class="material-icons">comment</i>
+                     Notas
+                  </li>
+                  <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteDocumentos({'pacienteId': ctrl.novo.id })">
+                      <i class="material-icons">attach_file</i>
+                     Documentos
+                  </li>
+
+                  <li disabled class="mdl-menu__item" title="Exames" ui-sref="main.pacienteLigar({'pacienteId': ctrl.novo.id })">
+                      <i class="material-icons">call</i>
+                     Ligar
+                  </li>
+                </ul>
+                </div>
+
             </div>
 
               </div>
