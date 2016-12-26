@@ -2,7 +2,7 @@
 angular.module('main')
 .controller('PacienteExameCtrl', function ($log, $rootScope, $state, $stateParams, Main, FlashService) {
 
-  $log.log('Hello from your Controller: PacienteExameCtrl in module main:. This is your controller:', this);
+   $log.log('PacienteExame.controller');
 
   var bind = this;
   bind.novo = $stateParams.pacienteId ? Main.getPaciente($stateParams.pacienteId, function (result) {

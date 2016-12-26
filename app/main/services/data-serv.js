@@ -1,8 +1,52 @@
 'use strict';
 angular.module('main')
-.service('DataService', function ($filter, $log, $rootScope, $http, Config) {
+.service('DataService', function ($filter, $log, $state, $rootScope, $http, UtilService, Config) {
+  $log.log('Data.service');
+  init();
 
-  var DataService = {
+  var bind = this;
+
+  function init(){
+    $log.log('Data.init');
+  }
+
+  var DataService = { 
+    prepareRoot: function(){
+      $log.info("DataService.prepareRoot init");
+      bind.user = UtilService.verifySaveUser();
+
+      if(bind.user === null){
+        UtilService.setUserCurrentBlank();
+        UtilService.refreshUserCurrentRoot();
+        bind.user = UtilService.getUserCurrentLocal();
+        $log.info('DataService.userCurrent blank defined!');
+      }else{
+        $log.info('user save apply: ', bind.user);
+      }
+      $log.info("DataService.prepareRoot finish");
+    },
+    prepareModule: function(){
+      $log.info("prepareModule init");
+      //check redirect where isauthorized
+      if(bind.user !== null 
+        && bind.user.isAuthorized){
+        $log.info('You is Authorized');
+        $state.go('main.home');
+      }else{
+          $log.warn('You not is Authorized');
+          $state.go('main.login');
+      }
+      $log.info("prepareModule finish");
+    },
+    preparePlatform: function(){
+        if(ionic.Platform.isWebView()){
+          $log.info("preparePlatform init web view");
+        } else if(ionic.Platform.isAndroid()){
+          $log.info("preparePlatform init android");
+        } else {
+          $log.error("preparePlatform init - Platform not defined");
+        }
+    },
     getPacienteList: function (callback, fail) {
       $log.log('init get pacientes all...');
       $http({

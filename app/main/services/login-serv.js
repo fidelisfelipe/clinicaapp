@@ -1,8 +1,14 @@
 'use strict';
 angular.module('main')
 .service('LoginService', function ($log, $filter, $timeout, $http, $rootScope, Config, UtilService) {
-  $log.log('Hello from your Service: LoginService in module main');
+  $log.log('Login.service');
+  init();
+
   var bind = this;
+
+  function init(){
+    $log.log('Login.init');
+  }
 
   this.Logout = function (callback, fail) {
     $log.log('init logout...');
@@ -19,7 +25,7 @@ angular.module('main')
         //set usuario logado
         $rootScope.status = 'Usuário não está logado';
         UtilService.setNotAuthorized();
-        //UtilService.setUserCurrentBlank();
+        UtilService.setUserCurrentBlank();
         UtilService.refreshUserCurrentRoot();
         callback();
       } else {
@@ -34,7 +40,9 @@ angular.module('main')
   }
 
   this.Login = function (usuarioWeb, callback, fail) {
-    $log.log('init login...', usuarioWeb.email);
+    usuarioWeb.data = castDateForBackend(new Date());
+    $log.log('init login:...', usuarioWeb.email);
+
     $http({
       method: 'POST',
       data: JSON.stringify(usuarioWeb),
@@ -45,6 +53,7 @@ angular.module('main')
       $log.log('login success!');
       $log.log('login request:', response.status);
       if (response.status === 200) {
+
         var user = response.data.userCurrent;
         user.data = new Date(user.data);
         //cast date
@@ -53,11 +62,10 @@ angular.module('main')
 
         if(user.isAuthorized){
           $log.info('success login!');
-          $rootScope.status = 'Olá '+ user.name;
           callback();
         } else{
           $log.warn('fail login!');
-          fail($rootScope.status);
+          fail(response.status);
         }
 
       } else {

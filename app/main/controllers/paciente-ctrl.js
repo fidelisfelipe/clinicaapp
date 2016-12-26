@@ -2,7 +2,7 @@
 angular.module('main')
 .controller('PacienteCtrl', function ($filter, $scope, $log, $state, $stateParams, $rootScope, $ionicModal, $ionicPopover, Main, FlashService, DataService) {
 
-  $log.log('Hello from your Controller: PacienteCtrl in module main:. This is your controller:', this);
+  $log.log('Paciente.controller');
   var bind = this;
 
   bind.openModalShow = true;
@@ -17,28 +17,36 @@ angular.module('main')
       FlashService.Error(msgError);
     }) : {};
   var count = 0;
-   //get list exame
 
   (function init(){
       
-      $rootScope.tipoExame = {};
-      $rootScope.tipoExameList = [];
+      //$rootScope.tipoExame = {};
+      //$rootScope.tipoExameList = [];
       $rootScope.resultadoExameList = [];
-      $rootScope.exameList = [];
+      //$rootScope.exameList = [];
       $rootScope.dataList = [];
       $rootScope.siglaList = [];
       $rootScope.siglaAllList = [];
-      $rootScope.pacienteList = [];
+      //$rootScope.pacienteList = [];
       $rootScope.profissaoList = [{nome: 'Desenvolvedor'},{nome: 'Professor'}];
 
+    if($state.current.name === 'main.pacienteSearch')
+        getPacienteList();
+      
+    if($state.current.name === 'main.pacienteExames')
+      getTipoExameList();
+
+    if($state.current.name === 'main.pacienteTipoExame'){
+      getSiglaAllList();
+      //getResultadoListAll();
+      //getTipoExame($stateParams.tipoExameId);
+      getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+    }
+
       initModalResultAdd();
+      
   })();
-  getSiglaAllList();
-  getPacienteList();
-  getTipoExameList();
-  getTipoExame($stateParams.tipoExameId);
-  getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
-  
+
   $ionicPopover.fromTemplateUrl('main/templates/paciente-dados-popover.html', {
     scope: $scope
   }).then(function(popover) {
@@ -153,7 +161,7 @@ angular.module('main')
                   }, function (msgError) {
                     FlashService.Error(msgError);
                   });
-                refreshList();
+                getPacienteList();
             }, function (erroMsg) {
               FlashService.Error(erroMsg);
             });
@@ -194,6 +202,7 @@ angular.module('main')
         FlashService.Error(erroMsg);
       });
   };
+
   bind.getValorPorDataPorSigla = function (data, sigla) {
     var result = [];
     for (var i = 0; i < $rootScope.resultadoExameList.length; i++) {
@@ -210,6 +219,17 @@ angular.module('main')
 
         return Math.abs(idadeData.getUTCFullYear() - 1970);
     }
+
+  function getResultadoListAll() {
+     //get list exame
+    DataService.getResultadoExameList(
+      function (resultadoList) {
+          $rootScope.resultadoList = resultadoList;
+          FlashService.Loading(false);
+      }, function (erroMsg) {
+        FlashService.Error(erroMsg);
+      });
+  };
   function getTipoExameList() {
     DataService.getTipoExameList(
       function (tipoExameList) {
@@ -282,6 +302,7 @@ angular.module('main')
     DataService.getSiglaAllList(
       function (siglaList) {
           $rootScope.siglaAllList = siglaList;
+          $rootScope.siglaList = siglaList;
       }, function (erroMsg) {
         FlashService.Error(erroMsg);
       });

@@ -2,14 +2,26 @@
 angular.module('main')
 .controller('TipoExameCtrl', function ($log, $state, $stateParams, $rootScope, Main, FlashService, DataService) {
 
-  $log.log('Hello from your Controller: TipoExameCtrl in module main:. This is your controller:', this);
+  $log.log('TipoExame.controller');
   var bind = this;
   bind.novo = $stateParams.tipoExameId ? Main.getTipoExame($stateParams.tipoExameId, function (result) {
     bind.novo = result;
   }, msgErro) : {};
   var count = 0;
   $rootScope.tipoExameList = [];
-  function refreshList() {
+
+(function init(){
+    if($state.current.name === 'main.tipoExameSearch')
+      getTipoExameList();
+
+    if($state.current.name === 'main.tipoExameDetail')
+      getExameAssociadoList();
+
+    if($state.current.name === 'main.tipoExameAdd')
+      getExameAssociadoList();
+  })();
+
+  function getTipoExameList() {
     bind.novo = {};
     FlashService.Loading(true, 'Carregando lista de tipo exame');
     DataService.getTipoExameList(function(tipoExameList){
@@ -33,15 +45,16 @@ angular.module('main')
     }
 
   };
-  refreshList();
-  getExameAssociadoList();
 
   bind.add = function (form) {
     if (form.$valid) {
 
       FlashService.Question('Incluir novo registro?',
         function () {
-          Main.addTipoExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+          Main.addTipoExame(bind.novo, function () {
+            getTipoExameList();
+            msgSucesso();
+          }, msgErro);
         });
 
     } else {
@@ -52,7 +65,10 @@ angular.module('main')
     if (form.$valid) {
       FlashService.Question('Alterar dados do registro?',
         function () {
-          Main.editTipoExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+          Main.editTipoExame(bind.novo, function () {
+            getTipoExameList(); 
+            msgSucesso();
+          }, msgErro);
         });
     } else {
       return false;
@@ -62,7 +78,10 @@ angular.module('main')
   bind.remove = function () {
     FlashService.Question('Remover este registro?',
       function () {
-        Main.removeTipoExame(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
+        Main.removeTipoExame(bind.novo.id, function () {
+          getTipoExameList(); 
+          msgSucesso();
+        }, msgErro);
       });
   };
   function msgErro() {

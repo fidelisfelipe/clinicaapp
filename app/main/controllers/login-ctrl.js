@@ -1,37 +1,58 @@
 'use strict';
 angular.module('main')
-.controller('LoginCtrl', function ($scope, $ionicModal, $ionicSideMenuDelegate, $ionicViewService, $log, $rootScope, $state, Main, LoginService, FlashService, UtilService) {
-
+.controller('LoginCtrl', function ($scope, $ionicModal, $ionicSideMenuDelegate, $ionicHistory, $log, $rootScope, $state, Main, LoginService, FlashService, UtilService) {
+  $log.log('Login.controller');
   componentHandler.upgradeDom();
 
-  $log.log('Hello from your Controller: LoginCtrl in module main:. This is your controller:', this);
   var bind = this;
-  bind.userCurrent = UtilService.getUserCurrentLocal();
-  (function init () {
 
+  (function init () {
+    //userCurrentClean();
+    verifySaveUser();
   })();
 
-  $ionicViewService.nextViewOptions({
+  $ionicHistory.nextViewOptions({
     disableAnimate: true,
     disableBack: true
   });
   $ionicSideMenuDelegate.canDragContent(false);
 
   bind.login = function (form) {
-	if (form.$valid) {
-
-          FlashService.Loading(true, 'Realizando Login...');
-          bind.userCurrent.data = null;
-          LoginService.Login(bind.userCurrent,
-          	function(){
-              FlashService.Loading(false);
-          		FlashService.Success('Login efetuado com sucesso!');
-          		$state.go('main.home');
-          	},
-          	function(erroMsg){
-          		FlashService.Error(erroMsg);
-          	});
-    }
+  	if (form.$valid) {
+      FlashService.Loading(true, 'Realizando Login...');
+      LoginService.Login(bind.userCurrent ,
+      	function(){
+          FlashService.Loading(false);
+      		FlashService.Success('Login efetuado com sucesso!');
+      		$state.go('main.home');
+      	},
+      	function(erroMsg){
+      		FlashService.Error(erroMsg);
+      	});
+      }
+  }
+  bind.logout = function () {
+    FlashService.Question('Deseja realmente sair do sistema?',
+    function () {
+      FlashService.Loading(true, 'Realizando Logout...');
+      LoginService.Logout(
+        function(){
+          bind.userCurrent = null;
+          $state.go('main.login');
+        },
+        function(){
+          FlashService.Error('Falha ao realizar Logout!');
+        });
+      FlashService.Loading(false);
+    });
+  }
+  function verifySaveUser(){
+    bind.userCurrent = JSON.parse(UtilService.verifySaveUser());
+    $log.debug('Login.controller: user find for login...');
+  }
+  function userCurrentClean(){
+    $log.log('user current clean...');
+    bind.userCurrent = null;
   }
   function msgErro() {
     FlashService.Error('Não foi possivel efetuar seu login...');

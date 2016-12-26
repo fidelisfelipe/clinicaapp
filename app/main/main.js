@@ -66,7 +66,8 @@ angular.module('main', [
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider, $provide) {
-    //force reload
+
+ //override state - force reload
    $provide.decorator('$state', function($delegate, $stateParams) {
         $delegate.forceReload = function() {
             return $delegate.go($delegate.current, $stateParams, {
@@ -77,6 +78,7 @@ angular.module('main', [
         };
         return $delegate;
     });
+  //override state - force reload
 
   // ROUTING with ui.router
   $urlRouterProvider.otherwise('/main/login');
@@ -93,8 +95,7 @@ angular.module('main', [
       views: {
         'pageContent': {
           templateUrl: 'main/templates/home.html',
-          controller: 'HomeCtrl as ctrl',
-          cache: false
+          controller: 'HomeCtrl as home'
         }
       }
     })
@@ -103,18 +104,17 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/login.html',
-            controller: 'LoginCtrl as ctrl',
-            cache: false
+            controller: 'LoginCtrl as ctrl'
           }
         }
       })
+    /** Account Features **/
       .state('main.account', {
         url: '/account',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/account.html',
-            controller: 'AccountCtrl as ctrl',
-            cache: false
+            controller: 'AccountCtrl as ctrl'
           }
         }
       })
@@ -123,18 +123,17 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/account-detail.html',
-            controller: 'AccountCtrl as ctrl',
-            cache: false
+            controller: 'AccountCtrl as ctrl'
           }
         }
       })
+      /** Paciente Features **/
      .state('main.pacienteSearch', {
         url: '/paciente/search',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-search.html',
-            controller: 'PacienteCtrl as ctrl',
-            cache: false
+            controller: 'PacienteCtrl as ctrl'
           }
         }
       })
@@ -156,7 +155,6 @@ angular.module('main', [
           }
         }
       })
-      
      .state('main.pacienteExames', {
         url: '/paciente/exames/:pacienteId',
         views: {
@@ -174,7 +172,7 @@ angular.module('main', [
           }
         }
       })
-       .state('main.pacienteAgenda', {
+      .state('main.pacienteAgenda', {
         url: '/paciente/agenda/:pacienteId',
         views: {
           'pageContent': {
@@ -182,7 +180,7 @@ angular.module('main', [
           }
         }
       })
-        .state('main.pacienteHistorico', {
+      .state('main.pacienteHistorico', {
         url: '/paciente/historico/:pacienteId',
         views: {
           'pageContent': {
@@ -190,7 +188,7 @@ angular.module('main', [
           }
         }
       })
-          .state('main.pacienteNotas', {
+      .state('main.pacienteNotas', {
         url: '/paciente/notas/:pacienteId',
         views: {
           'pageContent': {
@@ -198,7 +196,7 @@ angular.module('main', [
           }
         }
       })
-        .state('main.pacienteDocumentos', {
+      .state('main.pacienteDocumentos', {
         url: '/paciente/documentos/:pacienteId',
         views: {
           'pageContent': {
@@ -212,8 +210,7 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-tipoexame-detail.html',
-            controller: 'PacienteCtrl as ctrl',
-            cache: false, //required for state.forceReload
+            controller: 'PacienteCtrl as ctrl'
           }
         }
       })
@@ -222,19 +219,17 @@ angular.module('main', [
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-ligar-detail.html',
-            controller: 'PacienteCtrl as ctrl',
-            cache: false, //required for state.forceReload
+            controller: 'PacienteCtrl as ctrl'
           }
         }
       })
-    
+     /** Exame Features **/
       .state('main.exameSearch', {
         url: '/exame/search',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/exame-search.html',
-            controller: 'ExameCtrl as ctrl',
-            cache: false
+            controller: 'ExameCtrl as ctrl'
           }
         }
       })
@@ -256,13 +251,13 @@ angular.module('main', [
           }
         }
       })
+      /** Tipo Exame Features **/
       .state('main.tipoExameSearch', {
         url: '/tipoexame/search',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/tipoexame-search.html',
-            controller: 'TipoExameCtrl as ctrl',
-            cache: false
+            controller: 'TipoExameCtrl as ctrl'
           }
         }
       })
@@ -284,7 +279,7 @@ angular.module('main', [
           }
         }
       })
-
+      /** Debug Features **/
       .state('main.debug', {
         url: '/debug',
         views: {
@@ -294,11 +289,15 @@ angular.module('main', [
           }
         }
       });
-}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, UtilService, FlashService, LoginService, ConnectivityMonitor) {
-  $rootScope.appLoaded = false;
+}).run(function ($rootScope, $state, $log, $ionicPlatform, $ionicPopup, $ionicLoading, $cordovaNetwork, Main, UtilService, FlashService, LoginService, DataService) {
   $ionicPlatform.ready(function() {
 
     $log.info('init app...');
+
+    DataService.prepareRoot();
+    DataService.prepareModule();
+    //DataService.preparePlatform();
+
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyAyNwpCiUxEpBf9E473z81ku0pNROBFyf4",
@@ -313,15 +312,6 @@ angular.module('main', [
       componentHandler.upgradeDom();
       console.warn('domUpdated');
     }, 0);
-
-    $rootScope.appStatusView = 'Iniciando...';
-    var infoPlatform = ionic.Platform;
-    $log.log('Platform Info:',  JSON.stringify(infoPlatform));
-    $log.log('Platform online network: ' + navigator.onLine);
-    $log.log('Platform name:', ionic.Platform.platform());
-    $log.log('Platform version:', ionic.Platform.version());
-    $log.log('Platform isWebView:', ionic.Platform.isWebView());
-    $log.log('Platform isAndroid:', ionic.Platform.isAndroid());
 
     if(window.Connection) {
         if(navigator.connection.type == Connection.NONE) {
@@ -352,25 +342,7 @@ angular.module('main', [
     }else{
       $log.info('StatusBar cordova plugins not detected!');
     }
-//session ctrl
-//clean user session
-  	$log.debug('init session ctrl - begin');
-    $rootScope.userCurrent = UtilService.getUserCurrentLocal();
 
-  	if(!$rootScope.userCurrent.isAuthorized) {
-  		$log.info('user not found...');
-  	} else {
-  		$log.log('user found:', $rootScope.userCurrent.name);
-  	}
-  	$log.debug('init session ctrl - end');
-
-//check redirect where isauthorized
-    if($rootScope.userCurrent.isAuthorized){
-      $log.info('You is Authorized');
-      if($state.current.name === 'main.login'){
-        $state.go('main.home');
-      }
-    }
 
 //watch for change state
     $rootScope.$on('$stateChangeSuccess', function(evt){
@@ -379,21 +351,25 @@ angular.module('main', [
         console.warn('domUpdated');
       },0);
 
-      document.getElementById("logout").checked = true;
-
+      //document.getElementById("logout").checked = true;
+        //$state.go('main.login');
+       //TODO: Check Autorization and redirect (home, login)
+       
        $rootScope.userCurrent = UtilService.getUserCurrentLocal();
-        if($rootScope.userCurrent.isAuthorized){
+        if($rootScope.userCurrent !== undefined && 
+          $rootScope.userCurrent.isAuthorized){
           $log.info('You is Authorized');
-          if($state.current.name === 'main.login'){
-            $state.go('main.home');
-          }
+          //if($state.current.name === 'main.login'){
+          //  $state.go($state.current.name);
+          //}
         } else {
           $log.warn('You is Not Authorized');
           $log.warn('Redirect Request for main.login...');
-          $state.go('main.login');
+          //$state.go('main.login');
         }
+
       $log.log('state change success it: '+$state.current.name);
-    });//AuthSocialBackandService.onChangeSuccess
+    });
   //watch for signout
     $rootScope.$on('signout', function () {
       $log.log('receiver in auth signout...');
@@ -404,32 +380,6 @@ angular.module('main', [
       $log.log('receiver in auth signin...');
       $state.go('main.home');
     });
-    //check backend online
-    Main.isOnline(function (isOnline) {
-      $rootScope.isOnline = isOnline;
-      $log.log('Main.isOnline:', $rootScope.isOnline);
-    });
-
-    $rootScope.appLoaded = true;
-    $rootScope.logout = function () {
-      //TODO: send request logout
-
-        FlashService.Question('Deseja realmente sair do sistema?',
-        function () {
-          FlashService.Loading(true, 'Realizando Logout...');
-          LoginService.Logout(
-            function(){
-              $state.go('main.login');
-            },
-            function(){
-              FlashService.Error('Falha ao realizar Logout!');
-            });
-          FlashService.Loading(false);
-        });
-    }
-
-    $rootScope.status = $rootScope.userCurrent.isAuthorized ? 'Bem vindo '+$rootScope.userCurrent.nome : 'Usuário não está logado!';
-
   });
 
 });
@@ -476,6 +426,7 @@ angular.module('main').factory('ConnectivityMonitor', function($rootScope, $cord
     }
   }
 });
+
 
 angular.module('main').filter('unique', function () {
   return function (input, key) {

@@ -31,49 +31,46 @@
                           class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">settings</i>
                   </button>
-                </div>
 
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                    for="demo-menu-lower-right">
-                  <li class="mdl-menu__item" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" title="Exames" >
-                      <i class="material-icons">assessment</i>
-                     Exames
-                  </li>
-                  <li class="mdl-menu__item" ui-sref="main.pacienteProntuario({'pacienteId': ctrl.novo.id })" title="Prontuário">
-                      <i class="material-icons">assignment</i>
-                     Prontuário
-                  </li>
-                  <li class="mdl-menu__item" title="Agenda" ui-sref="main.pacienteAgenda({'pacienteId': ctrl.novo.id })">
-                      <i class="material-icons">event</i>
-                     Agenda
-                  </li>
-                  <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteHistorico({'pacienteId': ctrl.novo.id })">
-                      <i class="material-icons">timeline</i>
-                     Histórico
-                  </li>
-                  <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteNotas({'pacienteId': ctrl.novo.id })">
-                      <i class="material-icons">comment</i>
-                     Notas
-                  </li>
-                  <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteDocumentos({'pacienteId': ctrl.novo.id })">
-                      <i class="material-icons">attach_file</i>
-                     Documentos
-                  </li>
+                      for="demo-menu-lower-right">
+                    <li class="mdl-menu__item" ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" title="Exames" >
+                        <i class="material-icons">assessment</i>
+                       Exames
+                    </li>
+                    <li class="mdl-menu__item" ui-sref="main.pacienteProntuario({'pacienteId': ctrl.novo.id })" title="Prontuário">
+                        <i class="material-icons">assignment</i>
+                       Prontuário
+                    </li>
+                    <li class="mdl-menu__item" title="Agenda" ui-sref="main.pacienteAgenda({'pacienteId': ctrl.novo.id })">
+                        <i class="material-icons">event</i>
+                       Agenda
+                    </li>
+                    <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteHistorico({'pacienteId': ctrl.novo.id })">
+                        <i class="material-icons">timeline</i>
+                       Histórico
+                    </li>
+                    <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteNotas({'pacienteId': ctrl.novo.id })">
+                        <i class="material-icons">comment</i>
+                       Notas
+                    </li>
+                    <li class="mdl-menu__item" title="Exames" ui-sref="main.pacienteDocumentos({'pacienteId': ctrl.novo.id })">
+                        <i class="material-icons">attach_file</i>
+                       Documentos
+                    </li>
 
-                  <li disabled class="mdl-menu__item" title="Exames" ui-sref="main.pacienteLigar({'pacienteId': ctrl.novo.id })">
-                      <i class="material-icons">call</i>
-                     Ligar
-                  </li>
-                </ul>
-                </div>
+                    <li disabled class="mdl-menu__item" title="Exames" ui-sref="main.pacienteLigar({'pacienteId': ctrl.novo.id })">
+                        <i class="material-icons">call</i>
+                       Ligar
+                    </li>
+                  </ul>
 
-            </div>
+               </div>
+              </div>        
+            
 
-              </div>
-
-
-
-            </div>
+                  
+             </div>
 
             </ion-content>
           </section>
@@ -113,7 +110,7 @@
 
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <!-- ng-class="{ 'has-errors' : form.dataNascimento.$invalid, 'no-errors' : form.dataNascimento.$valid}" -->
-                    <input class="mdl-textfield__input" type="date" id="date-input" ng-model="ctrl.novo.dataNascimento" min="1900-01-01" max="2050-12-30" placeholder="">
+                    <input class="mdl-textfield__input" type="date" id="date-input" ng-model="ctrl.novo.dataNascimento" min="1900-01-01" max="2050-12-30" placeholder="" >
                     <label class="mdl-textfield__label" for="date-input">Data Nascimento</label>
                   </div>
 

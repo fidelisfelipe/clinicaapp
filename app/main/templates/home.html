@@ -11,36 +11,32 @@
       <div class="page-content">
         <ion-content>
 
-          <div class="button-bar" ng-show="!ctrl.userCurrent.isAuthorized">
-            <button class="button button-positive" ui-sref="main.login">Login</button>
-          </div>
-
-          <ul class="demo-list-icon mdl-list" ng-show="ctrl.userCurrent.isAuthorized">
-            <li class="mdl-list__item" ui-sref="main.account">
+          <ul class="demo-list-icon mdl-list" >
+            <li class="mdl-list__item" ui-sref="main.account" ng-show="userCurrent.isAuthorized">
               <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">person</i>
             Meus Dados
             </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
             </li>
-            <li class="mdl-list__item" ui-sref="main.pacienteSearch">
+            <li class="mdl-list__item" ui-sref="main.pacienteSearch" ng-show="userCurrent.isAuthorized">
               <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">supervisor_account</i>
-            <span class="mdl-badge" data-badge="{{pacienteList.length}}">Meus Pacientes</span>
+            <span class="mdl-badge" >Meus Pacientes</span>
               </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
             </li>
-            <li class="mdl-list__item" ui-sref="main.exameSearch">
+            <li class="mdl-list__item" ui-sref="main.exameSearch" ng-show="userCurrent.isAuthorized">
               <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">map</i>
-            <span class="mdl-badge" ng-controller="ExameCtrl as exameCtrl" data-badge="{{exameList.length}}">Exame</span>
+            <span class="mdl-badge" >Exames</span>
               </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
             </li>
-            <li class="mdl-list__item" ui-sref="main.tipoExameSearch">
+            <li class="mdl-list__item" ui-sref="main.tipoExameSearch" ng-show="userCurrent.isAuthorized">
               <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon">label</i>
-            <span class="mdl-badge" ng-controller="TipoExameCtrl as tipoExameCtrl" data-badge="{{tipoExameList.length}}">Tipo de Exame</span>
+            <i class="material-icons mdl-list__item-icon">local_hospital</i>
+            <span class="mdl-badge" >Tipo de Exames</span>
               </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
             </li>

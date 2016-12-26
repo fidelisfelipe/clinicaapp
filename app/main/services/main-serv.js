@@ -1,8 +1,14 @@
 'use strict';
 angular.module('main')
-.service('Main', function ($log, $filter, $timeout, $http, $rootScope, Config) {
-  $log.log('Hello from your Service: Main in module main');
+.service('Main', function ($log, $filter, $timeout, $http, $rootScope, Config, DataService) {
+  $log.log('Main.service');
+  init();
+
   var bind = this;
+
+  function init(){
+    $log.log('Main.init');
+  }
 
 //TODO: move for Util
   function getDataRandon () {

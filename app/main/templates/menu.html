@@ -26,48 +26,61 @@
     <!-- menu content -->
     <ion-content class="mdl-layout__drawer mdl-layout__drawer-force-open" scroll="false">
       <span class="mdl-layout-title">Clinica App</span>
-      <ul class="mdl-list menu-close" ng-show="ctrl.userCurrent.isAuthorized">
+      <ul class="mdl-list menu-close" >
         <li class="mdl-list__item" ui-sref="main.home">
           <span class="mdl-list__item-primary-content">
         <i class="material-icons mdl-list__item-icon">home</i>
         Home
         </span>
-          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+          <a class="mdl-list__item-secondary-action" href="#">
+            <i class="material-icons mdl-list__item-icon">chevron_right</i>
+          </a>
         </li>
-        <li class="mdl-list__item" ui-sref="main.login" ng-show="!ctrl.userCurrent.isAuthorized">
+        <li class="mdl-list__item" ui-sref="main.login" 
+          ng-show="!userCurrent.isAuthorized">
           <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon">home</i>
+          <i class="material-icons mdl-list__item-icon">home</i>
         Login
         </span>
-          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+          <a class="mdl-list__item-secondary-action" href="#">
+            <i class="material-icons mdl-list__item-icon">chevron_right</i>
+          </a>
         </li>
-        <li class="mdl-list__item" ui-sref="main.account" ng-show="ctrl.userCurrent.isAuthorized">
+        <li class="mdl-list__item" ui-sref="main.account" >
           <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon">person</i>
+          <i class="material-icons mdl-list__item-icon">person</i>
         Meus Dados
         </span>
-          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+          <a class="mdl-list__item-secondary-action" href="#">
+            <i class="material-icons mdl-list__item-icon">chevron_right</i>
+          </a>
         </li>
-        <li class="mdl-list__item" ui-sref="main.pacienteSearch" ng-show="ctrl.userCurrent.isAuthorized">
+        <li class="mdl-list__item" ui-sref="main.pacienteSearch" >
           <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" data-badge="{{pacienteList.length}}">supervisor_account</i>
+        <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" >supervisor_account</i>
         <span>Meus Pacientes</span>
           </span>
-          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+          <a class="mdl-list__item-secondary-action" href="#">
+            <i class="material-icons mdl-list__item-icon">chevron_right</i>
+          </a>
         </li>
-        <li class="mdl-list__item" ui-sref="main.exameSearch" ng-show="ctrl.userCurrent.isAuthorized">
+        <li class="mdl-list__item" ui-sref="main.exameSearch" >
           <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" ng-controller="ExameCtrl as exameCtrl" data-badge="{{exameList.length}}">map</i>
+          <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" >map</i>
         <span>Exame</span>
           </span>
-          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+          <a class="mdl-list__item-secondary-action" href="#">
+            <i class="material-icons mdl-list__item-icon">chevron_right</i>
+          </a>
         </li>
-        <li class="mdl-list__item" ui-sref="main.tipoExameSearch" ng-show="ctrl.userCurrent.isAuthorized">
+        <li class="mdl-list__item" ui-sref="main.tipoExameSearch" >
           <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" ng-controller="TipoExameCtrl as tipoExameCtrl" data-badge="{{tipoExameList.length}}">local_hospital</i>
+          <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" >local_hospital</i>
         <span>Tipo de Exame</span>
           </span>
-          <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+          <a class="mdl-list__item-secondary-action" href="#">
+            <i class="material-icons mdl-list__item-icon">chevron_right</i>
+          </a>
         </li>
         
       </ul>

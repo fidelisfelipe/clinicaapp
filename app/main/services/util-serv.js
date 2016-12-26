@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.service('UtilService', function ($log, $rootScope, $http, FlashService) {
+.service('UtilService', function ($log, $rootScope, $http, $state, FlashService) {
   var user =  new function () {
     //persistents
     this.id = null;
@@ -82,7 +82,7 @@ angular.module('main')
       user.isAdmin = (user.role === 'Admin');
       user.srcImg = 'main/assets/images/profile.jpg';
       user.senha = data.senha;
-      sessionStorage.currentUser = user;
+      sessionStorage.currentUser = JSON.stringify(user);
     },
 //setUserCurrentBlank
     setUserCurrentBlank: function () {
@@ -100,7 +100,7 @@ angular.module('main')
       user.isAdmin = false;
       user.srcImg = '';
       sessionStorage.removeItem('currentUser');
-      sessionStorage.currentUser = user;
+      sessionStorage.currentUser = JSON.stringify(user);
     },
 //setIsAuthorized
     setIsAuthorized: function () {
@@ -120,26 +120,23 @@ angular.module('main')
          $log.log('get user for session storage...');
          return JSON.parse(sessionStorage.getItem('currentUser'));
        }
-       $log.log('get user for service util...');
       return user;
+    },
+//verifySaveUser
+    verifySaveUser: function () {
+      var userSave = sessionStorage.getItem('currentUser');
+         $log.log('Util.verifySaveUser - verify user save...');
+         if(userSave === null){
+          $log.info('user save not found!');
+           return null;
+         }else{
+          $log.info('user save found');
+          return userSave;
+         }       
     },
 //refreshUserCurrentRoot
     refreshUserCurrentRoot: function () {
       sessionStorage.currentUser = JSON.stringify(user);
-    },
-//refreshUserCurrentForData
-    refreshUserCurrentForData: function () {
-
-      $http({
-        method: 'GET',
-        url: 'tests'
-      }).then(function (response) {
-        UtilService.setUserForDataDomain(response.data);
-        UtilService.refreshUserCurrentRoot();
-      }, function (error) {
-        $log.debug('fail update: ', error);
-      });
-
     }
 
   };

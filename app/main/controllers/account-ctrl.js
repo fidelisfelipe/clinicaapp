@@ -2,7 +2,7 @@
 angular.module('main')
 .controller('AccountCtrl', function ($log, $rootScope,$state, Main, LoginService, UtilService, FlashService) {
 
-  $log.log('Hello from your Controller: AccountCtrl in module main:. This is your controller:', this);
+  $log.log('Account.controller');
   var bind = this;
   bind.userCurrent = UtilService.getUserCurrentLocal();
   bind.openFormEdit = function () {

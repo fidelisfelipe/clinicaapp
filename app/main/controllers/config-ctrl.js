@@ -2,6 +2,6 @@
 angular.module('main')
 .controller('ConfigCtrl', function ($log) {
 
-  $log.log('Hello from your Controller: ConfigCtrl in module main:. This is your controller:', this);
+  $log.log('Config.controller');
 
 });

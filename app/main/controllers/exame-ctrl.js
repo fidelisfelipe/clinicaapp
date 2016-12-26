@@ -2,22 +2,32 @@
 angular.module('main')
 .controller('ExameCtrl', function ($log, $state, $stateParams, $rootScope, Main, FlashService, DataService) {
 
-  $log.log('Hello from your Controller: ExameCtrl in module main:. This is your controller:', this);
+  $log.log('Exame.controller');
   var bind = this;
   bind.novo = $stateParams.exameId ? Main.getExame($stateParams.exameId, function (result) {
     bind.novo = result;
   }, msgErro) : {};
   var count = 0;
-  $rootScope.exameList = [];
-  function refreshList() {
+
+  (function init(){
+    if($state.current.name === 'main.exameSearch')
+      getExameList();
+
+    if($state.current.name === 'main.exameDetail')
+      getTipoExameList();
+
+    if($state.current.name === 'main.exameAdd')
+      getTipoExameList();
+
+  })();
+
+  function getExameList() {
     bind.novo = {};
     Main.exames(
       function (result) {
           $rootScope.exameList = result;
       }, msgErroLoadExames);
   };
-  refreshList();
-  getTipoExameList();
   function getTipoExameList() {
     DataService.getTipoExameList(
       function (tipoExameList) {
@@ -39,7 +49,7 @@ angular.module('main')
         function () {
           //TODO: mover para DataService
           DataService.addExame(bind.novo, function () {
-            refreshList(); 
+            getExameList();
             msgSucesso();
           }, function () {
             FlashService.Error('Não foi possivel incluir o registro...');
@@ -58,7 +68,10 @@ angular.module('main')
       }
       FlashService.Question('Alterar dados do registro?', 
         function () {
-          Main.editExame(bind.novo, function () {refreshList(); msgSucesso();}, msgErro);
+          Main.editExame(bind.novo, function () {
+            getExameList();
+            msgSucesso();
+          }, msgErro);
         });
     } else {
       return false;
@@ -68,7 +81,10 @@ angular.module('main')
   bind.remove = function () {
     FlashService.Question('Remover este registro?', 
       function () {
-        Main.removeExame(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
+        Main.removeExame(bind.novo.id, function () {
+          getExameList();
+          msgSucesso();
+        }, msgErro);
       });
   };
   function msgErro() {
