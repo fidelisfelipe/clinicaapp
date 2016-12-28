@@ -4,11 +4,10 @@ angular.module('main')
 
   $log.log('Paciente.controller');
   var bind = this;
-
+  bind.showSelectedTable = 'material';
   bind.openModalShow = true;
   bind.openModalEdit = false;
-  bind.showGrid = true;
-  bind.showTable = false;
+
   if ($stateParams.pacienteId)
   bind.novo = $stateParams.pacienteId ? DataService.getPaciente($stateParams.pacienteId,
     function (result) {
@@ -37,13 +36,17 @@ angular.module('main')
       getTipoExameList();
 
     if($state.current.name === 'main.pacienteTipoExame'){
-      getSiglaAllList();
+       getSiglaAllList();
       //getResultadoListAll();
       //getTipoExame($stateParams.tipoExameId);
       getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+      
+      //$state.forceReload;
     }
 
+
       initModalResultAdd();
+
       
   })();
 
@@ -52,6 +55,34 @@ angular.module('main')
   }).then(function(popover) {
     bind.popover = popover;
   });
+  bind.addDate = function () {
+    
+    FlashService.Question('Incluir Resultados?',
+      function () {
+        $log.log('add date new');
+        $rootScope.dataList.push(new Date());
+         FlashService.Loading(false);
+         $state.forceReload();
+      });
+   
+    
+  }
+  bind.removeLastDate = function () {
+    FlashService.Question('Remover a última data?',
+      function () {
+        $log.log('remove date column');
+        $rootScope.dataList.remove($rootScope.dataList.length);
+         FlashService.Loading(false);
+         $state.forceReload();
+      });
+  }
+  //default grid
+  bind.showSelectedTable = 'grid';
+  bind.showTable = function (tableName){
+    $log.log('select table: '+tableName);
+    bind.showSelectedTable = tableName;
+  }
+
   bind.openDados = function($event) {
     bind.popover.show($event);
   };
@@ -205,11 +236,20 @@ angular.module('main')
 
   bind.getValorPorDataPorSigla = function (data, sigla) {
     var result = [];
+    var noHave = false;
     for (var i = 0; i < $rootScope.resultadoExameList.length; i++) {
       if($rootScope.resultadoExameList[i].data === data
         && $rootScope.resultadoExameList[i].exame.sigla === sigla
-        )
-      return $rootScope.resultadoExameList[i];
+        ){
+        $log.log('get item exame:'+$rootScope.resultadoExameList[i].data + ' - '+sigla);
+        return $rootScope.resultadoExameList[i];
+      }else{
+        noHave = true;
+      }
+    }
+    if(noHave){
+      var returnVazio = {valor: 'vazio'}; 
+        return returnVazio;
     }
   };
   bind.calcularIdade = function (nascimento) {

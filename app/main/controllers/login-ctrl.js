@@ -15,8 +15,9 @@ angular.module('main')
     disableAnimate: true,
     disableBack: true
   });
-  $ionicSideMenuDelegate.canDragContent(false);
 
+  $ionicSideMenuDelegate.canDragContent(false);
+  
   bind.login = function (form) {
   	if (form.$valid) {
       FlashService.Loading(true, 'Realizando Login...');
@@ -78,14 +79,17 @@ angular.module('main')
 
   	}
   }
-  $ionicModal.fromTemplateUrl('signin.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    bind.modal = modal;
-  });
+  
   bind.openModal = function() {
-    bind.modal.show();
+    userCurrentClean();
+    $ionicModal.fromTemplateUrl('signin.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      bind.modal = modal;
+      bind.modal.show();
+    });
+    
   };
   bind.closeModal = function() {
     bind.modal.hide();

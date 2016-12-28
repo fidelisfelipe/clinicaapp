@@ -60,6 +60,7 @@ angular.module('main', [
   'ngMessages',
   //session mode dependency - begin
   'ngCookies',
+  //'ngSanitize',
   'ui.utils.masks',
   'LocalForageModule',
   //session mode dependency - end
@@ -68,7 +69,7 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider, $provide) {
 
  //override state - force reload
-   $provide.decorator('$state', function($delegate, $stateParams) {
+  $provide.decorator('$state', function($delegate, $stateParams) {
         $delegate.forceReload = function() {
             return $delegate.go($delegate.current, $stateParams, {
                 reload: true,
@@ -78,10 +79,11 @@ angular.module('main', [
         };
         return $delegate;
     });
+
   //override state - force reload
 
   // ROUTING with ui.router
-  $urlRouterProvider.otherwise('/main/login');
+  $urlRouterProvider.otherwise("main/paciente/1/por/tipoexame/1");///main/login.html
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
     .state('main', {
@@ -209,8 +211,17 @@ angular.module('main', [
         url: '/paciente/:pacienteId/por/tipoexame/:tipoExameId',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-tipoexame-detail.html',
+            templateUrl: 'main/templates/paciente-resultados-grid.html',
             controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+     .state('main.tabela', {
+        url: '/tabela',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/tabela.html',
+            controller: 'TabelaCtrl as ctrl'
           }
         }
       })
@@ -306,7 +317,8 @@ angular.module('main', [
       storageBucket: "project-263344792902730854.appspot.com",
       messagingSenderId: "607347890439"
     };
-    firebase.initializeApp(config);
+    //TODO: desativado. deve configurar server backend
+    //firebase.initializeApp(config);
 
     setTimeout(function(){
       componentHandler.upgradeDom();
@@ -343,7 +355,10 @@ angular.module('main', [
       $log.info('StatusBar cordova plugins not detected!');
     }
 
-
+    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+         //here you can go to whatever state you want, and you also have a lot of information to save if needed
+         $log.error("state:"+toState.current.name+ " error: "+error);
+    });
 //watch for change state
     $rootScope.$on('$stateChangeSuccess', function(evt){
       setTimeout(function(){

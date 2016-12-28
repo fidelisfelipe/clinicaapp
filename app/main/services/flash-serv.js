@@ -92,10 +92,10 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
         title: "Oops...",
         text: message,
         type: "error",
+        customClass: "error-swa",
         allowOutsideClick: true,
         showCancelButton: false,
-        showConfirmButton: false,
-        customClass: "error-swa",
+        showConfirmButton: false
       });
 
   }

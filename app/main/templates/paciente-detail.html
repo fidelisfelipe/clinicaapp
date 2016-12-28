@@ -5,15 +5,37 @@
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">Paciente</span>
       </div>
-      <div class="mdl-layout__tab-bar mdl-js-ripple-effect" ng-show="ctrl.novo.id">
-        <a href="#view-user-tab" class="mdl-layout__tab is-active" ng-click="ctrl.openModalShow = !ctrl.openModalShow; ctrl.openModalEdit = false;">
-          <i class="material-icons">remove_red_eye</i>
-        </a>
-        <a href="#edit-user-tab" class="mdl-layout__tab" ng-click="ctrl.openModalEdit = !ctrl.openModalEdit;ctrl.openModalShow=false;">
-          <i class="material-icons">mode_edit</i>
-        </a>
-      </div>
+      
     </header>
+
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <ion-content>
+
+          <ul class="mdl-list">
+            <li class="mdl-list__item" 
+              ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" 
+              title="Exames" >
+              <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">local_hospital</i>
+                Exames
+                </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
+            <li class="mdl-list__item" 
+              ui-sref="main.main.pacienteDetailEdit({'pacienteId': ctrl.novo.id })" 
+              title="Exames" >
+              <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">face</i>
+                Editar Informações
+                </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
+          </ul>
+
+        </ion-content>
+      </div>
+    </main>
 
     <main class="mdl-layout__content">
 
@@ -74,7 +96,8 @@
 
             </ion-content>
           </section>
-          <section class="mdl-layout__tab-panel is-active" id="edit-user-tab" ng-show="ctrl.openModalEdit || !ctrl.novo.id">
+          <section class="mdl-layout__tab-panel is-active" id="edit-user-tab" 
+          ng-show="ctrl.openModalEdit || !ctrl.novo.id">
             <ion-content class="login-background">
             <div class="page-content">
               <div class="user-edit-delete-form-container">
