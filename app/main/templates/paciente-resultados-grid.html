@@ -6,20 +6,14 @@
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">Resultados</span>
 
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right search-field">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="searchText">
-            <i class="material-icons">search</i>
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" name="searchText" id="searchText" ng-model="ctrl.searchText">
-          </div>
-        </div>
+        <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="ctrl.addDate()">
+            <i class="material-icons" title="Add resultados">add</i>
+        </button>
 
       </div>
     </header>
 
-    <main class="mdl-layout__content">
+    <main class="mdl-layout__content" >
       <div class="page-content">
         <ion-content>
 
@@ -47,12 +41,10 @@
       </table>
 -->
 <!-- material -->
-      <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="ctrl.addDate()">
-            <i class="material-icons" title="Add resultados">add</i>
-      </button>
+
+      
       <table 
-        class="mdl-data-table mdl-js-data-table mdl-shadow--2dp"
-      style="width:100%; heigth: 100%;" >
+        class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" >
         <thead>
 
           <tr >
@@ -61,22 +53,13 @@
             </th>
             <th class="mdl-data-table__cell--non-numeric" 
               ng-repeat="data in dataList | orderBy:'data'" >
-              <button type="button" class="mdl-chip" >
-                  <span class="mdl-chip__text">
-                    {{data | date: 'dd/MM/yyyy'}}
-                  </span>
-              </button>
-              <!-- Deletable Chip -->
-              <button type="button" class="mdl-chip mdl-chip--deletable" >
-                  <span class="mdl-chip__text">
-                    {{data | date: 'dd/MM/yyyy'}}
-                  </span>
-                  <button type="button" class="mdl-chip__action" 
-                  ng-click="ctrl.removeLastDate()" >
-                    <i class="material-icons" >cancel</i>
-                  </button>
-              </button>
               
+              <!-- Deletable Chip -->
+                  <!-- Deletable Chip -->
+                  <span class="mdl-chip mdl-chip--deletable" 
+                    ng-click="ctrl.removeLastDate()">
+                      <span class="mdl-chip__text">{{data | date: 'dd/MM/yyyy'}}</span>
+                  </span>
             </th>
           </tr>
         </thead>
@@ -96,7 +79,7 @@
               </button>
               
                <!-- Button Chip -->
-
+              
               <button type="button button-light" class="mdl-chip" 
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor === 'vazio'">
                   <span class="mdl-chip__text">
@@ -109,13 +92,7 @@
         </tbody>
       </table>
 
-    <div class="button button-full" ng-class="button-positive" 
-      ng-click="ctrl.showListResult = !ctrl.showListResult;" >
-          Resultados 
-          <span class="badge badge-positive" ng-bind="resultadoExameList.length"></span>
-        </div>
-
-      <div class="button-bar" ng-show="ctrl.showListResult">
+      <div class="button-bar" >
         <div class="button button-positive" style="cursor:default;" >
           Exame
         </div>
@@ -128,7 +105,7 @@
         <div class="item item-positive ion-arrow-down-b col-5" >
         </div>
       </div>
-      <div class="button-bar" ng-repeat="resultado in resultadoExameList | orderBy: 'data':'data'" ng-show="ctrl.showListResult">
+      <div class="button-bar" ng-repeat="resultado in resultadoExameList | orderBy: 'data':'data'" >
         <div class="button" 
         ng-class="$index % 2 === 0? 'button-light' : 'button-positive'" 
         style="cursor:default" >
@@ -152,7 +129,8 @@
           Nenhum registro encontrado!
         </div>
       </div>
-       <ion-content>
+       
     </div>
+  </ion-content>
   </main>
 </ion-view>
