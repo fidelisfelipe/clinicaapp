@@ -208,6 +208,50 @@ angular.module('main')
         Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });
   };
+  bind.addResultInDate = function (data, sigla, index) {
+    var resultado = {'data': data, 'valor': '', 'exame': {'sigla': sigla}};
+    FlashService.ModalAddResult(sigla, $filter('date')(data, 'dd/MM/yyyy'), 0, function(){
+      
+      DataService.resultadoAdd($stateParams.pacienteId, resultado, function(){
+            FlashService.Success('Incluido com sucesso!');
+            FlashService.Loading(false);
+            var resultado = {};
+            getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+            $state.forceReload();
+          }, function(msgErro){
+            FlashService.Error(msgErro);
+            FlashService.Loading(false);
+            
+          });
+
+    });
+      //, sigla, index, 
+      //null,null,null,function(){
+
+
+    //title, data, sigla, index, successCallBack
+    
+    
+    //FlashService.Question(data, sigla, index, function (){$log.debug('success add result');};
+    /** 
+    FlashService.Question(sigla+' em '+$filter('date')(data, 'dd/MM/yyyy')+' valor '+1234+'?',
+      function () {
+      var resultado = {data: data, sigla: sigla};
+
+      DataService.resultadoAdd($stateParams.pacienteId, resultado, function(){
+            FlashService.Success('Incluido com sucesso!');
+            FlashService.Loading(false);
+            var resultado = {};
+            getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+            $state.forceReload();
+          }, function(msgErro){
+            FlashService.Error(msgErro);
+            FlashService.Loading(false);
+            
+          });
+      });
+    **/
+  };
   bind.refreshExameList = function (tipoId) {
 
      //get list exame

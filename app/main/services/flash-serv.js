@@ -15,6 +15,7 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
   service.Loading = Loading;
   service.Question = Question;
   service.FormEdit = FormEdit;
+  service.ModalAddResult = ModalAddResult;
 
 
   return service;
@@ -119,6 +120,37 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
         yes();
       });
     }
+    function ModalAddResult(title, data, index, successCallBack){
+      clearAlert();
+      swal({
+          title: title,
+          text: data,
+          type: "input",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          animation: "slide-from-top",
+          inputPlaceholder: "Valor:"
+        },
+        function(inputValue){
+          
+          if (inputValue === false) return false;
+          
+          if (inputValue === "") {
+            FlashService.Question("Deseja remover este valor?");
+            //var result = search value in backend
+            //
+            //if result is empty
+            //  not change
+            //else : FlashService.Question("Deseja remover este valor?");
+            //não: 
+            return false
+          }
+          successCallBack();
+          
+          
+        });
+    }
+    
 
     function FormEdit(){
 
