@@ -73,7 +73,7 @@
               <!-- Button Chip -->
               <button type="button" class="mdl-chip" 
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor !== 'vazio'">
-                  <span class="mdl-chip__text">
+                  <span class="mdl-chip__text" ng-click="ctrl.updateResult(exameData, sigla)">
                     {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}
                   </span>
               </button>
@@ -82,7 +82,7 @@
               
               <button type="button button-light" class="mdl-chip" 
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor === 'vazio'">
-                  <span class="mdl-chip__text" ng-click="ctrl.addResultInDate(exameData, sigla)">
+                  <span class="mdl-chip__text" ng-click="ctrl.addResultInDate(exameData, sigla, $index)">
                     ---
                   </span>
               </button>

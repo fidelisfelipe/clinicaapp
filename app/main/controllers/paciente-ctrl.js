@@ -40,8 +40,7 @@ angular.module('main')
       //getResultadoListAll();
       //getTipoExame($stateParams.tipoExameId);
       getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
-      
-      //$state.forceReload;
+      $state.forceReload();
     }
 
 
@@ -208,11 +207,36 @@ angular.module('main')
         Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });
   };
-  bind.addResultInDate = function (data, sigla, index) {
-    var resultado = {'data': data, 'valor': '', 'exame': {'sigla': sigla}};
-    FlashService.ModalAddResult(sigla, $filter('date')(data, 'dd/MM/yyyy'), 0, function(){
-      
-      DataService.resultadoAdd($stateParams.pacienteId, resultado, function(){
+  bind.updateResult = function (data, sigla) {
+    FlashService.Question('Alterar este Valor?', function () {
+      $log.info('update value...');
+      bind.addResultInDate(data, sigla);
+    },
+    function () {
+      $log.warn('not update value...');
+    });
+  };
+  bind.addResultInDate = function (data, sigla) {
+    var dataView = $filter('date')(data, 'dd/MM/yyyy')
+    $log.log('index dataList - column -'+dataView);
+    var inputPlaceholder = '';
+    FlashService.ModalAddResult(sigla, dataView, 0, inputPlaceholder, function(){
+      var resultado = {};
+
+      var result = [];
+      var noHave = false;
+      for (var i = 0; i < $rootScope.resultadoExameList.length; i++) {
+        if($rootScope.resultadoExameList[i].data === data
+          && $rootScope.resultadoExameList[i].exame.sigla === sigla
+          ){
+          $log.log('get item exame:'+$rootScope.resultadoExameList[i].data + ' - '+sigla);
+          bind.resultado = $rootScope.resultadoExameList[i];
+        }else{
+          noHave = true;
+        }
+      }
+
+      DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, function(){
             FlashService.Success('Incluido com sucesso!');
             FlashService.Loading(false);
             var resultado = {};

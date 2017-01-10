@@ -96,7 +96,8 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
         customClass: "error-swa",
         allowOutsideClick: true,
         showCancelButton: false,
-        showConfirmButton: false
+        showConfirmButton: false,
+        animation: 'none'
       });
 
   }
@@ -115,12 +116,13 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
         allowOutsideClick: true,
         showCancelButton: true,
         showConfirmButton: true,
-        customClass: 'warning-swa'
+        customClass: 'warning-swa',
+        animation: 'none'
       }, function(){
         yes();
       });
     }
-    function ModalAddResult(title, data, index, successCallBack){
+    function ModalAddResult(title, data, index, stringInputPlaceholder, successCallBack){
       clearAlert();
       swal({
           title: title,
@@ -128,15 +130,16 @@ function FlashService($rootScope, $ionicPopup, $ionicLoading) {
           type: "input",
           showCancelButton: true,
           closeOnConfirm: false,
-          animation: "slide-from-top",
-          inputPlaceholder: "Valor:"
+          //animation: "slide-from-top",
+          inputPlaceholder: stringInputPlaceholder,
+          animation: 'none'
         },
         function(inputValue){
           
           if (inputValue === false) return false;
           
-          if (inputValue === "") {
-            FlashService.Question("Deseja remover este valor?");
+          if (inputValue === '') {
+            swal("Cancelled", "Nenhum valor informado", "warning-swa");
             //var result = search value in backend
             //
             //if result is empty
