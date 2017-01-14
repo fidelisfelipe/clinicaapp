@@ -69,7 +69,7 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider, $provide) {
 
  //override state - force reload
-  $provide.decorator('$state', function($delegate, $stateParams) {
+ $provide.decorator('$state', function($delegate, $stateParams) {
         $delegate.forceReload = function() {
             return $delegate.go($delegate.current, $stateParams, {
                 reload: true,
@@ -304,7 +304,12 @@ angular.module('main', [
   $ionicPlatform.ready(function() {
 
     $log.info('init app...');
-
+    var status;
+    Main.isOnline(function(result){
+      status = result;
+      $log.debug('Status Backend: ', status);
+    });
+    
     DataService.prepareRoot();
     DataService.prepareModule();
     //DataService.preparePlatform();
@@ -398,50 +403,6 @@ angular.module('main', [
   });
 
 });
-
-angular.module('main').factory('ConnectivityMonitor', function($rootScope, $cordovaNetwork){
-
-  return {
-    isOnline: function(){
-      if(ionic.Platform.isWebView()){
-        return $cordovaNetwork.isOnline();
-      } else {
-        return navigator.onLine;
-      }
-    },
-    isOffline: function(){
-      if(ionic.Platform.isWebView()){
-        return !$cordovaNetwork.isOnline();
-      } else {
-        return !navigator.onLine;
-      }
-    },
-    startWatching: function(){
-        if(ionic.Platform.isWebView()){
-
-          $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-            console.log("went online");
-          });
-
-          $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-            console.log("went offline");
-          });
-
-        }
-        else {
-
-          window.addEventListener("online", function(e) {
-            console.log("went online");
-          }, false);
-
-          window.addEventListener("offline", function(e) {
-            console.log("went offline");
-          }, false);
-        }
-    }
-  }
-});
-
 
 angular.module('main').filter('unique', function () {
   return function (input, key) {

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('PacienteCtrl', function ($filter, $scope, $log, $state, $stateParams, $rootScope, $ionicModal, $ionicPopover, Main, FlashService, DataService) {
+.controller('PacienteCtrl', function ($timeout, $filter, $scope, $log, $state, $stateParams, $rootScope, $ionicModal, $ionicPopup, $ionicPopover, Main, FlashService, DataService) {
 
   $log.log('Paciente.controller');
   var bind = this;
@@ -36,35 +36,89 @@ angular.module('main')
       getTipoExameList();
 
     if($state.current.name === 'main.pacienteTipoExame'){
-       getSiglaAllList();
-      //getResultadoListAll();
-      //getTipoExame($stateParams.tipoExameId);
+      getSiglaAllList();
+      getExameList($stateParams.tipoExameId);
+      getTipoExame($stateParams.tipoExameId);
       getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
       $state.forceReload();
     }
 
-
-      initModalResultAdd();
-
       
   })();
+//adiciona novo resultado
+// Triggered on a button click, or some other target
+ bind.showPopupAdd = function(data, sigla) {
+   var dataView = $filter('date')(data, 'dd/MM/yyyy');
 
-  $ionicPopover.fromTemplateUrl('main/templates/paciente-dados-popover.html', {
-    scope: $scope
-  }).then(function(popover) {
-    bind.popover = popover;
-  });
+   // An elaborate, custom popup
+   var myPopup = $ionicPopup.show({
+     template: '<input type="text" ng-model="ctrl.resultado.valor">',
+     title: dataView+' '+$rootScope.tipoExame.nome+' '+sigla.sigla,
+     subTitle: 'Insira o valor do exame',
+     scope: $scope,
+     buttons: [
+       { text: 'Cancel' },
+       {
+         text: '<b>Add</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+           if (!bind.resultado.valor) {
+             //don't allow the user to close unless he enters wifi password
+             e.preventDefault();
+           } else {
+             return bind.resultado.valor;
+           }
+         }
+       },
+     ]
+   });
+   myPopup.then(function(res) {
+    if(res){
+      bind.resultado.data = data;
+      bind.resultado.tipo = $rootScope.tipoExame;
+      //recupera exame por sigla para obter id exame
+       for (var i = 0; i < $rootScope.siglaAllList.length; i++) {
+         if($rootScope.siglaAllList[i].sigla === sigla.sigla){
+           bind.resultado.exame = $rootScope.siglaAllList[i];
+         }
+       };
+
+        //post add resultado exame - clearValue is false
+        var clearValue = false;
+        DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, clearValue, function(){
+                FlashService.Success('Incluido com sucesso!');
+                FlashService.Loading(false);
+                bind.resultado = {};
+                getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+
+              }, function(msgErro){
+                FlashService.Error(msgErro);            
+              });
+              $state.forceReload();
+      }
+    });
+   $timeout(function() {
+      myPopup.close(); //close the popup after 10 seconds for some reason
+   }, 10000);
+  };
+//end add resultado
+
   bind.addDate = function () {
     
     FlashService.Question('Incluir Resultados?',
       function () {
-        $log.log('add date new');
-        $rootScope.dataList.push(new Date());
+        $log.log('add date new');//TODO: remover data randow para date type input 
+        $rootScope.dataList.push(randomDate(1, 30));
          FlashService.Loading(false);
          $state.forceReload();
       });
    
     
+  }
+
+  function randomDate(start, end) {
+    var date = new Date(+start + Math.random() * (end - start));
+    return date;
   }
   bind.removeLastDate = function () {
     FlashService.Question('Remover a última data?',
@@ -100,17 +154,6 @@ angular.module('main')
   }
 
   bind.openModalAdd = function () {
-    FlashService.Loading(true);
-    //get list tipo exame
-    DataService.getTipoExameList(
-      function (tipoExameList) {
-          $rootScope.tipoExameList = tipoExameList;
-          FlashService.Loading(false);
-      }, function (erroMsg) {
-        FlashService.Error(erroMsg);
-        FlashService.Loading(false);
-      });
-
     bind.modal.show();
   };
   bind.add = function (form) {
@@ -132,29 +175,7 @@ angular.module('main')
       return false;
     }
   };
-  bind.resultadoAdd = function (form) {
-    if (form.$valid) {
-
-      FlashService.Question('Incluir novo resultado?',
-        function () {
-          FlashService.Loading(true, 'Incluindo');
-          DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, function(){
-            FlashService.Success('Incluido com sucesso!');
-            FlashService.Loading(false);
-            bind.resultado = {};
-            getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
-            bind.modal.hide();
-          }, function(msgErro){
-            FlashService.Error(msgErro);
-            FlashService.Loading(false);
-            bind.modal.hide();
-          });
-        });
-
-    } else {
-      return false;
-    }
-  };
+ 
   bind.resultadoRemove = function (objectRemove) {
 
       FlashService.Question('Remover este resultado?',
@@ -207,76 +228,42 @@ angular.module('main')
         Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });
   };
-  bind.updateResult = function (data, sigla) {
-    FlashService.Question('Alterar este Valor?', function () {
-      $log.info('update value...');
-      bind.addResultInDate(data, sigla);
+  bind.updateResult = function (data, sigla, valor) {
+    bind.updateResult(data, sigla, true);
+  };
+  bind.updateResult = function (data, sigla, valor) {
+    FlashService.Question('Remover este valor?', function () {
+      $log.info('update value...'+data+' '+sigla.sigla);
+      bind.resultado = {tipo: '', data: '', valor: ''};
+      bind.resultado.valor = valor;
+      bind.resultado.data = data;
+      bind.resultado.tipo = $rootScope.tipoExame;
+      //recupera exame por sigla para obter id exame
+       for (var i = 0; i < $rootScope.siglaAllList.length; i++) {
+         if($rootScope.siglaAllList[i].sigla === sigla.sigla){
+           bind.resultado.exame = $rootScope.siglaAllList[i];
+         }
+       };
+      //post update/clearValue resultado exame
+      //clear value is true
+      var clearValue = true;
+      DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, clearValue, function(){
+              FlashService.Success('Incluido com sucesso!');
+              FlashService.Loading(false);
+              bind.resultado = {};
+              getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId, function () {$state.forceReload();});
+            }, function(msgErro){
+              FlashService.Error(msgErro);
+              FlashService.Loading(false);
+              
+            });
+
     },
     function () {
       $log.warn('not update value...');
     });
   };
-  bind.addResultInDate = function (data, sigla) {
-    var dataView = $filter('date')(data, 'dd/MM/yyyy')
-    $log.log('index dataList - column -'+dataView);
-    var inputPlaceholder = '';
-    FlashService.ModalAddResult(sigla, dataView, 0, inputPlaceholder, function(){
-      var resultado = {};
-
-      var result = [];
-      var noHave = false;
-      for (var i = 0; i < $rootScope.resultadoExameList.length; i++) {
-        if($rootScope.resultadoExameList[i].data === data
-          && $rootScope.resultadoExameList[i].exame.sigla === sigla
-          ){
-          $log.log('get item exame:'+$rootScope.resultadoExameList[i].data + ' - '+sigla);
-          bind.resultado = $rootScope.resultadoExameList[i];
-        }else{
-          noHave = true;
-        }
-      }
-
-      DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, function(){
-            FlashService.Success('Incluido com sucesso!');
-            FlashService.Loading(false);
-            var resultado = {};
-            getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
-            $state.forceReload();
-          }, function(msgErro){
-            FlashService.Error(msgErro);
-            FlashService.Loading(false);
-            
-          });
-
-    });
-      //, sigla, index, 
-      //null,null,null,function(){
-
-
-    //title, data, sigla, index, successCallBack
-    
-    
-    //FlashService.Question(data, sigla, index, function (){$log.debug('success add result');};
-    /** 
-    FlashService.Question(sigla+' em '+$filter('date')(data, 'dd/MM/yyyy')+' valor '+1234+'?',
-      function () {
-      var resultado = {data: data, sigla: sigla};
-
-      DataService.resultadoAdd($stateParams.pacienteId, resultado, function(){
-            FlashService.Success('Incluido com sucesso!');
-            FlashService.Loading(false);
-            var resultado = {};
-            getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
-            $state.forceReload();
-          }, function(msgErro){
-            FlashService.Error(msgErro);
-            FlashService.Loading(false);
-            
-          });
-      });
-    **/
-  };
-  bind.refreshExameList = function (tipoId) {
+  function getExameList(tipoId) {
 
      //get list exame
     if(tipoId)
@@ -303,19 +290,20 @@ angular.module('main')
   };
 
   bind.getValorPorDataPorSigla = function (data, sigla) {
+
     var result = [];
     var noHave = false;
     for (var i = 0; i < $rootScope.resultadoExameList.length; i++) {
       if($rootScope.resultadoExameList[i].data === data
-        && $rootScope.resultadoExameList[i].exame.sigla === sigla
+        && $rootScope.resultadoExameList[i].exame.sigla === sigla.sigla
         ){
-        $log.log('get item exame:'+$rootScope.resultadoExameList[i].data + ' - '+sigla);
+        $log.log('get item exame:'+$rootScope.resultadoExameList[i].data + ' - '+sigla.sigla);
         return $rootScope.resultadoExameList[i];
       }else{
         noHave = true;
       }
     }
-    if(noHave){
+    if($rootScope.resultadoExameList.length === 0 || noHave){
       var returnVazio = {valor: 'vazio'}; 
         return returnVazio;
     }
@@ -361,7 +349,7 @@ angular.module('main')
         });
     }
   }
-  function getResultadoExameList(tipoExameId, pacienteId){
+  function getResultadoExameList(tipoExameId, pacienteId, callback){
     FlashService.Loading(true, "carregando tabelas de resultado");
     if(tipoExameId && pacienteId)
     DataService.getResultadoExameList(
@@ -370,7 +358,7 @@ angular.module('main')
       function (resultadoExameList) {
           if(resultadoExameList.length === 0){
             FlashService.Loading(false);
-            $rootScope.resultadoExameList = [];
+            $rootScope.resultadoExameList = resultadoExameList;
             return;
           }
           $rootScope.resultadoExameList = resultadoExameList;
@@ -381,15 +369,17 @@ angular.module('main')
               if($rootScope.dataList.indexOf($rootScope.resultadoExameList[i].data) === -1){
                 $rootScope.dataList.push($rootScope.resultadoExameList[i].data);
               }
-              if($rootScope.siglaList.indexOf($rootScope.resultadoExameList[i].exame.sigla) === -1){
-                $rootScope.siglaList.push($rootScope.resultadoExameList[i].exame.sigla);
+              if($rootScope.siglaList.indexOf($rootScope.resultadoExameList[i].exame) === -1){
+                $rootScope.siglaList.push($rootScope.resultadoExameList[i].exame);
               }
           };
           for (var i = 0; i < $rootScope.siglaAllList.length; i++) {
-            if($rootScope.siglaList.indexOf($rootScope.siglaAllList[i].sigla) === -1){
-                $rootScope.siglaList.push($rootScope.siglaAllList[i].sigla);
+            if($rootScope.siglaList.indexOf($rootScope.siglaAllList[i]) === -1){
+                $rootScope.siglaList.push($rootScope.siglaAllList[i]);
               }
           }
+          if(callback)
+            callback();
           FlashService.Loading(false);
       }, function (erroMsg) {
         FlashService.Error(erroMsg);

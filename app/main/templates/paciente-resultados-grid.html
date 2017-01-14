@@ -53,27 +53,22 @@
             </th>
             <th class="mdl-data-table__cell--non-numeric" 
               ng-repeat="data in dataList | orderBy:'data'" >
-              
-              <!-- Deletable Chip -->
-                  <!-- Deletable Chip -->
-                  <span class="mdl-chip mdl-chip--deletable" 
-                    ng-click="ctrl.removeLastDate()">
-                      <span class="mdl-chip__text">{{data | date: 'dd/MM/yyyy'}}</span>
-                  </span>
+              <span class="mdl-chip__text">{{data | date: 'dd/MM/yyyy'}}</span>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="sigla in siglaList" style="{{$index % 2 === 0 ?'background-color: rgba(27, 104, 234, 0.44)':'background-color: rgba(208, 210, 214, 0.67)'}}" >
+          <tr ng-repeat="sigla in siglaAllList" style="{{$index % 2 === 0 ?'background-color: rgba(27, 104, 234, 0.44)':'background-color: rgba(208, 210, 214, 0.67)'}}" >
             <td class="mdl-data-table__cell--non-numeric">
-              {{sigla}}
+              {{sigla.sigla}}
             </td>
             <td class="mdl-data-table__cell--non-numeric"
               ng-repeat="exameData in dataList | orderBy: 'data'" >
               <!-- Button Chip -->
               <button type="button" class="mdl-chip" 
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor !== 'vazio'">
-                  <span class="mdl-chip__text" ng-click="ctrl.updateResult(exameData, sigla)">
+                  <span class="mdl-chip__text" 
+                  ng-click="ctrl.updateResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor)">
                     {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}
                   </span>
               </button>
@@ -82,7 +77,7 @@
               
               <button type="button button-light" class="mdl-chip" 
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor === 'vazio'">
-                  <span class="mdl-chip__text" ng-click="ctrl.addResultInDate(exameData, sigla, $index)">
+                  <span class="mdl-chip__text" ng-click="ctrl.showPopupAdd(exameData, sigla, $index)" >
                     ---
                   </span>
               </button>

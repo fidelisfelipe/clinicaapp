@@ -200,13 +200,13 @@ angular.module('main')
          }
       });
     },
-    resultadoAdd: function (pacienteId, resultado, callback, fail) {
+    resultadoAdd: function (pacienteId, resultado, clearValue, callback, fail) {
       //cast date for backend
       resultado.data = castDateForBackend(resultado.data);
       $log.log('init add resultado...');
       $http({
         method: 'POST',
-        data: '{resultado: '+JSON.stringify(resultado)+', paciente: {id: '+JSON.stringify(pacienteId)+'}}',
+        data: '{resultado: '+JSON.stringify(resultado)+', paciente: {id: '+JSON.stringify(pacienteId)+'}, clearValue: true}',
         url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/resultado/add'
       }).then(function successCallback(response) {
         // this callback will be called asynchronously

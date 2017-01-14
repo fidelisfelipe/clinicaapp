@@ -1,9 +1,6 @@
   <ion-modal-view >
-    <ion-header-bar>
-      <h1 class="title">Novo Resultado de Exame</h1>
-    </ion-header-bar>
     <ion-content  >
-    <div class="list" ng-init="ctrl.resultado = {}">
+    <div ng-init="ctrl.resultado = {}">
       <form name="form" class="" novalidate="" ng-submit="ctrl.resultado.id ? ctrl.resultadoEdit(form) : ctrl.resultadoAdd(form)" >
                <label class="item item-input item-select" ng-class="{ 'has-errors' : form.data.$invalid, 'no-errors' : form.data.$valid}">
                       <div class="input-label"  style="width: 95%" >Data</div>
@@ -31,20 +28,6 @@
                     <input type="text" id="valor" name="valor" ng-model="ctrl.resultado.valor"
                    placeholder="Valor" required />
                 </label>
-
-      <div class="button-bar">
-        <button class="item button button-positive" ng-disabled="form.$invalid" type="submit" >
-          {{ctrl.resultado.id ? 'Editar' : 'Novo'}}
-        </button>
-      </div>
-
-      <div class="button-bar">
-        <a class="button button-assertive" ng-click="ctrl.resultadoRemove()" 
-        ng-show="ctrl.resultado.id">
-          <span>Remover</span>
-        </a>
-      </div>
-
       </form>
 
     </div>
