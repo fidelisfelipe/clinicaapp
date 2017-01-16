@@ -1,24 +1,33 @@
 <ion-view view-title="Resultados">
 
+  
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <header ion-nav-bar class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Resultados</span>
+        <span class="mdl-layout__title">Resultados</span>
+       <!-- fixed header date 
+        <table 
+          class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" >
+          <thead >
 
-        <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="ctrl.addDate()">
-            <i class="material-icons" title="Add resultados">add</i>
-        </button>
-
+            <tr >
+            <th class="mdl-data-table__cell--non-numeric"
+              ng-repeat="data in dataList | orderBy:'data'" >
+              <span class="mdl-chip__text">{{data | date: 'dd/MM/yyyy'}}</span>
+            </th>
+          </tr>
+        </thead>
+      </table>
+      -->
       </div>
     </header>
 
-    <main class="mdl-layout__content" >
-      <div class="page-content">
+    <main class="mdl-layout__content--scroll" >
+      <div class="page-content" >
         <ion-content>
-
       <!--table simple-->
-<!--
+
       <table style="width:100%; heigth: 100%;" class="text-center" 
         ng-show="ctrl.showSelectedTable === 'table'">
         <tr >
@@ -39,13 +48,13 @@
           </td>
         </tr>
       </table>
--->
-<!-- material -->
 
-      
+<!-- material -->
+       <br><br><br><br><br>
+      <ion-scroll zooming="true" direction="xy" >
       <table 
         class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" >
-        <thead>
+        <thead >
 
           <tr >
             <th class="mdl-data-table__cell--non-numeric">
@@ -86,8 +95,8 @@
           </tr>
         </tbody>
       </table>
-
-      <div class="button-bar" >
+      </ion-scroll>
+      <div class="button-bar" ng-hide="true">
         <div class="button button-positive" style="cursor:default;" >
           Exame
         </div>
@@ -100,7 +109,7 @@
         <div class="item item-positive ion-arrow-down-b col-5" >
         </div>
       </div>
-      <div class="button-bar" ng-repeat="resultado in resultadoExameList | orderBy: 'data':'data'" >
+      <div class="button-bar" ng-repeat="resultado in resultadoExameList | orderBy: 'data':'data'" ng-hide="true">
         <div class="button" 
         ng-class="$index % 2 === 0? 'button-light' : 'button-positive'" 
         style="cursor:default" >
@@ -124,8 +133,15 @@
           Nenhum registro encontrado!
         </div>
       </div>
-       
-    </div>
-  </ion-content>
-  </main>
+       </ion-content>
+     </div>
+   
+    </main>
+        
+  <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="ctrl.addDate()">
+      <i class="material-icons">add</i>
+    </button>
+
+</div>
+
 </ion-view>

@@ -322,6 +322,7 @@ angular.module('main', [
       storageBucket: "project-263344792902730854.appspot.com",
       messagingSenderId: "607347890439"
     };
+
     //TODO: desativado. deve configurar server backend
     //firebase.initializeApp(config);
 

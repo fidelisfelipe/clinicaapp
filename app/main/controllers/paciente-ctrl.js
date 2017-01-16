@@ -52,7 +52,7 @@ angular.module('main')
 
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
-     template: '<input type="text" ng-model="ctrl.resultado.valor">',
+     template: '<input type="text" ng-model="ctrl.resultado.valor" />',
      title: dataView+' '+$rootScope.tipoExame.nome+' '+sigla.sigla,
      subTitle: 'Insira o valor do exame',
      scope: $scope,
@@ -85,6 +85,7 @@ angular.module('main')
 
         //post add resultado exame - clearValue is false
         var clearValue = false;
+        FlashService.Loading(true, 'Incluindo valor...');
         DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, clearValue, function(){
                 FlashService.Success('Incluido com sucesso!');
                 FlashService.Loading(false);
@@ -94,24 +95,49 @@ angular.module('main')
               }, function(msgErro){
                 FlashService.Error(msgErro);            
               });
+         FlashService.Loading(false);
               $state.forceReload();
       }
     });
-   $timeout(function() {
-      myPopup.close(); //close the popup after 10 seconds for some reason
-   }, 10000);
   };
 //end add resultado
 
   bind.addDate = function () {
     
-    FlashService.Question('Incluir Resultados?',
-      function () {
-        $log.log('add date new');//TODO: remover data randow para date type input 
-        $rootScope.dataList.push(randomDate(1, 30));
-         FlashService.Loading(false);
-         $state.forceReload();
+       // An elaborate, custom popup
+     var myPopup = $ionicPopup.show({
+       template: '<input type="date" ng-model="ctrl.resultado.data" />',
+       title: 'Data do Exame',
+       subTitle: 'Insira a data do exame',
+       scope: $scope,
+       buttons: [
+         { text: 'Cancel' },
+         {
+           text: '<b>Add</b>',
+           type: 'button-positive',
+           onTap: function(e) {
+             if (!bind.resultado.data) {
+               //don't allow the user to close unless he enters wifi password
+               e.preventDefault();
+             } else {
+               return bind.resultado.data;
+             }
+           }
+         },
+       ]
+     });
+
+     myPopup.then(function(res) {
+        if(res){
+          $log.debug('selected date: ', bind.resultado.data);
+          $rootScope.dataList.push(bind.resultado.data);
+          myPopup.close();
+          $state.forceReload();
+        }
       });
+     $timeout(function() {
+        myPopup.close(); //close the popup after 10 seconds for some reason
+     }, 10000);
    
     
   }
