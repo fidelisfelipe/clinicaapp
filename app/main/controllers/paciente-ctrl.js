@@ -4,19 +4,18 @@ angular.module('main')
 
   $log.log('Paciente.controller');
   var bind = this;
-  bind.showSelectedTable = 'material';
-  bind.openModalShow = true;
-  bind.openModalEdit = false;
-
-  if ($stateParams.pacienteId)
-  bind.novo = $stateParams.pacienteId ? DataService.getPaciente($stateParams.pacienteId,
-    function (result) {
-      bind.novo = result;
-    }, function (msgError) {
-      FlashService.Error(msgError);
-    }) : {};
-  var count = 0;
-
+  bind.reload = function () {
+    $state.forceReload();
+  }
+  if ($stateParams.pacienteId){
+    bind.novo = $stateParams.pacienteId ? DataService.getPaciente($stateParams.pacienteId,
+      function (result) {
+        bind.novo = result;
+      }, function (msgError) {
+        FlashService.Error(msgError);
+      }) : {};
+  }
+  
   (function init(){
       
       //$rootScope.tipoExame = {};
@@ -45,6 +44,10 @@ angular.module('main')
 
       
   })();
+  setTimeout(function(){
+        componentHandler.upgradeDom();
+        console.warn('domUpdated');
+      },0);
 //adiciona novo resultado
 // Triggered on a button click, or some other target
  bind.showPopupAdd = function(data, sigla) {
@@ -52,7 +55,7 @@ angular.module('main')
 
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
-     template: '<input type="text" ng-model="ctrl.resultado.valor" />',
+     template: '<input type="text" ng-model="ctrl.resultado.valor"  autofocus />',
      title: dataView+' '+$rootScope.tipoExame.nome+' '+sigla.sigla,
      subTitle: 'Insira o valor do exame',
      scope: $scope,
@@ -63,7 +66,6 @@ angular.module('main')
          type: 'button-positive',
          onTap: function(e) {
            if (!bind.resultado.valor) {
-             //don't allow the user to close unless he enters wifi password
              e.preventDefault();
            } else {
              return bind.resultado.valor;
@@ -72,6 +74,7 @@ angular.module('main')
        },
      ]
    });
+
    myPopup.then(function(res) {
     if(res){
       bind.resultado.data = data;
@@ -85,17 +88,17 @@ angular.module('main')
 
         //post add resultado exame - clearValue is false
         var clearValue = false;
-        FlashService.Loading(true, 'Incluindo valor...');
+        FlashService.Loading(true, 'aguarde');
         DataService.resultadoAdd($stateParams.pacienteId, bind.resultado, clearValue, function(){
-                FlashService.Success('Incluido com sucesso!');
+                //incluido com sucesso: msg suprimida para melhor experiência
                 FlashService.Loading(false);
                 bind.resultado = {};
                 getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
 
               }, function(msgErro){
+                FlashService.Loading(false);
                 FlashService.Error(msgErro);            
               });
-         FlashService.Loading(false);
               $state.forceReload();
       }
     });
@@ -137,7 +140,7 @@ angular.module('main')
       });
      $timeout(function() {
         myPopup.close(); //close the popup after 10 seconds for some reason
-     }, 10000);
+     }, 30000);
    
     
   }
@@ -206,18 +209,19 @@ angular.module('main')
 
       FlashService.Question('Remover este resultado?',
         function () {
-          FlashService.Loading(true, 'Removendo');
+          FlashService.Loading(true, 'aguarde');
           DataService.resultadoRemove($stateParams.pacienteId, objectRemove, function(){
-            FlashService.Success('Removido com sucesso!');
+            //sucesso
             FlashService.Loading(false);
             bind.resultado = {};
             getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
-            bind.modal.hide();
+            //bind.modal.hide();
             //reload?
           }, function(msgErro){
-            FlashService.Error(msgErro);
             FlashService.Loading(false);
-            bind.modal.hide();
+            FlashService.Error(msgErro);
+            
+            //bind.modal.hide();
           });
         });
 
@@ -376,7 +380,7 @@ angular.module('main')
     }
   }
   function getResultadoExameList(tipoExameId, pacienteId, callback){
-    FlashService.Loading(true, "carregando tabelas de resultado");
+    FlashService.Loading(true, "atualizando resultados");
     if(tipoExameId && pacienteId)
     DataService.getResultadoExameList(
       pacienteId,
@@ -408,8 +412,9 @@ angular.module('main')
             callback();
           FlashService.Loading(false);
       }, function (erroMsg) {
-        FlashService.Error(erroMsg);
         FlashService.Loading(false);
+        FlashService.Error(erroMsg);
+        
       });
   }
   function getPacienteList() {

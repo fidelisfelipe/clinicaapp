@@ -9,7 +9,11 @@ angular.module('main')
   (function init () {
     //userCurrentClean();
     verifySaveUser();
+    
+
   })();
+  
+  
 
   $ionicHistory.nextViewOptions({
     disableAnimate: true,
@@ -49,7 +53,7 @@ angular.module('main')
   }
   function verifySaveUser(){
     bind.userCurrent = JSON.parse(UtilService.verifySaveUser());
-    $log.debug('Login.controller: user find for login...');
+    $log.debug('Login.controller: verify user');
   }
   function userCurrentClean(){
     $log.log('user current clean...');

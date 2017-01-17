@@ -30,8 +30,9 @@
                 Nenhum registro encontrado!
                 </span>
             </li>
-            <li class="mdl-list__item" ui-sref="main.pacienteDetail({'pacienteId': result.id})" 
-            ng-repeat="result in pacienteList | filter:ctrl.searchText | orderBy: 'id' ">
+            <li class="mdl-list__item" 
+            ng-repeat="result in pacienteList | filter:ctrl.searchText | orderBy: 'id' "
+            ui-sref="main.pacienteDetail({'pacienteId': result.id})" >
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">face</i>
                 {{result.nome}} <!-- {{result.id}} -->

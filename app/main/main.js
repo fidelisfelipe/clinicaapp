@@ -143,11 +143,21 @@ angular.module('main', [
         url: '/paciente/add',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-detail.html',
+            templateUrl: 'main/templates/paciente-detail-edit.html',
             controller: 'PacienteCtrl as ctrl'
           }
         }
       })
+     .state('main.pacienteDetailEdit', {
+        url: '/paciente/detail/edit/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-detail-edit.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+     
      .state('main.pacienteDetail', {
         url: '/paciente/detail/:pacienteId',
         views: {
@@ -372,24 +382,21 @@ angular.module('main', [
         console.warn('domUpdated');
       },0);
 
-      //document.getElementById("logout").checked = true;
-        //$state.go('main.login');
        //TODO: Check Autorization and redirect (home, login)
-       
+       $log.log('state change success it: '+$state.current.name);
        $rootScope.userCurrent = UtilService.getUserCurrentLocal();
-        if($rootScope.userCurrent !== undefined && 
+
+        if($state.current.name !== 'main.login' && 
           $rootScope.userCurrent.isAuthorized){
-          $log.info('You is Authorized');
-          //if($state.current.name === 'main.login'){
-          //  $state.go($state.current.name);
-          //}
-        } else {
-          $log.warn('You is Not Authorized');
-          $log.warn('Redirect Request for main.login...');
-          //$state.go('main.login');
+          $state.go($state.current.name);
+        }else if($state.current.name === 'main.login' && 
+          $rootScope.userCurrent.isAuthorized){
+          $state.go('main.home');
+        }else{
+          $state.go('main.login');
         }
 
-      $log.log('state change success it: '+$state.current.name);
+      
     });
   //watch for signout
     $rootScope.$on('signout', function () {

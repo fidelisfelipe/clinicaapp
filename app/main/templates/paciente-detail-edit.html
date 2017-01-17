@@ -8,57 +8,93 @@
       </div>
     </header>
 
-    <main class="mdl-layout__content">
-      <ion-content class="login-background">
-      <div class="page-content">
-        <div class="user-edit-delete-form-container">
+<section class="mdl-layout__tab-panel is-active" id="edit-user-tab" 
+          ng-show="ctrl.openModalEdit || !ctrl.novo.id">
+            <ion-content class="login-background">
+            <div class="page-content">
+              <div class="user-edit-delete-form-container">
+                <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="id-input" ng-model="ctrl.novo.id" readonly pattern="-?[0-9]*(\.[0-9]+)?">
+                    <label class="mdl-textfield__label" for="id-input">ID</label>
+                  </div>
 
-          <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}" -->
+                    <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="5" ng-maxlength="80">
+                    <label class="mdl-textfield__label" for="nome-input">Nome</label>
+                  </div>
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" ng-show="ctrl.novo.id">
-              <input class="mdl-textfield__input" type="text" id="id-input" ng-model="ctrl.novo.id" readonly pattern="-?[0-9]*(\.[0-9]+)?">
-              <label class="mdl-textfield__label" for="id-input">ID</label>
-            </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.cpf.$invalid, 'no-errors' : form.cpf.$valid}" -->
+                    <input class="mdl-textfield__input" type="text" id="cpf-input" ng-model="ctrl.novo.cpf" ui-br-cpfcnpj-mask maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+                    <label class="mdl-textfield__label" for="cpf-input">CPF</label>
+                  </div>
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="2" ng-maxlength="80">
-              <label class="mdl-textfield__label" for="nome-input">Nome</label>
-            </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.rg.$invalid, 'no-errors' : form.rg.$valid}" -->
+                    <input class="mdl-textfield__input" type="text" id="rg-input" ng-model="ctrl.novo.rg">
+                    <label class="mdl-textfield__label" for="rg-input">RG</label>
+                  </div>
 
-              <div class="mdl-textfield button-field">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">Remover</button>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.responsavel.$invalid, 'no-errors' : form.responsavel.$valid}" -->
+                    <input class="mdl-textfield__input" type="text" id="responsavel-input" ng-model="ctrl.novo.responsavel" ng-minlength="5" ng-maxlength="80">
+                    <label class="mdl-textfield__label" for="responsavel-input">Responsável</label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.dataNascimento.$invalid, 'no-errors' : form.dataNascimento.$valid}" -->
+                    <input class="mdl-textfield__input" type="date" id="date-input" ng-model="ctrl.novo.dataNascimento" min="1900-01-01" max="2050-12-30" placeholder="" >
+                    <label class="mdl-textfield__label" for="date-input">Data Nascimento</label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.telefone.$invalid, 'no-errors' : form.telefone.$valid}" -->
+                    <input class="mdl-textfield__input" type="tel" id="telefone-input" ng-model="ctrl.novo.telefone" ui-br-phone-number>
+                    <label class="mdl-textfield__label" for="telefone-input">Telefone</label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.email.$invalid, 'no-errors' : form.email.$valid}" -->
+                    <input class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.novo.email">
+                    <label class="mdl-textfield__label" for="email-input">Email</label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" ng-init="sexos = ['Masculino','Feminino']">
+                    <!-- ng-class="{ 'has-errors' : form.sexo.$invalid, 'no-errors' : form.sexo.$valid}" -->
+                    <select class="mdl-textfield__input" ng-model="ctrl.novo.sexo" ng-options="sexo for sexo in sexoList" id="sexo-input"></select>
+                    <label class="mdl-textfield__label" for="sexo-input">Sexo</label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.estadoCivil.$invalid, 'no-errors' : form.estadoCivil.$valid}" -->
+                    <select class="mdl-textfield__input" ng-model="ctrl.novo.estadoCivil" ng-options="estadoCivil for estadoCivil in estadoCivilList" id="estadoCivil-input"></select>
+                    <label class="mdl-textfield__label" for="estadoCivil-input">Estado Civil</label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.naturalidade.$invalid, 'no-errors' : form.naturalidade.$valid}" -->
+                    <input class="mdl-textfield__input" type="text" id="naturalidade-input" ng-model="ctrl.novo.naturalidade">
+                    <label class="mdl-textfield__label" for="naturalidade-input">Naturalidade</label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <!-- ng-class="{ 'has-errors' : form.profissao.$invalid, 'no-errors' : form.profissao.$valid}" -->
+                    <input class="mdl-textfield__input" type="text" id="profissao-input" ng-model="ctrl.novo.profissao">
+                    <label class="mdl-textfield__label" for="profissao-input">Profissão</label>
+                  </div>
+
+                  <div class="mdl-textfield button-field">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-if="ctrl.novo.id" ng-click="ctrl.remove()">Remover</button>
+                  </div>
+
+                </form>
               </div>
-            </form>
-        </div>
-        <div class="user-edit-delete-form-container second-container">
-            <h4 class="title title-background title-custom">Exames Associados</h4>
-            <ul class="white-list-icon mdl-list">
-              <li class="mdl-list__item" ng-show="exameAssociadoList.length === 0" style="opacity:.5;pointer-events:none;">
-                <span class="mdl-list__item-primary-content">
-                  <i class="material-icons mdl-list__item-icon">warning</i>
-                  Nenhum registro encontrado!
-                  </span>
-              </li>
-              <li class="mdl-list__item" ui-sref="main.exameSearch"  >
-                      <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" ng-controller="ExameCtrl as exameCtrl" data-badge="{{exameList.length}}">map</i>
-                    <span>Associar Exame</span>
-                      </span>
-                      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
-                    </li>
-              <li class="mdl-list__item" ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameAssociadoList  | orderBy: 'id' ">
-                <span class="mdl-list__item-primary-content">
-                  <i class="material-icons mdl-list__item-icon">map</i>
-                  {{result.nome}}
-                  </span>
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
-              </li>
-            </ul>
-        </div>
-      </div>
-      </ion-content>
-    </main>
+            </div>
+            </ion-content>
+          </section>
   </div>
 
 </ion-view>

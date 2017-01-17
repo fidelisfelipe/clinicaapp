@@ -8,24 +8,24 @@
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 
-          <input tabindex="0" class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email" >
+          <input autofocus class="mdl-textfield__input" type="email" id="email-input" ng-model="ctrl.userCurrent.email" name="email" >
           <label class="mdl-textfield__label" for="email-input">Entre com seu email</label>
           <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
         </div>
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 
-          <input tabindex="1" class="mdl-textfield__input" type="password" id="senha-input" ng-model="ctrl.userCurrent.senha" name="senha">
+          <input class="mdl-textfield__input" type="password" id="senha-input" ng-model="ctrl.userCurrent.senha" name="senha">
           <label class="mdl-textfield__label" for="senha-input">Senha</label>
           <span class="mdl-textfield__error">Oops! Algo de errado aqui...</span>
         </div>
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-textfield">
-          <button tabindex="2" class="login-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" ng-disabled="formLogin.$invalid" >Login</button>
+          <button class="login-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" ng-disabled="formLogin.$invalid" >Login</button>
         </div>
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-textfield some-helps">
-            <p>Não tem uma conta? <b tabindex="3" ng-click="ctrl.signin()" class="pointer">Crie agora!</b></p>
+            <p>Não tem uma conta? <b ng-click="ctrl.signin()" class="pointer">Crie agora!</b></p>
           
         </div>
 

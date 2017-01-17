@@ -57,7 +57,8 @@
         <thead >
 
           <tr >
-            <th class="mdl-data-table__cell--non-numeric">
+            <th class="mdl-data-table__cell--non-numeric" 
+              >
                 &nbsp;
             </th>
             <th class="mdl-data-table__cell--non-numeric" 
@@ -74,28 +75,28 @@
             <td class="mdl-data-table__cell--non-numeric"
               ng-repeat="exameData in dataList | orderBy: 'data'" >
               <!-- Button Chip -->
-              <button type="button" class="mdl-chip" 
+              <button type="button" class="fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+              ng-click="ctrl.updateResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor)"
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor !== 'vazio'">
-                  <span class="mdl-chip__text" 
-                  ng-click="ctrl.updateResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor)">
+                  <span class="mdl-chip__text" >
                     {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}
                   </span>
               </button>
               
                <!-- Button Chip -->
-              
-              <button type="button button-light" class="mdl-chip" 
-              ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor === 'vazio'">
-                  <span class="mdl-chip__text" ng-click="ctrl.showPopupAdd(exameData, sigla, $index)" >
-                    ---
-                  </span>
-              </button>
-
+              <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--light" 
+                ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor === 'vazio'" 
+                ng-click="ctrl.showPopupAdd(exameData, sigla, $index)"
+              >
+              <i class="material-icons">add</i>
+            </button>
+          
             </td>
           </tr>
         </tbody>
       </table>
       </ion-scroll>
+      <!--
       <div class="button-bar" ng-hide="true">
         <div class="button button-positive" style="cursor:default;" >
           Exame
@@ -133,6 +134,7 @@
           Nenhum registro encontrado!
         </div>
       </div>
+    -->
        </ion-content>
      </div>
    
