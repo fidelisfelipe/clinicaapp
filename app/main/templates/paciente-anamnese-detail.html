@@ -1,0 +1,110 @@
+<ion-view view-title="Anamnese">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-wtf-tabs-hack" ng-class="{'mdl-layout--fixed-tabs' : ctrl.novo.id || ctrl.openModalEdit, 'mdl-tabs-container-hack' : !ctrl.novo.id}">
+
+    <header ion-nav-bar class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Anamnese</span>
+      </div>
+      
+    </header>
+
+    <main class="mdl-layout__content" >
+          <section class="mdl-layout__tab-panel is-active"  
+          ng-show="!ctrl.novo.id">
+            <ion-content class="login-background">
+            <div class="page-content">
+              <div class="user-edit-delete-form-container">
+                <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
+                  
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea class="mdl-textfield__input" type="text" id="qp-input" 
+                    ng-model="ctrl.novo.anamnese.qp" maxlength="1000" ></textarea>
+                    <label class="mdl-textfield__label" for="qp-input">
+                      QP - Queixa principa
+                    </label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea class="mdl-textfield__input" id="hda-input" 
+                    ng-model="ctrl.novo.anamnese.hda" maxlength="1000" ></textarea>
+                    <label class="mdl-textfield__label" for="hda-input">
+                      HDA - História da doença atual
+                    </label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    
+                    <textarea class="mdl-textfield__input" type="text" id="hpp-input" 
+                    ng-model="ctrl.novo.hpp" maxlength="1000">
+                    </textarea>
+                    <label class="mdl-textfield__label" for="hpp-input">
+                      HPP - História patológica pregressa
+                    </label>
+                  </div>
+
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"> 
+                    <textarea class="mdl-textfield__input" id="hf-input" 
+                    ng-model="ctrl.novo.hf" maxlength="1000"></textarea>
+                    <label class="mdl-textfield__label" for="hf-input">
+                      HF - Histórico familiar
+                    </label>
+                  </div>
+
+                  <h1 class="mdl-layout-title" style="color: white;font-size: 15px;">
+                    Interrogatório Sobre os Diversos Aparelhos
+                  </h1>
+
+                  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" 
+                    style="color: white;font-size: 15px;">
+                    <div class="mdl-tabs__tab-bar" >
+                        <a href="#starks-panel" class="mdl-tabs__tab is-active"
+                        style="color: white;font-size: 15px;" >Sintomas Gerais</a>
+                        <a href="#lannisters-panel" class="mdl-tabs__tab"
+                        style="color: white;font-size: 15px;" >Lannisters</a>
+                        <a href="#targaryens-panel" class="mdl-tabs__tab"
+                         style="color: white;font-size: 15px;" >Targaryens</a>
+                    </div>
+
+                    <div class="mdl-tabs__panel is-active" id="starks-panel">
+                      <ul>
+                        <li>Emagrecimento</li>
+                        <li>Astenia</li>
+                        <li>Anorexia</li>
+                        <li>Mialgias</li>
+                        <li>Febres</li>
+                      </ul>
+                    </div>
+                    <div class="mdl-tabs__panel" id="lannisters-panel">
+                      <ul>
+                        <li>Tywin</li>
+                        <li>Cersei</li>
+                        <li>Jamie</li>
+                        <li>Tyrion</li>
+                      </ul>
+                    </div>
+                    <div class="mdl-tabs__panel" id="targaryens-panel">
+                      <ul>
+                        <li>Viserys</li>
+                        <li>Daenerys</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="mdl-textfield button-field">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">Salvar</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-if="ctrl.novo.id" ng-click="ctrl.remove()">Remover</button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+
+
+            </ion-content>
+          </section>
+
+
+    </main>
+  </div>
+
+</ion-view>

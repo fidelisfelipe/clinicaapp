@@ -184,6 +184,14 @@ angular.module('main', [
           }
         }
       })
+      .state('main.pacienteAnamnese', {
+        url: '/paciente/anamnese/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-anamnese-detail.html'
+          }
+        }
+      })
       .state('main.pacienteAgenda', {
         url: '/paciente/agenda/:pacienteId',
         views: {
