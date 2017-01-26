@@ -34,6 +34,17 @@ angular.module('main')
     if($state.current.name === 'main.pacienteExames')
       getTipoExameList();
 
+    setTimeout(function(){
+      
+    
+    if($state.current.name === 'main.pacienteHistorico'){
+      getSiglaAllList();
+      getExameList($stateParams.tipoExameId);
+      getTipoExame($stateParams.tipoExameId);
+      getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+      $state.forceReload();
+    }
+
     if($state.current.name === 'main.pacienteTipoExame'){
       getSiglaAllList();
       getExameList($stateParams.tipoExameId);
@@ -41,6 +52,8 @@ angular.module('main')
       getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
       $state.forceReload();
     }
+
+  }, 1000);
 
       
   })();

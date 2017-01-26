@@ -285,7 +285,9 @@ align-items: center;
   &:not(.second-container){
     position: relative;
     top: 30px;
-    max-width: 300px;
+    
+    padding-left: 3%;
+    padding-right: 3%;
     margin: 0 auto;
   }
 

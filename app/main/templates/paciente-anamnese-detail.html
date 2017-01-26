@@ -11,11 +11,14 @@
     <main class="mdl-layout__content" >
           <section class="mdl-layout__tab-panel is-active"  
           ng-show="!ctrl.novo.id">
-            <ion-content class="login-background">
+            <ion-content class="anamnese-background">
             <div class="page-content">
-              <div class="user-edit-delete-form-container">
+              <div class="user-edit-delete-form-container" style="text-align: center">
                 <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
-                  
+                  <h1 class="mdl-layout-title" style="color: white;font-size: 15px;text-align: center">
+                    Questionário Anamnese
+                  </h1>
+                  <hr/>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <textarea class="mdl-textfield__input" type="text" id="qp-input" 
                     ng-model="ctrl.novo.anamnese.qp" maxlength="1000" ></textarea>
@@ -48,10 +51,14 @@
                       HF - Histórico familiar
                     </label>
                   </div>
+                  
+                  <hr/>
 
-                  <h1 class="mdl-layout-title" style="color: white;font-size: 15px;">
+                  <h1 class="mdl-layout-title" style="color: white;font-size: 15px;text-align: center">
                     Interrogatório Sobre os Diversos Aparelhos
                   </h1>
+
+                  <hr/>
 
                   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" 
                     style="color: white;font-size: 15px;">
@@ -65,7 +72,7 @@
                     </div>
 
                     <div class="mdl-tabs__panel is-active" id="starks-panel">
-                      <ul>
+                      <ul style="text-align: center">
                         <li>Emagrecimento</li>
                         <li>Astenia</li>
                         <li>Anorexia</li>
@@ -74,7 +81,7 @@
                       </ul>
                     </div>
                     <div class="mdl-tabs__panel" id="lannisters-panel">
-                      <ul>
+                      <ul style="text-align: center">
                         <li>Tywin</li>
                         <li>Cersei</li>
                         <li>Jamie</li>
@@ -82,7 +89,7 @@
                       </ul>
                     </div>
                     <div class="mdl-tabs__panel" id="targaryens-panel">
-                      <ul>
+                      <ul style="text-align: center">
                         <li>Viserys</li>
                         <li>Daenerys</li>
                       </ul>

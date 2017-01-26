@@ -1,21 +1,58 @@
-<ion-view view-title="Histórico">
+<ion-view view-title="Histótico de Consultas">
 
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <header ion-nav-bar class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Histórico</span>
+        <span class="mdl-layout-title">
+          Histótico de Consultas
+        </span>
       </div>
     </header>
 
     <main class="mdl-layout__content">
+      <ion-content class="login-background">
       <div class="page-content">
-        <ion-content>
+        <div class="user-edit-delete-form-container">
 
-          Histórico
+          <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
 
-        </ion-content>
+              <div class="mdl-textfield button-field center">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">
+                  Nova Consulta
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">Remover</button>
+              </div>
+            </form>
+        </div>
+        <div class="user-edit-delete-form-container second-container">
+            <h4 class="title title-background title-custom">Últimas Consultas</h4>
+            <ul class="white-list-icon mdl-list">
+              <li class="mdl-list__item" ng-show="exameAssociadoList.length === 0" style="opacity:.5;pointer-events:none;">
+                <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon">warning</i>
+                  Nenhum registro encontrado!
+                  </span>
+              </li>
+              <li class="mdl-list__item" ui-sref="main.exameSearch"  >
+                      <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon mdl-badge mdl-badge--overlap" data-badge="{{exameList.length}}">map</i>
+                    <span>10/01/2010</span>
+                      </span>
+                      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+                    </li>
+              <li class="mdl-list__item" ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="data in dataList | orderBy:'data':reverse">
+                <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon">map</i>
+                  {{data | date: 'dd/MM/yyyy'}}
+                  </span>
+                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+              </li>
+            </ul>
+        </div>
       </div>
+      </ion-content>
     </main>
   </div>
+
 </ion-view>
