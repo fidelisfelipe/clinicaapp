@@ -540,6 +540,61 @@ angular.module('main')
            fail(response.statusText + ' - ' + response.status);
          }
       });
+    },
+	consultaAdd: function (consulta, pacienteId, callback, fail) {
+      consulta.data = castDateForBackend(consulta.data);
+      $log.log('init add consulta...');
+      $http({
+        method: 'POST',
+        data: '{pacienteId:'+JSON.stringify(pacienteId)+', consulta:'+ JSON.stringify(consulta)+'}',
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/consultas/add'
+      }).then(function successCallback(response) {
+        if (response.status === 200) {
+            callback();
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Registro já existe!');
+         } else if(response.status === 409){
+           fail('Registro já existe!');
+         }else{
+           $log.warn('get consulta add response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
+	getConsultaList: function (pacienteId, callback, fail) {
+      $log.log('init get consulta list...');
+      $http({
+        method: 'GET',
+        //data: JSON.stringify(object),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/consultas/por/paciente/'+pacienteId
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get consulta list success!');
+        $log.log('get consulta list - status:', response.status);
+        if (response.status === 200) {
+            callback(response.data.consultaList);
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         } else{
+           $log.warn('get consulta list response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
     }
   };
 

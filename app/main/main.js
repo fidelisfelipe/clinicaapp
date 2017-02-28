@@ -167,6 +167,24 @@ angular.module('main', [
           }
         }
       })
+	  .state('main.pacienteConsultaSearch', {
+        url: '/paciente/consulta/search/:pacienteId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-consulta-search.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
+	  .state('main.pacienteConsultaItems', {
+        url: '/paciente/consulta/items/:consultaId',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/paciente-consulta-items.html',
+            controller: 'PacienteCtrl as ctrl'
+          }
+        }
+      })
      .state('main.pacienteExames', {
         url: '/paciente/exames/:pacienteId',
         views: {

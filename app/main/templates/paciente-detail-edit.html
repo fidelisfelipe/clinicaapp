@@ -1,10 +1,10 @@
-<ion-view view-title="{{(ctrl.novo.nome)? ctrl.novo.nome : 'Tipo de Exame'}}">
+<ion-view view-title="{{(ctrl.novo.nome)? ctrl.novo.nome : 'Novo Paciente'}}">
 
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <header ion-nav-bar class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">{{(ctrl.novo.nome)? ctrl.novo.nome : 'Tipo de Exame'}}</span>
+        <span class="mdl-layout-title">{{(ctrl.novo.nome)? ctrl.novo.nome : 'Novo Paciente'}}</span>
       </div>
     </header>
 
@@ -13,12 +13,12 @@
             <ion-content class="login-background">
             <div class="page-content">
               <div class="user-edit-delete-form-container">
+			  <hr/>
                 <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" ng-show="ctrl.novo.id">
                     <input class="mdl-textfield__input" type="text" id="id-input" ng-model="ctrl.novo.id" readonly pattern="-?[0-9]*(\.[0-9]+)?">
                     <label class="mdl-textfield__label" for="id-input">ID</label>
                   </div>
-
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <!-- ng-class="{ 'has-errors' : form.nome.$invalid, 'no-errors' : form.nome.$valid}" -->
                     <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="5" ng-maxlength="80">

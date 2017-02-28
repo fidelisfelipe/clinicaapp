@@ -33,6 +33,9 @@ angular.module('main')
       
     if($state.current.name === 'main.pacienteExames')
       getTipoExameList();
+  
+    if($state.current.name === 'main.pacienteConsultaSearch')
+		getConsultaList();
 
     setTimeout(function(){
       
@@ -116,6 +119,7 @@ angular.module('main')
       }
     });
   };
+
 //end add resultado
 
   bind.addDate = function () {
@@ -156,6 +160,52 @@ angular.module('main')
      }, 30000);
    
     
+  }
+
+  //add nova consulta
+  bind.addConsulta = function () {
+    
+       // An elaborate, custom popup
+     var myPopup = $ionicPopup.show({
+       template: '<input type="date" ng-model="ctrl.consulta.data" />',
+       title: 'Data da Consulta',
+       subTitle: 'Insira a data da Consulta',
+       scope: $scope,
+       buttons: [
+         { text: 'Cancel' },
+         {
+           text: '<b>Add</b>',
+           type: 'button-positive',
+           onTap: function(e) {
+             if (!bind.consulta.data) {
+               //don't allow the user to close unless he enters data consulta
+               e.preventDefault();
+             } else {
+               return bind.consulta.data;
+             }
+           }
+         },
+       ]
+     });
+
+     myPopup.then(function(res) {
+        if(res){
+          $log.debug('selected date: ', bind.consulta.data);
+          DataService.consultaAdd(bind.consulta, bind.novo.id, function(){
+              FlashService.Success('Registro incluido com sucesso!');
+              FlashService.Loading(false);
+              bind.resultado = {};
+              getConsultaList();//force reload?
+            }, function(msgErro){
+              FlashService.Error(msgErro);
+            });
+          myPopup.close();
+          $state.forceReload();
+        }
+      });
+     $timeout(function() {
+        myPopup.close(); //close the popup after 10 seconds for some reason
+     }, 30000);
   }
 
   function randomDate(start, end) {
@@ -378,6 +428,19 @@ angular.module('main')
         FlashService.Error(erroMsg);
         FlashService.Loading(false);
       });
+  }
+  function getConsultaList() {
+	  if($stateParams.pacienteId) {
+		FlashService.Loading(true);
+		DataService.getConsultaList($stateParams.pacienteId,
+		  function (consultaList) {
+			  $rootScope.consultaList = consultaList;
+			  FlashService.Loading(false);
+		  }, function (erroMsg) {
+			FlashService.Error(erroMsg);
+			FlashService.Loading(false);
+		  });
+	  }
   }
   function getTipoExame(tipoExameId){
     if(tipoExameId){

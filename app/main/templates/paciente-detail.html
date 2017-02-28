@@ -13,36 +13,18 @@
         <ion-content>
 
           <ul class="mdl-list">
-            <li class="mdl-list__item" 
-              ui-sref="main.pacienteAnamnese({'pacienteId': ctrl.novo.id })" 
-              title="Anamnese" >
+		    <li class="mdl-list__item" 
+              ui-sref="main.pacienteConsultaSearch({'pacienteId': ctrl.novo.id })" 
+              title="Consultas" >
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">assignment</i>
-                Anamnese
+                Consultas
                 </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
             </li>
             <li class="mdl-list__item" 
-              ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" 
-              title="Exames" >
-              <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-icon">local_hospital</i>
-                Exames
-                </span>
-              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
-            </li>
-            <li class="mdl-list__item" 
-              ui-sref="main.pacienteHistorico({'pacienteId': ctrl.novo.id })" 
-              title="Histórico de Consultas" >
-              <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-icon">history</i>
-                Histórico de Consultas
-                </span>
-              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
-            </li>
-            <li class="mdl-list__item" 
-              ui-sref="main.pacienteDetailEdit({'pacienteId': ctrl.novo.id })" 
-              title="Exames" ng-hide="true" >
+              ui-sref="main.pacienteAdd({'pacienteId': ctrl.novo.id })" 
+              title="Exames" ng-hide="false" >
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">face</i>
                 Editar Informações
