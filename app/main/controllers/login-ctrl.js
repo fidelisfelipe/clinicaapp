@@ -86,7 +86,7 @@ angular.module('main')
   
   bind.openModal = function() {
     userCurrentClean();
-    $ionicModal.fromTemplateUrl('signin.html', {
+    $ionicModal.fromTemplateUrl('main/templates/signin-test.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
