@@ -177,7 +177,7 @@ angular.module('main', [
         }
       })
 	  .state('main.pacienteConsultaItems', {
-        url: '/paciente/consulta/items/:consultaId',
+        url: '/paciente/:pacienteId/consulta/:consultaId/items',
         views: {
           'pageContent': {
             templateUrl: 'main/templates/paciente-consulta-items.html',
@@ -203,10 +203,11 @@ angular.module('main', [
         }
       })
       .state('main.pacienteAnamnese', {
-        url: '/paciente/anamnese/:pacienteId',
+        url: '/paciente/:pacienteId/anamnese/:consultaId',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/paciente-anamnese-detail.html'
+            templateUrl: 'main/templates/paciente-anamnese-detail.html',
+            controller: 'PacienteCtrl as ctrl'
           }
         }
       })

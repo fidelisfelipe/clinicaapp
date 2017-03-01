@@ -15,6 +15,14 @@ angular.module('main')
         FlashService.Error(msgError);
       }) : {};
   }
+  if ($stateParams.consultaId){
+    bind.consulta = $stateParams.consultaId ? DataService.getConsulta($stateParams.consultaId,
+      function (result) {
+        bind.consulta = result;
+      }, function (msgError) {
+        FlashService.Error(msgError);
+      }) : {};
+  }
   
   (function init(){
       
@@ -27,18 +35,27 @@ angular.module('main')
       $rootScope.siglaAllList = [];
       //$rootScope.pacienteList = [];
       $rootScope.profissaoList = [{nome: 'Desenvolvedor'},{nome: 'Professor'}];
-
+    setTimeout(function(){
     if($state.current.name === 'main.pacienteSearch')
         getPacienteList();
       
-    if($state.current.name === 'main.pacienteExames')
-      getTipoExameList();
+    if($state.current.name === 'main.pacienteExames'){
+      getTipoExameList($stateParams.pacienteId);
+	}
   
     if($state.current.name === 'main.pacienteConsultaSearch')
 		getConsultaList();
 
-    setTimeout(function(){
-      
+	if($state.current.name === 'main.pacienteAnamnese'){
+		if ($stateParams.consultaId){
+			bind.consulta = $stateParams.consultaId ? DataService.getConsulta($stateParams.consultaId,
+			  function (result) {
+				bind.consulta = result;
+			  }, function (msgError) {
+				FlashService.Error(msgError);
+			  }) : {};
+		}
+	}
     
     if($state.current.name === 'main.pacienteHistorico'){
       getSiglaAllList();
@@ -292,6 +309,7 @@ angular.module('main')
   bind.msgErroShow = function (msgErro) {
     FlashService.Error(msgErro);
   }
+  
   bind.edit = function (form) {
     if (form.$valid) {
       FlashService.Question('Alterar dados do registro?',
@@ -315,6 +333,20 @@ angular.module('main')
     }
 
   };
+  
+  bind.editAnamnese = function (form) {
+	if (form.$valid) {
+	  FlashService.Question('Alterar dados do registro?',
+        function () {
+           DataService.editAnamnese(bind.consulta.anamnese, function () {
+            FlashService.Success('Operação realizada com sucesso');
+          }, msgErro);
+        });
+    } else {
+      return false;
+    }
+  };
+
   bind.remove = function () {
     FlashService.Question('Remover este registro?',
       function () {
@@ -419,16 +451,17 @@ angular.module('main')
         FlashService.Error(erroMsg);
       });
   };
-  function getTipoExameList() {
-    DataService.getTipoExameList(
+  function getTipoExameList(pacienteId) {
+	  DataService.getTipoExameList(
       function (tipoExameList) {
-          $rootScope.tipoExameList = tipoExameList;
+          bind.tipoExameList = tipoExameList;
           FlashService.Loading(false);
       }, function (erroMsg) {
         FlashService.Error(erroMsg);
         FlashService.Loading(false);
       });
   }
+
   function getConsultaList() {
 	  if($stateParams.pacienteId) {
 		FlashService.Loading(true);
@@ -455,6 +488,7 @@ angular.module('main')
         });
     }
   }
+  //TODO: recuperar resultado por paciente PRIORIDADE
   function getResultadoExameList(tipoExameId, pacienteId, callback){
     FlashService.Loading(true, "atualizando resultados");
     if(tipoExameId && pacienteId)

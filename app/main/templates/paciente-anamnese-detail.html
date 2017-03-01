@@ -10,95 +10,62 @@
 
     <main class="mdl-layout__content" >
           <section class="mdl-layout__tab-panel is-active"  
-          ng-show="!ctrl.novo.id">
+          ng-show="ctrl.consulta.anamnese.id">
             <ion-content class="anamnese-background">
             <div class="page-content">
-              <div class="user-edit-delete-form-container" style="text-align: center">
-                <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.novo.id ? ctrl.edit(form) : ctrl.add(form)">
+              <div class="user-edit-delete-form-container" style="text-align: center" >
+                <form name="form" class="user-edit-delete-form" novalidate="" ng-submit="ctrl.editAnamnese(form)">
                   <h1 class="mdl-layout-title" style="color: white;font-size: 15px;text-align: center">
                     Questionário Anamnese
                   </h1>
                   <hr/>
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <textarea class="mdl-textfield__input" type="text" id="qp-input" 
-                    ng-model="ctrl.novo.anamnese.qp" maxlength="1000" ></textarea>
-                    <label class="mdl-textfield__label" for="qp-input">
-                      QP - Queixa principa
+				  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" ng-show="ctrl.consulta.anamnese.id">
+                    <input class="mdl-textfield__input" type="text" id="id-input" 
+                    ng-model="ctrl.consulta.anamnese.id" disabled ></input>
+                    <label class="mdl-textfield__label" for="id-input">
+                      ID
                     </label>
                   </div>
+				  <br>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <textarea class="mdl-textfield__input" id="hda-input" 
-                    ng-model="ctrl.novo.anamnese.hda" maxlength="1000" ></textarea>
-                    <label class="mdl-textfield__label" for="hda-input">
-                      HDA - História da doença atual
+                    <textarea class="mdl-textfield__input" type="text" id="anamnese-input" 
+                    ng-model="ctrl.consulta.anamnese.anamnese" maxlength="1000" ></textarea>
+                    <label class="mdl-textfield__label" for="anamnese-input">
+                      Anamnese
                     </label>
                   </div>
-
+				  <br>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea class="mdl-textfield__input" id="diagnostico-input" 
+                    ng-model="ctrl.consulta.anamnese.diagnostico" maxlength="500" ></textarea>
+                    <label class="mdl-textfield__label" for="diagnostico-input">
+                      Diagnóstico
+                    </label>
+                  </div>
+				  <br>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     
-                    <textarea class="mdl-textfield__input" type="text" id="hpp-input" 
-                    ng-model="ctrl.novo.hpp" maxlength="1000">
+                    <textarea class="mdl-textfield__input" type="text" id="pedido-input" 
+                    ng-model="ctrl.consulta.anamnese.pedido" maxlength="500">
                     </textarea>
-                    <label class="mdl-textfield__label" for="hpp-input">
-                      HPP - História patológica pregressa
+                    <label class="mdl-textfield__label" for="pedido-input">
+                     Pedidos de Exame
                     </label>
                   </div>
-
+				  <br>
                   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"> 
-                    <textarea class="mdl-textfield__input" id="hf-input" 
-                    ng-model="ctrl.novo.hf" maxlength="1000"></textarea>
-                    <label class="mdl-textfield__label" for="hf-input">
-                      HF - Histórico familiar
+                    <textarea class="mdl-textfield__input" id="consulta-input" 
+                    ng-model="ctrl.consulta.anamnese.condulta" maxlength="1000"></textarea>
+                    <label class="mdl-textfield__label" for="condulta-input">
+                      Condulta
                     </label>
                   </div>
                   
-                  <hr/>
-
-                  <h1 class="mdl-layout-title" style="color: white;font-size: 15px;text-align: center">
-                    Interrogatório Sobre os Diversos Aparelhos
-                  </h1>
-
-                  <hr/>
-
-                  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" 
-                    style="color: white;font-size: 15px;">
-                    <div class="mdl-tabs__tab-bar" >
-                        <a href="#starks-panel" class="mdl-tabs__tab is-active"
-                        style="color: white;font-size: 15px;" >Sintomas Gerais</a>
-                        <a href="#lannisters-panel" class="mdl-tabs__tab"
-                        style="color: white;font-size: 15px;" >Lannisters</a>
-                        <a href="#targaryens-panel" class="mdl-tabs__tab"
-                         style="color: white;font-size: 15px;" >Targaryens</a>
-                    </div>
-
-                    <div class="mdl-tabs__panel is-active" id="starks-panel">
-                      <ul style="text-align: center">
-                        <li>Emagrecimento</li>
-                        <li>Astenia</li>
-                        <li>Anorexia</li>
-                        <li>Mialgias</li>
-                        <li>Febres</li>
-                      </ul>
-                    </div>
-                    <div class="mdl-tabs__panel" id="lannisters-panel">
-                      <ul style="text-align: center">
-                        <li>Tywin</li>
-                        <li>Cersei</li>
-                        <li>Jamie</li>
-                        <li>Tyrion</li>
-                      </ul>
-                    </div>
-                    <div class="mdl-tabs__panel" id="targaryens-panel">
-                      <ul style="text-align: center">
-                        <li>Viserys</li>
-                        <li>Daenerys</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <br>
 
                   <div class="mdl-textfield button-field">
                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">Salvar</button>
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-if="ctrl.novo.id" ng-click="ctrl.remove()">Remover</button>
+                    <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-if="ctrl.novo.id" ng-click="ctrl.remove()">Remover</button> -->
                   </div>
 
                 </form>

@@ -423,6 +423,42 @@ angular.module('main')
          }
       });
     },
+	getTipoExameListPorPaciente: function (pacienteId, callback, fail) {
+      $log.log('init get tipoExame all for paciente...');
+      $http({
+        method: 'GET',
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/tipoExameList/por/paciente/'+pacienteId
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get tipoExame all for paciente success!');
+        $log.log('get tipoExame all - status:', response.status);
+        if (response.status === 200) {
+
+           //init converte date util for input date
+            var tipoExameList = response.data.tipoExameList;
+
+            //tipoExame.data = new Date(tipoExame.data);
+            //end converte date util for input date
+
+            callback(tipoExameList);
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+
+         }else{
+           $log.warn('get tipoExame all for paciente response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
     getResultadoExameList: function (pacienteId, tipoExameId, callback, fail) {
       $log.log('init get resultado exame one...');
       $http({
@@ -517,6 +553,37 @@ angular.module('main')
          }
       });
     },
+	editAnamnese: function (anamnese, callback, fail) {
+      //anamnese.atualizacao.data = castDateForBackend(Utils.getCurrentDate());//TODO: Util
+	  //session = session.data;//TODO: log e auditoria
+      $log.log('init edit anamnese...');
+      $http({
+        method: 'POST',
+        data: '{anamnese:'+JSON.stringify(anamnese)+'}',
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/anamneses'
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get anamnese edit success!');
+        $log.log('get anamnese edit - status:', response.status);
+        if (response.status === 200) {
+            callback();
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         }else{
+           $log.warn('get paciente one response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
     addExame: function (exame, callback, fail) {
       exame.dataNascimento = castDateForBackend(exame.dataNascimento);
       $log.log('init edit exame...');
@@ -592,6 +659,35 @@ angular.module('main')
            fail('Usuário não autorizado!');
          } else{
            $log.warn('get consulta list response: ', response);
+           fail(response.statusText + ' - ' + response.status);
+         }
+      });
+    },
+	getConsulta: function (consultaId, callback, fail) {
+      $log.log('init get consulta one...');
+      $http({
+        method: 'GET',
+        //data: JSON.stringify(object),
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/consultas/'+consultaId
+      }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        $log.log('get consulta one success!');
+        $log.log('get consulta one - status:', response.status);
+        if (response.status === 200) {
+            callback(response.data.consulta);
+        } else {
+          fail(response.status +' - '+ response.statusText);
+        }
+      }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+         if(response.status === -1){
+           fail('Servidor Indisponível!');
+         } else if(response.status === 401){
+           fail('Usuário não autorizado!');
+         } else{
+           $log.warn('get consulta one response: ', response);
            fail(response.statusText + ' - ' + response.status);
          }
       });

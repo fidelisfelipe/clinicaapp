@@ -32,7 +32,7 @@
             </li>
             <li class="mdl-list__item" 
             ng-repeat="result in consultaList | filter:ctrl.searchText | orderBy: 'data': true"
-            ui-sref="main.pacienteConsultaItems({'consultaId': result.id})" >
+            ui-sref="main.pacienteConsultaItems({'consultaId': result.id, 'pacienteId': ctrl.novo.id})" >
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">face</i>
                 {{result.data | date: 'dd/MM/yyyy'}} <!-- {{result.id}} -->

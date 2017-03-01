@@ -22,6 +22,15 @@
                 </span>
               <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
             </li>
+			<li class="mdl-list__item" 
+              ui-sref="main.pacienteExames({'pacienteId': ctrl.novo.id })" 
+              title="Exames" >
+              <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">assignment</i>
+                Exames
+                </span>
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
+            </li>
             <li class="mdl-list__item" 
               ui-sref="main.pacienteAdd({'pacienteId': ctrl.novo.id })" 
               title="Exames" ng-hide="false" >
