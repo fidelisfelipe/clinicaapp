@@ -1,49 +1,110 @@
-<ion-view view-title="Tipos de Exame">
+	  <!-- List items with avatar and action -->
+		<style>
+		.demo-list-action {
+		  width: 100%;
+		}
+		</style>
+<ion-view view-title="Meus Documentos">
 
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-    <header ion-nav-bar class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Documentos</span>
-
-          <!-- {{pacienteList.length}} -->
-
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right search-field">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
-            <i class="material-icons">search</i>
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" name="searchText" id="fixed-header-drawer-exp" ng-model="searchText">
-          </div>
-        </div>
-
-      </div>
-    </header>
-
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <ion-content>
-
-          <ul class="mdl-list">
-            <li class="mdl-list__item" ng-show="!tipoExameList[0]" style="opacity:.5;pointer-events:none;">
-              <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-icon">warning</i>
-                Nenhum documento associado ao paciente!
-                </span>
-            </li>
-            <li class="mdl-list__item" ng-repeat="item in tipoExameList | orderBy: 'id'"
-            ui-sref="main.pacienteTipoExame({'pacienteId': ctrl.novo.id, 'tipoExameId': item.id})">
-              <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-icon">assignment</i>
-                {{item.nome}}
-                </span>
-              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
-            </li>
-          </ul>
-
-        </ion-content>
-      </div>
-    </main>
+ <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+            mdl-layout--fixed-tabs">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Meus Documentos</span>
+    </div>
+    <!-- Tabs -->
+    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+      <a href="#fixed-tab-1" class="mdl-layout__tab ">Receitas</a>
+      <a href="#fixed-tab-2" class="mdl-layout__tab is-active">Relatórios</a>
+      <a href="#fixed-tab-3" class="mdl-layout__tab">Atestados</a>
+    </div>
+  </header>
+   <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Meus Documentos</span>
   </div>
+  <main class="mdl-layout__content">
+    <section class="mdl-layout__tab-panel" id="fixed-tab-1">
+      <div class="page-content">
+	  
+	  
+		  <div class="demo-list-action mdl-list">
+			  <div class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+					for="id-0">
+				  <li class="mdl-menu__item">open</li>
+				  <li class="mdl-menu__item mdl-menu__item--full-bleed-divider">download</li>
+				  <li disabled class="mdl-menu__item">remove</li>
+				  <li class="mdl-menu__item">copy file for paciente session</li>
+				</ul>
+				  <span>Modelo Receita</span>
+				</span>
+				<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+				<button id="id-0"
+					class="mdl-button mdl-js-button mdl-button--icon">
+					<i class="material-icons">more_vert</i>
+				</button>
+			  </div>
+		  </div>
+		
+		
+	  </div>
+    </section>
+    <section class="mdl-layout__tab-panel  is-active" id="fixed-tab-2">
+      <div class="page-content">
+
+		<div class="demo-list-action mdl-list">
+		  <div class="mdl-list__item">
+			<span class="mdl-list__item-primary-content">
+
+			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+				for="id-1">
+			  <li class="mdl-menu__item">open</li>
+			  <li class="mdl-menu__item mdl-menu__item--full-bleed-divider">download</li>
+			  <li disabled class="mdl-menu__item">remove</li>
+			  <li class="mdl-menu__item">copy file for paciente session</li>
+			</ul>
+			  <span>Modelo INSS</span>
+			</span>
+			<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+			<button id="id-1"
+				class="mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons">more_vert</i>
+			</button>
+		  </div>
+		  
+		</div>
+	  
+	  </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+		  <div class="page-content">
+	  		  <div class="demo-list-action mdl-list">
+			  <div class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+					for="id-2">
+				  <li class="mdl-menu__item">open</li>
+				  <li class="mdl-menu__item mdl-menu__item--full-bleed-divider">download</li>
+				  <li disabled class="mdl-menu__item">remove</li>
+				  <li class="mdl-menu__item">copy file for paciente session</li>
+				</ul>
+				  <span>Modelo Atestado</span>
+				</span>
+				<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+				<button id="id-2"
+					class="mdl-button mdl-js-button mdl-button--icon">
+					<i class="material-icons">more_vert</i>
+				</button>
+			  </div>
+		  </div>
+	  </div>
+    </section>
+  </main>
+  
+  </div>
+ 
 </ion-view>
