@@ -76,12 +76,12 @@ angular.module('main')
          }
       });
     },
-    getSiglaAllList: function (callback, fail) {
+    getSiglaAllList: function (tipoExameId, callback, fail) {
       $log.log('init get sigla all...');
       $http({
         method: 'GET',
         //data: JSON.stringify(object),
-        url: Config.ENV.DOMAIN_BACKEND_URL + '/exames/siglaalllist'
+        url: Config.ENV.DOMAIN_BACKEND_URL + '/exames/siglaalllist/por/tipoexame/'+tipoExameId
       }).then(function successCallback(response) {
         // this callback will be called asynchronously
         // when the response is available

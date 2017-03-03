@@ -66,7 +66,7 @@ angular.module('main')
     }
 
     if($state.current.name === 'main.pacienteTipoExame'){
-      getSiglaAllList();
+      getSiglaAllList($stateParams.tipoExameId);
       getExameList($stateParams.tipoExameId);
       getTipoExame($stateParams.tipoExameId);
       getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
@@ -536,9 +536,9 @@ angular.module('main')
         FlashService.Error(erroMsg);
       });
   }
-  function getSiglaAllList() {
+  function getSiglaAllList(tipoExameId) {
     bind.novo = {};
-    DataService.getSiglaAllList(
+    DataService.getSiglaAllList(tipoExameId,
       function (siglaList) {
           $rootScope.siglaAllList = siglaList;
           $rootScope.siglaList = siglaList;
