@@ -47,6 +47,11 @@ angular.module('main')
 		getConsultaList();
 
 	if($state.current.name === 'main.pacienteAnamnese'){
+		//for add text edit bower install tinymce --save
+		//tinymce.init({
+		//    selector: '#mytextarea'
+		//});
+		
 		if ($stateParams.consultaId){
 			bind.consulta = $stateParams.consultaId ? DataService.getConsulta($stateParams.consultaId,
 			  function (result) {
@@ -85,7 +90,7 @@ angular.module('main')
 // Triggered on a button click, or some other target
  bind.showPopupAdd = function(data, sigla) {
    var dataView = $filter('date')(data, 'dd/MM/yyyy');
-
+   bind.resultado = {};
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
      template: '<input type="text" ng-model="ctrl.resultado.valor"  autofocus />',
@@ -166,7 +171,7 @@ angular.module('main')
 
      myPopup.then(function(res) {
         if(res){
-          $log.debug('selected date: ', bind.resultado.data);
+          $log.debug('selected date: ', bind.resultado.data);          
           $rootScope.dataList.push(bind.resultado.data);
           myPopup.close();
           $state.forceReload();
@@ -353,10 +358,65 @@ angular.module('main')
         Main.removePaciente(bind.novo.id, function () {refreshList(); msgSucesso();}, msgErro);
       });
   };
-  bind.updateResult = function (data, sigla, valor) {
-    bind.updateResult(data, sigla, true);
+  bind.updateResult = function (data, sigla, valor, id) {
+    bind.updateResultado(data, sigla, valor, id);
   };
-  bind.updateResult = function (data, sigla, valor) {
+  bind.updateResultado = function (data, sigla, valor, id) {
+	  bind.resultado = {id: id, data: data, tipo: $rootScope.tipoExame, exame: '', valor: valor};
+	  console.log('init update result exame id: '+id);
+	// An elaborate, custom popup
+	   var myPopup = $ionicPopup.show({
+	     template: '<input type="text" ng-model="ctrl.resultado.valor"  autofocus />',
+	     title: $rootScope.tipoExame.nome+' '+sigla.sigla,
+	     subTitle: 'Atualize o valor do exame',
+	     scope: $scope,
+	     buttons: [
+	       { text: 'Cancel' },
+	       {
+	         text: '<b>Update</b>',
+	         type: 'button-positive',
+	         onTap: function(e) {
+	           if (!bind.resultado.valor) {
+	             e.preventDefault();
+	           } else {
+	             return bind.resultado.valor;
+	           }
+	         }
+	       },
+	     ]
+	   });
+
+	   myPopup.then(function(res) {
+	    if(res){
+	      
+	      //recupera exame por sigla para obter id exame
+	       for (var i = 0; i < $rootScope.siglaAllList.length; i++) {
+	         if($rootScope.siglaAllList[i].sigla === sigla.sigla){
+	           bind.resultado.exame = $rootScope.siglaAllList[i];
+	         }
+	       };
+
+	        //post add resultado exame - clearValue is false
+	        var clearValue = false;
+	        FlashService.Loading(true, 'aguarde');
+	        DataService.resultadoUpdate($stateParams.pacienteId, bind.resultado, clearValue, function(){
+	                //incluido com sucesso: msg suprimida para melhor experiência
+	                FlashService.Loading(false);
+	                bind.resultado = {};
+	                getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+
+	              }, function(msgErro){
+	                FlashService.Loading(false);
+	                FlashService.Error(msgErro);            
+	              });
+	              $state.forceReload();
+	      }
+	    });
+  };
+  bind.removeResult = function (data, sigla, valor) {
+	  bind.removeResult(data, sigla, true);
+  };
+  bind.removeResult = function (data, sigla, valor) {
     FlashService.Question('Remover este valor?', function () {
       $log.info('update value...'+data+' '+sigla.sigla);
       bind.resultado = {tipo: '', data: '', valor: ''};
@@ -488,7 +548,7 @@ angular.module('main')
         });
     }
   }
-  //TODO: recuperar resultado por paciente PRIORIDADE
+
   function getResultadoExameList(tipoExameId, pacienteId, callback){
     FlashService.Loading(true, "atualizando resultados");
     if(tipoExameId && pacienteId)

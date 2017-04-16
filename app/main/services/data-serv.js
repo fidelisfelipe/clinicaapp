@@ -231,6 +231,37 @@ angular.module('main')
          }
       });
     },
+    resultadoUpdate: function (pacienteId, resultado, clearValue, callback, fail) {
+        //cast date for backend
+        resultado.data = castDateForBackend(resultado.data);
+        $log.log('init update resultado...');
+        $http({
+          method: 'POST',
+          data: '{resultado: '+JSON.stringify(resultado)+', paciente: {id: '+JSON.stringify(pacienteId)+'}, clearValue: true}',
+          url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/resultado/update'
+        }).then(function successCallback(response) {
+          // this callback will be called asynchronously
+          // when the response is available
+          $log.log('add resultado success!');
+          $log.log('add resultado - status:', response.status);
+          if (response.status === 200) {
+              callback();
+          } else {
+            fail(response.status +' - '+ response.statusText);
+          }
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+           if(response.status === -1){
+             fail('Servidor Indisponível!');
+           } else if(response.status === 406){
+             
+           }else{
+             $log.warn('add resultado response: ', response);
+             fail(response.statusText + ' - ' + response.status);
+           }
+        });
+    },
     resultadoRemove: function (pacienteId, resultado, callback, fail) {
       //cast date for backend
       resultado.data = castDateForBackend(resultado.data);

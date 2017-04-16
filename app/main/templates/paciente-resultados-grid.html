@@ -34,16 +34,16 @@
           <th>
               &nbsp;
           </th>
-          <th ng-repeat="data in dataList | orderBy:'data':reverse" 
+          <th ng-repeat="data in dataList" 
             style="background-color: rgb(74, 135, 238)">
-            {{data | date: 'dd/MM/yyyy'}}
+            {{data | date: 'dd/MM/yyyy' | orderBy: 'data'}}
           </th>
         </tr>
         <tr ng-repeat="sigla in siglaList" style="{{$index % 2 === 0 ?'background-color: rgba(27, 104, 234, 0.44)':'background-color: rgba(208, 210, 214, 0.67)'}}" >
           <td>
             {{sigla}}
           </td>
-          <td ng-repeat="exameData in dataList | orderBy: 'data'">
+          <td ng-repeat="exameData in dataList">
             {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}
           </td>
         </tr>
@@ -75,8 +75,13 @@
             <td class="mdl-data-table__cell--non-numeric"
               ng-repeat="exameData in dataList | orderBy: 'data'" >
               <!-- Button Chip -->
+              <label class="material-icons" 
+              	style="cursor:pointer; color: red" 
+              	ng-click="ctrl.removeResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor, ctrl.getValorPorDataPorSigla(exameData, sigla).id)">
+              	close
+              </label>
               <button type="button" class="fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-              ng-click="ctrl.updateResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor)"
+              ng-click="ctrl.updateResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor, ctrl.getValorPorDataPorSigla(exameData, sigla).id)"
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor !== 'vazio'">
                   <span class="mdl-chip__text" >
                     {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}

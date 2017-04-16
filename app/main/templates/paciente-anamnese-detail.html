@@ -1,3 +1,15 @@
+<style>
+.mdl-textfield {
+    position: relative;
+    font-size: 16px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px 0;
+}
+</style>
 <ion-view view-title="Anamnese">
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-wtf-tabs-hack" ng-class="{'mdl-layout--fixed-tabs' : ctrl.novo.id || ctrl.openModalEdit, 'mdl-tabs-container-hack' : !ctrl.novo.id}">
 
@@ -7,16 +19,8 @@
       </div>
       
     </header>
-	
-	<main>
-	texto
-	<textarea type="text" id="anamnese-input" 
-                    ng-model="ctrl.consulta.anamnese.anamnese" maxlength="1000" ></textarea>
-	</main>
-	
-	
-<script>
-//**
+
+
     <main class="mdl-layout__content" >
           <section class="mdl-layout__tab-panel is-active"  
           ng-show="ctrl.consulta.anamnese.id">
@@ -90,8 +94,7 @@
 
 
     </main>
-	**//
-</script>
+
   </div>
 
 </ion-view>
