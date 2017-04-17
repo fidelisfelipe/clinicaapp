@@ -262,6 +262,37 @@ angular.module('main')
            }
         });
     },
+    resultadoRemovePorData: function (pacienteId, data, callback, fail){
+    	//cast date for backend
+    	var data = castDateForBackend(data);
+        $log.log('init add resultado...');
+        $http({
+          method: 'POST',
+          data: '{data: '+JSON.stringify(data)+', paciente: {id: '+JSON.stringify(pacienteId)+'}}',
+          url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/resultado/remove/por/data'
+        }).then(function successCallback(response) {
+          // this callback will be called asynchronously
+          // when the response is available
+          $log.log('remove for date resultado success!');
+          $log.log('remove resultado - status:', response.status);
+          if (response.status === 200) {
+              callback();
+          } else {
+            fail(response.status +' - '+ response.statusText);
+          }
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+           if(response.status === -1){
+             fail('Servidor Indisponível!');
+           } else if(response.status === 401){
+             fail('Usuário não autorizado!');
+           }else{
+             $log.warn('remove resultado response: ', response);
+             fail(response.statusText + ' - ' + response.status);
+           }
+        });
+    },
     resultadoRemove: function (pacienteId, resultado, callback, fail) {
       //cast date for backend
       resultado.data = castDateForBackend(resultado.data);

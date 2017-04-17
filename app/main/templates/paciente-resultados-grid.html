@@ -63,6 +63,13 @@
             </th>
             <th class="mdl-data-table__cell--non-numeric" 
               ng-repeat="data in dataList | orderBy:'data'" >
+              
+              <label class="material-icons" 
+              	style="cursor:pointer; color: red" 
+              	ng-click="ctrl.removeData(data)">
+              	close
+              </label>
+              
               <span class="mdl-chip__text">{{data | date: 'dd/MM/yyyy'}}</span>
             </th>
           </tr>
@@ -75,16 +82,18 @@
             <td class="mdl-data-table__cell--non-numeric"
               ng-repeat="exameData in dataList | orderBy: 'data'" >
               <!-- Button Chip -->
-              <label class="material-icons" 
+              
+              <i class="material-icons" 
               	style="cursor:pointer; color: red" 
               	ng-click="ctrl.removeResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor, ctrl.getValorPorDataPorSigla(exameData, sigla).id)">
               	close
-              </label>
+              </i>
+              
               <button type="button" class="fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
               ng-click="ctrl.updateResult(exameData, sigla, ctrl.getValorPorDataPorSigla(exameData, sigla).valor, ctrl.getValorPorDataPorSigla(exameData, sigla).id)"
               ng-show="ctrl.getValorPorDataPorSigla(exameData, sigla).valor !== 'vazio'">
                   <span class="mdl-chip__text" >
-                    {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}
+                    {{ctrl.getValorPorDataPorSigla(exameData, sigla).valor}}                   
                   </span>
               </button>
               

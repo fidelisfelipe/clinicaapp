@@ -311,6 +311,29 @@ angular.module('main')
         });
 
   };
+  
+  bind.removeData = function (data) {
+
+      FlashService.Question('Remover todos os resultados referentes a esta data?',
+        function () {
+          FlashService.Loading(true, 'aguarde');
+          DataService.resultadoRemovePorData($stateParams.pacienteId, data, function(){
+            //sucesso
+            FlashService.Loading(false);
+            bind.resultado = {};
+            getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+            //bind.modal.hide();
+            //reload?
+          }, function(msgErro){
+            FlashService.Loading(false);
+            FlashService.Error(msgErro);
+            //bind.modal.hide();
+          });
+        });
+
+  };
+
+  
   bind.msgErroShow = function (msgErro) {
     FlashService.Error(msgErro);
   }
@@ -413,11 +436,9 @@ angular.module('main')
 	      }
 	    });
   };
+  
   bind.removeResult = function (data, sigla, valor) {
-	  bind.removeResult(data, sigla, true);
-  };
-  bind.removeResult = function (data, sigla, valor) {
-    FlashService.Question('Remover este valor?', function () {
+    FlashService.Question('Deseja remover este registro?', function () {
       $log.info('update value...'+data+' '+sigla.sigla);
       bind.resultado = {tipo: '', data: '', valor: ''};
       bind.resultado.valor = valor;
