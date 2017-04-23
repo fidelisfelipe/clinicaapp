@@ -266,7 +266,6 @@ angular.module('main')
       bind.modal = modal;
     });
   }
-
   bind.openModalAdd = function () {
     bind.modal.show();
   };
@@ -289,6 +288,7 @@ angular.module('main')
       return false;
     }
   };
+  
  
   bind.resultadoRemove = function (objectRemove) {
 
@@ -332,7 +332,48 @@ angular.module('main')
         });
 
   };
+  bind.updateDataShow = function(dataAtual) {
+	   bind.dataAnterior = new Date(dataAtual);
+ 	   bind.resultado = {data: new Date(dataAtual)};
+	   // An elaborate, custom popup
+	   var myPopup = $ionicPopup.show({
+	     template: '<input type="date" ng-model="ctrl.resultado.data"  autofocus />',
+	     title: 'Data Atual:<br>'+$filter('date')(new Date(dataAtual), 'dd/MM/yyyy'),
+	     subTitle: 'Alterar a data destes exames? <br> Informe a nova data!',
+	     scope: $scope,
+	     buttons: [
+	       { text: 'Cancel' },
+	       {
+	         text: '<b>Atualizar</b>',
+	         type: 'button-positive',
+	         onTap: function(e) {
+	           if (!bind.resultado.data) {
+	             e.preventDefault();
+	           } else {
+	             return bind.resultado.data;
+	           }
+	         }
+	       },
+	     ]
+	   });
 
+	   myPopup.then(function(res) {
+	    if(res){
+	        //post update resultado.data list exame
+	        FlashService.Loading(true, 'aguarde');
+	        DataService.updateData($stateParams.pacienteId, bind.resultado, bind.dataAnterior, function(){
+	                //incluido com sucesso: msg suprimida para melhor experiência
+	                FlashService.Loading(false);
+	                bind.resultado = {};
+	                getResultadoExameList($stateParams.tipoExameId, $stateParams.pacienteId);
+	              }, function(msgErro){
+	                FlashService.Loading(false);
+	                FlashService.Error(msgErro);            
+	              });
+	              //$state.forceReload();
+	      }
+	    });
+	  };
   
   bind.msgErroShow = function (msgErro) {
     FlashService.Error(msgErro);
@@ -469,6 +510,7 @@ angular.module('main')
       $log.warn('not update value...');
     });
   };
+  
   function getExameList(tipoId) {
 
      //get list exame

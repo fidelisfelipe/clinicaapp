@@ -71,6 +71,13 @@
               </label>
               
               <span class="mdl-chip__text">{{data | date: 'dd/MM/yyyy'}}</span>
+              
+               <label class="material-icons" 
+              	style="cursor:pointer; color: red" 
+              	ng-click="ctrl.updateDataShow(data)">
+              	edit
+              </label>
+              
             </th>
           </tr>
         </thead>

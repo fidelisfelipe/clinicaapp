@@ -1,0 +1,14 @@
+  <ion-modal-view >
+    <ion-content  >
+    <div >
+      <form name="form" class="" novalidate="" ng-submit="ctrl.dataUpdate(form)" >
+               <label class="item item-input item-select" ng-class="{ 'has-errors' : form.data.$invalid, 'no-errors' : form.data.$valid}">
+                      <div class="input-label"  style="width: 95%" >Data</div>
+                      <input  type="date" id="date" name="data" ng-model="ctrl.resultado.data"
+                     placeholder="dd/MM/yyyy" min="1900-01-01" max="2050-12-30" required />
+               </label>
+      </form>
+
+    </div>
+    </ion-content>
+  </ion-modal-view>

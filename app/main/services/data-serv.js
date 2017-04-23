@@ -231,6 +231,40 @@ angular.module('main')
          }
       });
     },
+    
+    updateData: function (pacienteId, resultado, old, callback, fail) {
+        //cast date for backend
+    	resultado.data = castDateForBackend(resultado.data);
+    	old = castDateForBackend(old);
+        $log.log('init update all data...');
+        $http({
+          method: 'POST',
+          data: '{resultado: '+JSON.stringify(resultado)+', paciente: {id: '+JSON.stringify(pacienteId)+'}, old: '+JSON.stringify(old)+'}',
+          url: Config.ENV.DOMAIN_BACKEND_URL + '/pacientes/dataExame/update'
+        }).then(function successCallback(response) {
+          // this callback will be called asynchronously
+          // when the response is available
+          $log.log('update data success!');
+          $log.log('update data status:', response.status);
+          if (response.status === 200) {
+              callback();
+          } else {
+            fail(response.status +' - '+ response.statusText);
+          }
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+           if(response.status === -1){
+             fail('Servidor Indisponível!');
+           } else if(response.status === 406){
+             
+           }else{
+             $log.warn('add resultado response: ', response);
+             fail(response.statusText + ' - ' + response.status);
+           }
+        });
+    },
+    
     resultadoUpdate: function (pacienteId, resultado, clearValue, callback, fail) {
         //cast date for backend
         resultado.data = castDateForBackend(resultado.data);
