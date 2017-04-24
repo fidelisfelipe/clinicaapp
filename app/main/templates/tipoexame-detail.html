@@ -21,15 +21,24 @@
             </div>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="2" ng-maxlength="80">
+              <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="1" ng-maxlength="80">
               <label class="mdl-textfield__label" for="nome-input">Nome</label>
             </div>
 
-              <div class="mdl-textfield button-field">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">Remover</button>
+             <div class="mdl-textfield button-field">
+                <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="formPaciente.$invalid">
+		      		<i class="material-icons">{{ctrl.novo.id ? 'save' : 'add'}}</i>
+		    	</button>
+		    	<i class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">
+		      		<i class="material-icons" >close</i>
+		    	</i>
               </div>
+            
+            
             </form>
+            
+            
+            
         </div>
         <div class="user-edit-delete-form-container second-container">
             <h4 class="title title-background title-custom">Exames Associados</h4>
@@ -50,7 +59,7 @@
               <li class="mdl-list__item" ui-sref="main.exameDetail({'exameId': result.id})" ng-repeat="result in exameAssociadoList  | orderBy: 'id' ">
                 <span class="mdl-list__item-primary-content">
                   <i class="material-icons mdl-list__item-icon">map</i>
-                  {{result.nome}}
+                  {{result.sigla}}
                   </span>
                 <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons mdl-list__item-icon">chevron_right</i></a>
               </li>

@@ -22,7 +22,7 @@
     <main class="mdl-layout__content">
       <div class="page-content">
         <ion-content>
-			<h2>{{ctrl.consulta.data | date: 'dd/MM/yyyy'}}</h2>
+			<span class="mdl-list__item">{{ctrl.consulta.data | date: 'dd/MM/yyyy'}}</span>
           <ul class="mdl-list">
             <li class="mdl-list__item" 
               ui-sref="main.pacienteAnamnese({'pacienteId': ctrl.novo.id,'consultaId': ctrl.consulta.id })" 

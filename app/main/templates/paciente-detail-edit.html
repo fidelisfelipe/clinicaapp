@@ -85,10 +85,14 @@
                     <label class="mdl-textfield__label" for="profissao-input">Profissão</label>
                   </div>
 
-                  <div class="mdl-textfield button-field">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="form.$invalid">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-if="ctrl.novo.id" ng-click="ctrl.remove()">Remover</button>
-                  </div>
+                 <div class="mdl-textfield button-field">
+	                <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="formPaciente.$invalid">
+			      		<i class="material-icons">{{ctrl.novo.id ? 'save' : 'add'}}</i>
+			    	</button>
+			    	<i class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">
+			      		<i class="material-icons" >close</i>
+			    	</i>
+	              </div>
 
                 </form>
               </div>

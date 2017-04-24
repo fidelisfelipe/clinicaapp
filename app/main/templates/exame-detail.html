@@ -22,7 +22,7 @@
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <!-- ng-class="{ 'has-errors' : formPaciente.nome.$invalid, 'no-errors' : formPaciente.nome.$valid}" -->
-              <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="5" ng-maxlength="80">
+              <input class="mdl-textfield__input" type="text" id="nome-input" ng-model="ctrl.novo.nome" ng-minlength="1" ng-maxlength="80">
               <label class="mdl-textfield__label" for="nome-input">Nome</label>
             </div>
 
@@ -39,11 +39,20 @@
             </div>            
 
               <div class="mdl-textfield button-field">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="formPaciente.$invalid">{{ctrl.novo.id ? 'Editar' : 'Novo'}}</button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">Remover</button>
+                <button class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" type="submit" ng-disabled="formPaciente.$invalid">
+		      		<i class="material-icons">{{ctrl.novo.id ? 'save' : 'add'}}</i>
+		    	</button>
+		    	<i class="right-bottom-fab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="ctrl.remove()" ng-if="ctrl.novo.id">
+		      		<i class="material-icons" >close</i>
+		    	</i>
               </div>
+               	
             </form>
-        </div>
+            </div>
+           
+
+		    
+
       </div>
       </ion-content>
     </main>
